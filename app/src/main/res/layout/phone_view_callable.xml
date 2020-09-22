@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/phone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:hint="@string/phone"
+    android:selectAllOnFocus="true"
+    android:textColor="@color/black"
+    android:padding="@dimen/_10sdp"
+    android:textSize="@dimen/_14ssp"
+    android:elevation="@dimen/_8sdp"
+    android:layout_margin="@dimen/_10sdp"
+    />

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/form_padding">
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/purchase_select_provider_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:gravity="center"
+                android:weightSum="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent">
+
+                <com.safesoft.safemobile.ui.generics.CustomAutoCompleteTextView
+                    android:id="@+id/purchase_select_provider"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.9"
+                    android:hint="@string/provider"
+                    android:inputType="textNoSuggestions"
+                    android:selectAllOnFocus="true" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/provider_icon"
+                    android:layout_width="@dimen/form_icons_size"
+                    android:layout_height="@dimen/form_icons_size"
+                    android:layout_weight="0.1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_factory"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/purchase_select_provider"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/purchase_select_product_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:gravity="center"
+                android:weightSum="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/purchase_select_provider_layout"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent">
+
+                <com.safesoft.safemobile.ui.generics.CustomAutoCompleteTextView
+                    android:id="@+id/purchase_select_product"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.9"
+                    android:hint="@string/product"
+                    android:inputType="textNoSuggestions"
+                    android:selectAllOnFocus="true" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="@dimen/form_icons_size"
+                    android:layout_height="@dimen/form_icons_size"
+                    android:layout_weight="0.1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_product"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/purchase_select_product"
+                    app:layout_constraintTop_toBottomOf="@+id/provider_icon" />
+
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nested_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/purchase_select_product_layout">
+
+                <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/purchase_form_products_header" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/selected_products_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_200sdp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/purchase_form_products_list_item" />
+
+                    <include
+                        android:id="@+id/footer"
+                        layout="@layout/purchase_form_products_footer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp" />
+
+                </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/validate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nested_view"
+                app:layout_constraintWidth_percent="@dimen/form_validation_button_width_percent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

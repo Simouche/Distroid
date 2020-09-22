@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.safesoft.safemobile.viewmodel.SalesViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.circularreveal.CircularRevealLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/products_count_footer_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/form_items_header_margin_start"
+                    android:text="@{@string/products_count(viewModel.invoice.productsCount)}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/form_items_header_font_size"
+                    app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/stamp_switcher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/form_items_header_margin_start"
+                    android:text="@string/stamp" />
+
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/form_items_header_margin_start"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/totals_footer_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:text="@string/total"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/form_items_header_font_size"
+                    app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.circularreveal.CircularRevealLinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:text="@string/total_ht_sum"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/form_items_header_font_size"
+                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:text="@string/total_tva_sum"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/form_items_header_font_size"
+                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:text="@string/total_stamp_sum"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/form_items_header_font_size"
+                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:text="@string/total_discount_sum"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/form_items_header_font_size"
+                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:text="@string/total_ttc_sum"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/form_items_header_font_size"
+                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+                    <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:gravity="end"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/total_ht_footer_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:text="@{@string/money_place_holder(viewModel.invoice.totalHT)}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/form_items_header_font_size"
+                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/total_tva_footer_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:text="@{@string/money_place_holder(viewModel.invoice.tva)}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/form_items_header_font_size"
+                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/total_stamp_footer_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:text="@{@string/money_place_holder(viewModel.invoice.stamp)}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/form_items_header_font_size"
+                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/total_discount_footer_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:text="@{@string/money_place_holder(viewModel.invoice.discount)}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/form_items_header_font_size"
+                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/total_ttc_footer_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:text="@{@string/money_place_holder(viewModel.invoice.totalTTC)}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/form_items_header_font_size"
+                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+                </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

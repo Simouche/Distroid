@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:name="com.safesoft.safedistribute.ui.purchases.PurchasesListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.purchases.PurchasesListFragment">
+
+        <EditText
+            android:id="@+id/purchases_search_field"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/edit_text_margins"
+            android:layout_marginTop="@dimen/search_field_margin_top"
+            android:layout_marginEnd="@dimen/edit_text_margins"
+            android:layout_marginBottom="@dimen/search_field_margin_bottom"
+            android:hint="@string/search"
+            android:inputType="textNoSuggestions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/purchases_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="@dimen/recycler_layout_height_percent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/purchases_search_field"
+            tools:listitem="@layout/fragment_purchases_list_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

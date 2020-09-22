@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.safesoft.safemobile.viewmodel.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.dashboard.HomeFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/_20sdp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/purchases_card"
+            android:layout_width="@dimen/dashboard_card_width"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_margin="@dimen/_10sdp"
+            android:checkable="true"
+            android:clickable="true"
+            android:elevation="@dimen/_8sdp"
+            android:focusable="true"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:contentPadding="@dimen/_5sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_line">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/purchases_image"
+                    android:layout_width="@dimen/dashboard_card_icon_size"
+                    android:layout_height="@dimen/dashboard_card_icon_size"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:src="@drawable/ic_buy"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider_purchases"
+                    android:layout_width="@dimen/dashboard_card_divider_width"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/dashboard_card_divider_start_margin"
+                    android:layout_marginTop="@dimen/dashboard_card_divider_top_margin"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintStart_toEndOf="@id/purchases_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/purchases_card_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:layout_marginTop="@dimen/dashboard_card_divider_top_margin"
+                    android:text="@string/purchases"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dashboard_card_title_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_purchases"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/purchases_open_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/open_forms,viewModel.counts.openPurchases)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_purchases"
+                    app:layout_constraintTop_toBottomOf="@id/purchases_card_title" />
+
+                <TextView
+                    android:id="@+id/purchases_closed_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/validated_forms,viewModel.counts.validatedPurchases)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_purchases"
+                    app:layout_constraintTop_toBottomOf="@id/purchases_open_forms_text" />
+
+                <TextView
+                    android:id="@+id/purchases_total_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/total_forms,viewModel.counts.totalPurchases)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_purchases"
+                    app:layout_constraintTop_toBottomOf="@id/purchases_closed_forms_text" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/sales_card"
+            android:layout_width="@dimen/dashboard_card_width"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_margin="@dimen/_10sdp"
+            android:checkable="true"
+            android:clickable="true"
+            android:elevation="@dimen/_8sdp"
+            android:focusable="true"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:contentPadding="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_line">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/sales_image"
+                    android:layout_width="@dimen/dashboard_card_icon_size"
+                    android:layout_height="@dimen/dashboard_card_icon_size"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:src="@drawable/ic_sales"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider_sales"
+                    android:layout_width="@dimen/dashboard_card_divider_width"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/dashboard_card_divider_start_margin"
+                    android:layout_marginTop="@dimen/dashboard_card_divider_top_margin"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintStart_toEndOf="@id/sales_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/sales_card_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:layout_marginTop="@dimen/dashboard_card_divider_top_margin"
+                    android:text="@string/sales"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dashboard_card_title_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_sales"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/sales_open_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/open_forms,viewModel.counts.openSales)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_sales"
+                    app:layout_constraintTop_toBottomOf="@id/sales_card_title" />
+
+                <TextView
+                    android:id="@+id/sales_closed_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/validated_forms,viewModel.counts.validatedSales)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_sales"
+                    app:layout_constraintTop_toBottomOf="@id/sales_open_forms_text" />
+
+                <TextView
+                    android:id="@+id/sales_total_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/total_forms,viewModel.counts.totalSales)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_sales"
+                    app:layout_constraintTop_toBottomOf="@id/sales_closed_forms_text" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/products_card"
+            android:layout_width="@dimen/dashboard_card_width"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_margin="@dimen/_10sdp"
+            android:checkable="true"
+            android:clickable="true"
+            android:elevation="@dimen/_8sdp"
+            android:focusable="true"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:contentPadding="@dimen/_5sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/purchases_card">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/products_image"
+                    android:layout_width="@dimen/dashboard_card_icon_size"
+                    android:layout_height="@dimen/dashboard_card_icon_size"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:src="@drawable/ic_product"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider_products"
+                    android:layout_width="@dimen/dashboard_card_divider_width"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/dashboard_card_divider_start_margin"
+                    android:layout_marginTop="@dimen/dashboard_card_divider_top_margin"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintStart_toEndOf="@id/products_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/products_card_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:layout_marginTop="@dimen/dashboard_card_divider_top_margin"
+                    android:text="@string/products"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dashboard_card_title_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_products"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/products_open_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/out_of_stock,viewModel.counts.productsOutOfStock)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_products"
+                    app:layout_constraintTop_toBottomOf="@id/products_card_title" />
+
+                <TextView
+                    android:id="@+id/products_closed_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/expired,viewModel.counts.productsExpired)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_products"
+                    app:layout_constraintTop_toBottomOf="@id/products_open_forms_text" />
+
+                <TextView
+                    android:id="@+id/products_total_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/total_forms,viewModel.counts.productsTotal)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_products"
+                    app:layout_constraintTop_toBottomOf="@id/products_closed_forms_text" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/inventory_card"
+            android:layout_width="@dimen/dashboard_card_width"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_margin="@dimen/_10sdp"
+            android:checkable="true"
+            android:clickable="true"
+            android:elevation="@dimen/_8sdp"
+            android:focusable="true"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:contentPadding="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sales_card">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/inventory_image"
+                    android:layout_width="@dimen/dashboard_card_icon_size"
+                    android:layout_height="@dimen/dashboard_card_icon_size"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:src="@drawable/ic_inventory"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider_inventory"
+                    android:layout_width="@dimen/dashboard_card_divider_width"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/dashboard_card_divider_start_margin"
+                    android:layout_marginTop="@dimen/dashboard_card_divider_top_margin"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintStart_toEndOf="@id/inventory_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/inventory_card_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:layout_marginTop="@dimen/dashboard_card_divider_top_margin"
+                    android:text="@string/inventory"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dashboard_card_title_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_inventory"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/inventory_open_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/open_forms,viewModel.counts.openInventory)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_inventory"
+                    app:layout_constraintTop_toBottomOf="@id/inventory_card_title" />
+
+                <TextView
+                    android:id="@+id/inventory_closed_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/validated_forms,viewModel.counts.validatedInventory)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_inventory"
+                    app:layout_constraintTop_toBottomOf="@id/inventory_open_forms_text" />
+
+                <TextView
+                    android:id="@+id/inventory_total_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/total_forms,viewModel.counts.totalInventory)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_inventory"
+                    app:layout_constraintTop_toBottomOf="@id/inventory_closed_forms_text" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/clients_card"
+            android:layout_width="@dimen/dashboard_card_width"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_margin="@dimen/_10sdp"
+            android:checkable="true"
+            android:clickable="true"
+            android:elevation="@dimen/_8sdp"
+            android:focusable="true"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:contentPadding="@dimen/_5sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/products_card">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/clients_image"
+                    android:layout_width="@dimen/dashboard_card_icon_size"
+                    android:layout_height="@dimen/dashboard_card_icon_size"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:src="@drawable/ic_clients"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider_clients"
+                    android:layout_width="@dimen/dashboard_card_divider_width"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/dashboard_card_divider_start_margin"
+                    android:layout_marginTop="@dimen/dashboard_card_divider_top_margin"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintStart_toEndOf="@id/clients_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/clients_card_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:layout_marginTop="@dimen/dashboard_card_divider_top_margin"
+                    android:text="@string/clients"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dashboard_card_title_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_clients"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/clients_total_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/total_forms,viewModel.counts.totalClients)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_clients"
+                    app:layout_constraintTop_toBottomOf="@id/clients_card_title" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/providers_card"
+            android:layout_width="@dimen/dashboard_card_width"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_margin="@dimen/_10sdp"
+            android:checkable="true"
+            android:clickable="true"
+            android:elevation="@dimen/_8sdp"
+            android:focusable="true"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:contentPadding="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inventory_card">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/providers_image"
+                    android:layout_width="@dimen/dashboard_card_icon_size"
+                    android:layout_height="@dimen/dashboard_card_icon_size"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:contentDescription="icon"
+                    android:src="@drawable/ic_factory"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider_providers"
+                    android:layout_width="@dimen/dashboard_card_divider_width"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/dashboard_card_divider_start_margin"
+                    android:layout_marginTop="@dimen/dashboard_card_divider_top_margin"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintStart_toEndOf="@id/providers_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/providers_card_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:layout_marginTop="@dimen/dashboard_card_divider_top_margin"
+                    android:text="@string/providers"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dashboard_card_title_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_providers"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/providers_total_forms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dashboard_card_title_start_margin"
+                    android:text="@{String.format(@string/total_forms,viewModel.counts.totalProviders)}"
+                    android:textSize="@dimen/dashboard_card_subtitle_size"
+                    app:layout_constraintStart_toEndOf="@id/divider_providers"
+                    app:layout_constraintTop_toBottomOf="@id/providers_card_title" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

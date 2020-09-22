@@ -1,0 +1,1198 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "ae8db5985745dfeb87c9fb9becdfabcd",
+    "entities": [
+      {
+        "tableName": "users",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `USERNAME` TEXT NOT NULL, `PASSWORD` TEXT NOT NULL, `FIRST_NAME` TEXT, `LAST_NAME` TEXT, `BIRTH_DATE` TEXT, `ADDRESS` TEXT, `PHONE` TEXT, `FAX` TEXT, `EMAIL` TEXT, `LAST_LOGIN` TEXT, `LOGGED` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "username",
+            "columnName": "USERNAME",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "PASSWORD",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstName",
+            "columnName": "FIRST_NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastName",
+            "columnName": "LAST_NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "birthDate",
+            "columnName": "BIRTH_DATE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "ADDRESS",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "PHONE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fax",
+            "columnName": "FAX",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "EMAIL",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastLogin",
+            "columnName": "LAST_LOGIN",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "logged",
+            "columnName": "LOGGED",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_users_USERNAME",
+            "unique": true,
+            "columnNames": [
+              "USERNAME"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_users_USERNAME` ON `${TABLE_NAME}` (`USERNAME`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "purchases",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `PURCHASE_NUMBER` TEXT, `INVOICE_NUMBER` TEXT, `DATE` TEXT, `PROVIDER` INTEGER, `PRODUCTS_COUNT` INTEGER, `TOTAL_HT` REAL, `TOTAL_TTC` REAL, `TVA` REAL, `STAMP` REAL, `DISCOUNT` REAL, `REGLEMENT` TEXT NOT NULL DEFAULT 'E', `TOTAL_QUANTITY` REAL, `NOTE` TEXT, `DONE` INTEGER NOT NULL DEFAULT 0, `PAYMENT` REAL NOT NULL DEFAULT 0, FOREIGN KEY(`PROVIDER`) REFERENCES `providers`(`PROVIDER_ID`) ON UPDATE CASCADE ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "purchaseNumber",
+            "columnName": "PURCHASE_NUMBER",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "invoiceNumber",
+            "columnName": "INVOICE_NUMBER",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "DATE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "provider",
+            "columnName": "PROVIDER",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "productsCount",
+            "columnName": "PRODUCTS_COUNT",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalHT",
+            "columnName": "TOTAL_HT",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalTTC",
+            "columnName": "TOTAL_TTC",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tva",
+            "columnName": "TVA",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "stamp",
+            "columnName": "STAMP",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "discount",
+            "columnName": "DISCOUNT",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "reglement",
+            "columnName": "REGLEMENT",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'E'"
+          },
+          {
+            "fieldPath": "totalQuantity",
+            "columnName": "TOTAL_QUANTITY",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "NOTE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "done",
+            "columnName": "DONE",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "payment",
+            "columnName": "PAYMENT",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_purchases_PROVIDER",
+            "unique": false,
+            "columnNames": [
+              "PROVIDER"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_purchases_PROVIDER` ON `${TABLE_NAME}` (`PROVIDER`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "providers",
+            "onDelete": "RESTRICT",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "PROVIDER"
+            ],
+            "referencedColumns": [
+              "PROVIDER_ID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "sales",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `SALE_NUMBER` TEXT, `INVOICE_NUMBER` TEXT, `DATE` TEXT, `CLIENT` INTEGER, `PRODUCTS_COUNT` INTEGER, `TOTAL_HT` REAL, `TOTAL_TTC` REAL, `TVA` REAL, `STAMP` REAL, `DISCOUNT` REAL, `REGLEMENT` TEXT NOT NULL DEFAULT 'E', `TOTAL_QUANTITY` REAL, `NOTE` TEXT, `DONE` INTEGER NOT NULL DEFAULT 0, `PAYMENT` REAL NOT NULL DEFAULT 0, FOREIGN KEY(`CLIENT`) REFERENCES `clients`(`CLIENT_ID`) ON UPDATE CASCADE ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "purchaseNumber",
+            "columnName": "SALE_NUMBER",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "invoiceNumber",
+            "columnName": "INVOICE_NUMBER",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "DATE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "provider",
+            "columnName": "CLIENT",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "productsCount",
+            "columnName": "PRODUCTS_COUNT",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalHT",
+            "columnName": "TOTAL_HT",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalTTC",
+            "columnName": "TOTAL_TTC",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tva",
+            "columnName": "TVA",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "stamp",
+            "columnName": "STAMP",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "discount",
+            "columnName": "DISCOUNT",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "reglement",
+            "columnName": "REGLEMENT",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'E'"
+          },
+          {
+            "fieldPath": "totalQuantity",
+            "columnName": "TOTAL_QUANTITY",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "NOTE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "done",
+            "columnName": "DONE",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "payment",
+            "columnName": "PAYMENT",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_sales_CLIENT",
+            "unique": false,
+            "columnNames": [
+              "CLIENT"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sales_CLIENT` ON `${TABLE_NAME}` (`CLIENT`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "clients",
+            "onDelete": "RESTRICT",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "CLIENT"
+            ],
+            "referencedColumns": [
+              "CLIENT_ID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "purchase_lines",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `PRODUCT` INTEGER NOT NULL, `QUANTITY` REAL, `BUY_PRICE_HT` REAL NOT NULL, `BUY_PRICE_TTC` REAL NOT NULL, `TVA` REAL, `NOTE` TEXT, `PURCHASE` INTEGER NOT NULL, FOREIGN KEY(`PURCHASE`) REFERENCES `purchases`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`PRODUCT`) REFERENCES `products`(`PRODUCT_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "product",
+            "columnName": "PRODUCT",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "QUANTITY",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalBuyPriceHT",
+            "columnName": "BUY_PRICE_HT",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalBuyPriceTTC",
+            "columnName": "BUY_PRICE_TTC",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tva",
+            "columnName": "TVA",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "NOTE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "purchase",
+            "columnName": "PURCHASE",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_purchase_lines_PURCHASE",
+            "unique": false,
+            "columnNames": [
+              "PURCHASE"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_purchase_lines_PURCHASE` ON `${TABLE_NAME}` (`PURCHASE`)"
+          },
+          {
+            "name": "index_purchase_lines_PRODUCT",
+            "unique": false,
+            "columnNames": [
+              "PRODUCT"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_purchase_lines_PRODUCT` ON `${TABLE_NAME}` (`PRODUCT`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "purchases",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "PURCHASE"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "products",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "PRODUCT"
+            ],
+            "referencedColumns": [
+              "PRODUCT_ID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "providers",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`PROVIDER_ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `CODE` TEXT NOT NULL, `NAME` TEXT, `ACTIVITY` TEXT, `ADDRESS` TEXT, `COMMUNE` INTEGER, `CONTACT` TEXT, `PHONES` TEXT, `FAXES` TEXT, `RIB` TEXT, `WEBSITE` TEXT, `INITIAL_SOLD` REAL DEFAULT 0, `NOTE` TEXT, `CLIENT` INTEGER, `REGISTRE_COMMERCE` TEXT, `ARTCILE_FISCALE` TEXT, `IDENTIFIANT_FISCALE` TEXT, `IDENTIFIANT_STATISTIQUE` TEXT, `LONGITUDE` REAL, `LATITUDE` REAL, FOREIGN KEY(`CLIENT`) REFERENCES `clients`(`CLIENT_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "PROVIDER_ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "code",
+            "columnName": "CODE",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "activity",
+            "columnName": "ACTIVITY",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "ADDRESS",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "commune",
+            "columnName": "COMMUNE",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contact",
+            "columnName": "CONTACT",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "phones",
+            "columnName": "PHONES",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "faxes",
+            "columnName": "FAXES",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rib",
+            "columnName": "RIB",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "webSite",
+            "columnName": "WEBSITE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "initialSold",
+            "columnName": "INITIAL_SOLD",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "NOTE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "client",
+            "columnName": "CLIENT",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiscalData.registreCommerce",
+            "columnName": "REGISTRE_COMMERCE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiscalData.articleFiscale",
+            "columnName": "ARTCILE_FISCALE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiscalData.identifiantFiscale",
+            "columnName": "IDENTIFIANT_FISCALE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiscalData.identifiantStatistic",
+            "columnName": "IDENTIFIANT_STATISTIQUE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location.longitude",
+            "columnName": "LONGITUDE",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location.latitude",
+            "columnName": "LATITUDE",
+            "affinity": "REAL",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "PROVIDER_ID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_providers_CODE",
+            "unique": true,
+            "columnNames": [
+              "CODE"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_providers_CODE` ON `${TABLE_NAME}` (`CODE`)"
+          },
+          {
+            "name": "index_providers_CLIENT",
+            "unique": true,
+            "columnNames": [
+              "CLIENT"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_providers_CLIENT` ON `${TABLE_NAME}` (`CLIENT`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "clients",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "CLIENT"
+            ],
+            "referencedColumns": [
+              "CLIENT_ID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "barcodes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `CODE` TEXT NOT NULL, `PRODUCT` INTEGER NOT NULL, FOREIGN KEY(`PRODUCT`) REFERENCES `products`(`PRODUCT_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "code",
+            "columnName": "CODE",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "product",
+            "columnName": "PRODUCT",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_barcodes_CODE",
+            "unique": true,
+            "columnNames": [
+              "CODE"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_barcodes_CODE` ON `${TABLE_NAME}` (`CODE`)"
+          },
+          {
+            "name": "index_barcodes_PRODUCT",
+            "unique": false,
+            "columnNames": [
+              "PRODUCT"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_barcodes_PRODUCT` ON `${TABLE_NAME}` (`PRODUCT`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "products",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "PRODUCT"
+            ],
+            "referencedColumns": [
+              "PRODUCT_ID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "products",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`PRODUCT_ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `REFERENCE` TEXT NOT NULL, `DESIGNATION` TEXT NOT NULL, `QUANTITY` REAL DEFAULT 0, `PURCHASE_PRICE_HT` REAL DEFAULT 0, `TVA` REAL DEFAULT 19, `PURCHASE_PRICE_TTC` REAL DEFAULT 0, `STEADY_PURCHASE_PRICE_HT` REAL DEFAULT 0, `STEADY_PURCHASE_PRICE_TTC` REAL DEFAULT 0, `MARGE` REAL, `SELL_PRICE_DETAIL_HT` REAL DEFAULT 0, `SELL_PRICE_WHOLE_HT` REAL DEFAULT 0, `SELL_PRICE_HAF_WHOLE_HT` REAL DEFAULT 0, `SELL_PRICE_DETAIL_TTC` REAL DEFAULT 0, `SELL_PRICE_WHOLE_TTC` REAL DEFAULT 0, `SELL_PRICE_HAF_WHOLE_TTC` REAL DEFAULT 0, `PHOTO` TEXT, `QUANTITY_PER_PACKAGE` INTEGER, `PROMO` REAL DEFAULT 0, `BRAND` INTEGER, FOREIGN KEY(`BRAND`) REFERENCES `brands`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "PRODUCT_ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reference",
+            "columnName": "REFERENCE",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "designation",
+            "columnName": "DESIGNATION",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "QUANTITY",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "purchasePriceHT",
+            "columnName": "PURCHASE_PRICE_HT",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "tva",
+            "columnName": "TVA",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "19"
+          },
+          {
+            "fieldPath": "purchasePriceTTC",
+            "columnName": "PURCHASE_PRICE_TTC",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "steadyPurchasePriceHT",
+            "columnName": "STEADY_PURCHASE_PRICE_HT",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "steadyPurchasePriceTTC",
+            "columnName": "STEADY_PURCHASE_PRICE_TTC",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "marge",
+            "columnName": "MARGE",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sellPriceDetailHT",
+            "columnName": "SELL_PRICE_DETAIL_HT",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "sellPriceWholeHT",
+            "columnName": "SELL_PRICE_WHOLE_HT",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "sellPriceHalfWholeHT",
+            "columnName": "SELL_PRICE_HAF_WHOLE_HT",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "sellPriceDetailTTC",
+            "columnName": "SELL_PRICE_DETAIL_TTC",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "sellPriceWholeTTC",
+            "columnName": "SELL_PRICE_WHOLE_TTC",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "sellPriceHalfWholeTTC",
+            "columnName": "SELL_PRICE_HAF_WHOLE_TTC",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "photo",
+            "columnName": "PHOTO",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "quantityPerPackage",
+            "columnName": "QUANTITY_PER_PACKAGE",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "promotion",
+            "columnName": "PROMO",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "brand",
+            "columnName": "BRAND",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "PRODUCT_ID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_products_BRAND",
+            "unique": false,
+            "columnNames": [
+              "BRAND"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_products_BRAND` ON `${TABLE_NAME}` (`BRAND`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "brands",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "BRAND"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "expiration_dates",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `DATE` TEXT NOT NULL, `DISABLED` INTEGER NOT NULL DEFAULT 0, `PRODUCT` INTEGER NOT NULL, FOREIGN KEY(`PRODUCT`) REFERENCES `products`(`PRODUCT_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "DATE",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "disabled",
+            "columnName": "DISABLED",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "product",
+            "columnName": "PRODUCT",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_expiration_dates_PRODUCT",
+            "unique": false,
+            "columnNames": [
+              "PRODUCT"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_expiration_dates_PRODUCT` ON `${TABLE_NAME}` (`PRODUCT`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "products",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "PRODUCT"
+            ],
+            "referencedColumns": [
+              "PRODUCT_ID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "brands",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `NAME` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "NAME",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_brands_NAME",
+            "unique": true,
+            "columnNames": [
+              "NAME"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_brands_NAME` ON `${TABLE_NAME}` (`NAME`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ProductProviderCrossRef",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`PRODUCT_ID` INTEGER NOT NULL, `PROVIDER_ID` INTEGER NOT NULL, PRIMARY KEY(`PRODUCT_ID`, `PROVIDER_ID`), FOREIGN KEY(`PRODUCT_ID`) REFERENCES `products`(`PRODUCT_ID`) ON UPDATE CASCADE ON DELETE RESTRICT , FOREIGN KEY(`PROVIDER_ID`) REFERENCES `providers`(`PROVIDER_ID`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "productId",
+            "columnName": "PRODUCT_ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "providerId",
+            "columnName": "PROVIDER_ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "PRODUCT_ID",
+            "PROVIDER_ID"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_ProductProviderCrossRef_PRODUCT_ID",
+            "unique": false,
+            "columnNames": [
+              "PRODUCT_ID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ProductProviderCrossRef_PRODUCT_ID` ON `${TABLE_NAME}` (`PRODUCT_ID`)"
+          },
+          {
+            "name": "index_ProductProviderCrossRef_PROVIDER_ID",
+            "unique": false,
+            "columnNames": [
+              "PROVIDER_ID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ProductProviderCrossRef_PROVIDER_ID` ON `${TABLE_NAME}` (`PROVIDER_ID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "products",
+            "onDelete": "RESTRICT",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "PRODUCT_ID"
+            ],
+            "referencedColumns": [
+              "PRODUCT_ID"
+            ]
+          },
+          {
+            "table": "providers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "PROVIDER_ID"
+            ],
+            "referencedColumns": [
+              "PROVIDER_ID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "clients",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CLIENT_ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `CODE` TEXT NOT NULL, `NAME` TEXT, `ACTIVITY` TEXT, `ADDRESS` TEXT, `COMMUNE` INTEGER, `CONTACT` TEXT, `PHONES` TEXT, `FAXES` TEXT, `RIB` TEXT, `WEBSITE` TEXT, `INITIAL_SOLD` REAL DEFAULT 0, `NOTE` TEXT, `PROVIDER` INTEGER, `REGISTRE_COMMERCE` TEXT, `ARTCILE_FISCALE` TEXT, `IDENTIFIANT_FISCALE` TEXT, `IDENTIFIANT_STATISTIQUE` TEXT, `LONGITUDE` REAL, `LATITUDE` REAL, FOREIGN KEY(`PROVIDER`) REFERENCES `providers`(`PROVIDER_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "CLIENT_ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "code",
+            "columnName": "CODE",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "activity",
+            "columnName": "ACTIVITY",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "ADDRESS",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "commune",
+            "columnName": "COMMUNE",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contact",
+            "columnName": "CONTACT",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "phones",
+            "columnName": "PHONES",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "faxes",
+            "columnName": "FAXES",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rib",
+            "columnName": "RIB",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "webSite",
+            "columnName": "WEBSITE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "initialSold",
+            "columnName": "INITIAL_SOLD",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "NOTE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "provider",
+            "columnName": "PROVIDER",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiscalData.registreCommerce",
+            "columnName": "REGISTRE_COMMERCE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiscalData.articleFiscale",
+            "columnName": "ARTCILE_FISCALE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiscalData.identifiantFiscale",
+            "columnName": "IDENTIFIANT_FISCALE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiscalData.identifiantStatistic",
+            "columnName": "IDENTIFIANT_STATISTIQUE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location.longitude",
+            "columnName": "LONGITUDE",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location.latitude",
+            "columnName": "LATITUDE",
+            "affinity": "REAL",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "CLIENT_ID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_clients_CODE",
+            "unique": true,
+            "columnNames": [
+              "CODE"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_clients_CODE` ON `${TABLE_NAME}` (`CODE`)"
+          },
+          {
+            "name": "index_clients_PROVIDER",
+            "unique": true,
+            "columnNames": [
+              "PROVIDER"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_clients_PROVIDER` ON `${TABLE_NAME}` (`PROVIDER`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "providers",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "PROVIDER"
+            ],
+            "referencedColumns": [
+              "PROVIDER_ID"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ae8db5985745dfeb87c9fb9becdfabcd')"
+    ]
+  }
+}

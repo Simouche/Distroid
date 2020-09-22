@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="sale"
+            type="com.safesoft.safemobile.backend.db.entity.Sales" />
+        
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:elevation="@dimen/card_normal_elevation"
+        android:focusable="true"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:contentPadding="@dimen/card_content_padding">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sale_number_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/list_item_content_margin"
+                android:text="@string/numero"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sale_invoice_number_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/list_item_content_margin"
+                android:text="@string/invoice_number"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@id/sale_number_display"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sale_date_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/list_item_content_margin"
+                android:text="@string/invoice_date"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@id/sale_invoice_number_display"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sale_products_count_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/list_item_content_margin"
+                android:text="@string/products_count"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sale_number_display" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sale_total_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/list_item_content_margin"
+                android:text="@string/total_sum"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@id/sale_products_count_display"
+                app:layout_constraintTop_toBottomOf="@id/sale_invoice_number_display" />
+
+
+            <ImageView
+                android:id="@+id/sale_status_display"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:src="@drawable/ic_invoice_done"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

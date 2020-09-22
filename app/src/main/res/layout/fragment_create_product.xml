@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.safesoft.safemobile.viewmodel.ProductsViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/create_product_barcodes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/product_barcode_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/product_barcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/barcode"
+                        android:inputType="text"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.barcode}"
+                        app:error="@{viewModel.productsForm.barcodeError}"
+                        app:onFocus="@{viewModel.onFocusBarCode}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/create_product_reference_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                app:boxBackgroundColor="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_product_barcodes"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_product_reference"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/reference"
+                    android:inputType="textNoSuggestions"
+                    android:selectAllOnFocus="true"
+                    android:text="@={viewModel.productsForm.fields.reference}"
+                    app:error="@{viewModel.productsForm.referenceError}"
+                    app:onFocus="@{viewModel.onFocusReference}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/create_product_designation_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                app:boxBackgroundColor="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_product_reference_layout"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_product_designation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/designation"
+                    android:inputType="textNoSuggestions"
+                    android:selectAllOnFocus="true"
+                    android:text="@={viewModel.productsForm.fields.designation}"
+                    app:error="@{viewModel.productsForm.designationError}"
+                    app:onFocus="@{viewModel.onFocusDesignation}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/create_product_quantity_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                app:boxBackgroundColor="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_product_designation_layout"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_product_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/initial_quantity"
+                    android:inputType="numberDecimal"
+                    android:selectAllOnFocus="true"
+                    android:text="@={viewModel.productsForm.fields.quantity}"
+                    app:error="@{viewModel.productsForm.quantityError}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/purchase_prices"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_product_quantity_layout"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_product_purchase_price_ht"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/purchase_price_ht"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.purchasePriceHT}"
+                        app:error="@{viewModel.productsForm.purchasePriceHTError}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_product_tva"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/tva"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.tva}"
+                        app:error="@{viewModel.productsForm.tvaError}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_product_purchase_price_ttc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/purchase_price_ttc"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.purchasePriceTTC}"
+                        app:error="@{viewModel.productsForm.purchasePriceTTCError}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/sell_prices_detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/purchase_prices"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_product_marge_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:hint="@string/marge_detail"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.marge}"
+                        app:error="@{viewModel.productsForm.margeError}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_product_sell_price_detail_ht"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/sell_price_detail_ht"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.sellPriceDetailHT}"
+                        app:error="@{viewModel.productsForm.sellPriceDetailHTError}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_product_sell_price_detail_ttc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/sell_price_detail_ttc"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.sellPriceDetailTTC}"
+                        app:error="@{viewModel.productsForm.sellPriceDetailTTCError}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/sell_prices_whole"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sell_prices_detail"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_product_marge_whole"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:hint="@string/marge_whole"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.margeWhole}"
+                        app:error="@{viewModel.productsForm.margeWholeError}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_product_sell_price_whole_ht"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/sell_price_whole_ht"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.sellPriceWholeHT}"
+                        app:error="@{viewModel.productsForm.sellPriceWholeHTError}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_product_sell_price_whole_ttc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/sell_price_whole_ttc"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.sellPriceWholeTTC}"
+                        app:error="@{viewModel.productsForm.sellPriceWholeTTCError}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/sell_prices_half_whole"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sell_prices_whole"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_product_marge_half_whole"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:hint="@string/marge_half_whole"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.margeHalfWhole}"
+                        app:error="@{viewModel.productsForm.margeHalfWholeError}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_product_sell_price_half_whole_ht"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/sell_price_half_whole_ht"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.sellPrice3HT}"
+                        app:error="@{viewModel.productsForm.sellPrice3HTError}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_product_sell_price_half_whole_ttc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/sell_price_half_whole_ttc"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.sellPrice3TTC}"
+                        app:error="@{viewModel.productsForm.sellPrice3HTError}" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.safesoft.safemobile.ui.generics.CustomAutoCompleteTextView
+                android:id="@+id/create_product_brand"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:completionThreshold="1"
+                android:hint="@string/brand"
+                android:inputType="text"
+                android:text="@={viewModel.productsForm.fields.brandName}"
+                android:selectAllOnFocus="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sell_prices_half_whole"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big" />
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/promotion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:gravity="start"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_product_brand"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/discount_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/discount" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/discount_amount_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:boxBackgroundColor="@color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/discount_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:hint="@string/discount"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+                        android:text="@={viewModel.productsForm.fields.promotion}"
+                        app:error="@{viewModel.productsForm.promotionError}" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/create_product_image"
+                android:layout_width="@dimen/_128sdp"
+                android:layout_height="@dimen/_128sdp"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:src="@drawable/ic_product"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/promotion" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/create_product_save_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/form_validation_button_margin"
+                android:enabled="@{viewModel.productsForm.productValid}"
+                android:text="@string/save"
+                app:cornerRadius="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/create_product_image"
+                app:layout_constraintWidth_percent="@dimen/form_validation_button_width_percent" />
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/form_validation_button_margin"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/create_product_image" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.safesoft.safemobile.backend.db.entity.SaleLines" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_2sdp">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/delete_product"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_delete" />
+
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/form_items_header_margin_start">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/product_designation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{model.selectedProduct.product.designation}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/form_items_item_font_size"
+                        app:layout_constraintStart_toEndOf="@id/designation_header_text"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </HorizontalScrollView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/product_pu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/form_items_header_margin_start"
+                    android:text="@{model.selectedProduct.product.purchasePriceHT.toString()}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/form_items_item_font_size"
+                    app:layout_constraintStart_toEndOf="@id/designation_header_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/product_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/form_items_header_margin_start"
+                    android:text="@{model.quantity.toString()}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/form_items_item_font_size"
+                    app:layout_constraintStart_toEndOf="@id/designation_header_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/product_total_ht"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/form_items_header_margin_start"
+                    android:text="@{String.valueOf(model.totalBuyPriceHT)}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/form_items_item_font_size"
+                    app:layout_constraintStart_toEndOf="@id/designation_header_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/product_tva"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/form_items_header_margin_start"
+                    android:text="@{model.tva.toString()}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/form_items_item_font_size"
+                    app:layout_constraintStart_toEndOf="@id/designation_header_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/product_total_ttc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/form_items_header_margin_start"
+                    android:text="@{String.valueOf(model.totalBuyPriceTTC)}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/form_items_item_font_size"
+                    app:layout_constraintStart_toEndOf="@id/designation_header_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </HorizontalScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

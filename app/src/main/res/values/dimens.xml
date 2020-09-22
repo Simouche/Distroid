@@ -1,0 +1,53 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+    <!--    Dashboard dimensions-->
+    <dimen name="dashboard_card_content_top_margin">@dimen/_20sdp</dimen>
+    <dimen name="dashboard_card_divider_top_margin">@dimen/_10sdp</dimen>
+    <dimen name="dashboard_card_divider_start_margin">@dimen/_3sdp</dimen>
+    <dimen name="dashboard_card_divider_width">@dimen/_1sdp</dimen>
+    <dimen name="dashboard_card_title_start_margin">@dimen/_5sdp</dimen>
+    <dimen name="dashboard_card_title_size">@dimen/_14ssp</dimen>
+    <dimen name="dashboard_card_subtitle_size">@dimen/_10ssp</dimen>
+    <dimen name="dashboard_card_height">@dimen/_80sdp</dimen>
+    <dimen name="dashboard_card_width">@dimen/_125sdp</dimen>
+    <dimen name="dashboard_card_icon_size">@dimen/_32sdp</dimen>
+
+
+    <!--    forms dimensions -->
+    <dimen name="edit_text_margins">@dimen/_24sdp</dimen>
+    <dimen name="edit_text_space_between">@dimen/_8sdp</dimen>
+    <dimen name="form_validation_button_margin">@dimen/_16sdp</dimen>
+    <dimen name="form_edit_text_width_percent">.9</dimen>
+    <dimen name="form_edit_text_width_percent_big">.9</dimen>
+    <dimen name="form_validation_button_width_percent">.5</dimen>
+    <dimen name="form_padding">@dimen/_5sdp</dimen>
+    <dimen name="form_icons_size">@dimen/_32sdp</dimen>
+    <dimen name="form_items_header_font_size">@dimen/_13ssp</dimen>
+    <dimen name="form_items_header_margin_start">@dimen/_15sdp</dimen>
+    <dimen name="form_items_item_font_size">@dimen/_10ssp</dimen>
+
+    <!--    Lists dimensions-->
+    <dimen name="recycler_layout_height_percent">.927</dimen>
+    <dimen name="search_field_margin_top">@dimen/_5sdp</dimen>
+    <dimen name="search_field_margin_bottom">@dimen/_5sdp</dimen>
+    <dimen name="list_item_content_margin">@dimen/_5sdp</dimen>
+
+
+    <!--    Cards elevation-->
+    <dimen name="card_normal_elevation">@dimen/_8sdp</dimen>
+    <dimen name="card_corner_radius">@dimen/_8sdp</dimen>
+    <dimen name="card_content_padding">@dimen/_5sdp</dimen>
+
+
+    <!--    Recyclers-->
+        <dimen name="recycler_placeholder_top_bottom_paddings">@dimen/_100sdp</dimen>
+
+
+</resources>

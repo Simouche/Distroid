@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.safesoft.safemobile.viewmodel.ProvidersViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/create_provider_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:drawableEnd="@drawable/ic_magic_wand"
+                android:hint="@string/code"
+                android:inputType="textNoSuggestions"
+                android:selectAllOnFocus="true"
+                android:text="@={viewModel.providerForm.fields.code}"
+                app:error="@{viewModel.providerForm.codeError}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent"
+                app:onFocus="@{viewModel.onFocusCode}" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/create_provider_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:hint="@string/name"
+                android:inputType="textNoSuggestions"
+                android:selectAllOnFocus="true"
+                android:text="@={viewModel.providerForm.fields.name}"
+                app:error="@{viewModel.providerForm.nameError}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_provider_code"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent" />
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/phones_and_faxes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_provider_name"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent">
+
+                <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                    android:id="@+id/phones"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_1sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/create_provider_name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/phone"
+                        android:inputType="phone"
+                        android:selectAllOnFocus="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+                <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                    android:id="@+id/faxes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_1sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/create_provider_name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fax"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/fax"
+                        android:inputType="phone"
+                        android:selectAllOnFocus="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/create_provider_website"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:hint="@string/website"
+                android:inputType="textNoSuggestions"
+                android:selectAllOnFocus="true"
+                android:text="@={viewModel.providerForm.fields.webSite}"
+                app:error="@{viewModel.providerForm.webSiteError}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/phones_and_faxes"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent" />
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/address_and_city"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:gravity="center"
+                android:padding="@dimen/_1sdp"
+                android:weightSum="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_provider_website"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/address"
+                    android:inputType="textMultiLine"
+                    android:selectAllOnFocus="true"
+                    android:text="@={viewModel.providerForm.fields.address}"
+                    app:error="@{viewModel.providerForm.addressError}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_provider_city"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/city"
+                    android:inputType="textNoSuggestions"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/create_provider_contact"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:hint="@string/contact"
+                android:inputType="textNoSuggestions"
+                android:selectAllOnFocus="true"
+                android:text="@={viewModel.providerForm.fields.contact}"
+                app:error="@{viewModel.providerForm.contactError}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/address_and_city"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent" />
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/ribs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_provider_contact"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/rib"
+                    android:inputType="number"
+                    android:selectAllOnFocus="true"
+                    android:text="@={viewModel.providerForm.fields.rib}"
+                    app:error="@{viewModel.providerForm.ribError}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/address_and_city"
+                    app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent" />
+
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/create_provider_activity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:hint="@string/activity"
+                android:inputType="textNoSuggestions"
+                android:selectAllOnFocus="true"
+                android:text="@={viewModel.providerForm.fields.activity}"
+                app:error="@{viewModel.providerForm.activityError}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ribs"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/create_provider_initial_sold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:hint="@string/initial_sold"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_provider_activity"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent" />
+
+            <com.safesoft.safemobile.ui.generics.CustomAutoCompleteTextView
+                android:id="@+id/create_provider_client"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:completionThreshold="1"
+                android:hint="@string/client"
+                android:inputType="text"
+                android:selectAllOnFocus="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_provider_initial_sold"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent" />
+
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/extra_infos_buttons"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:elevation="@dimen/_8sdp"
+                android:gravity="center"
+                android:weightSum="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_provider_client"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fiscal_infos_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.1"
+                    android:text="@string/add_fiscal_data"
+                    app:cornerRadius="@dimen/_8sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/localisation_button"
+                    android:layout_width="0dp"
+                    android:enabled="false"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:layout_weight="1.1"
+                    android:text="@string/localize"
+                    app:cornerRadius="@dimen/_8sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/extra_notes_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:layout_weight=".8"
+                    android:text="@string/notes"
+                    app:cornerRadius="@dimen/_8sdp" />
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_provider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/form_validation_button_margin"
+                android:enabled="@{viewModel.providerForm.valid}"
+                android:text="@string/save"
+                app:cornerRadius="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/extra_infos_buttons"
+                app:layout_constraintWidth_percent="@dimen/form_validation_button_width_percent" />
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/form_validation_button_margin"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/extra_infos_buttons" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

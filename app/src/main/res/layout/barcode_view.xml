@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/product_barcode_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:boxBackgroundColor="@color/transparent">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/product_barcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/barcode"
+        android:inputType="text"
+        android:selectAllOnFocus="true" />
+</com.google.android.material.textfield.TextInputLayout>
