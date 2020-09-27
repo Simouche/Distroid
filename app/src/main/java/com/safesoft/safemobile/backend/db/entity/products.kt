@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.backend.db.entity
 
 import androidx.room.*
+import com.safesoft.safemobile.backend.utils.calculatePercentageValue
 
 @Entity(
     tableName = "barcodes",
@@ -54,32 +55,85 @@ data class Products(
     @ColumnInfo(
         name = "SELL_PRICE_DETAIL_HT",
         defaultValue = "0"
-    ) val sellPriceDetailHT: Double? = null,
+    ) val sellPriceDetailHT: Double = 0.0,
     @ColumnInfo(
         name = "SELL_PRICE_WHOLE_HT",
         defaultValue = "0"
-    ) val sellPriceWholeHT: Double? = null,
+    ) val sellPriceWholeHT: Double = 0.0,
     @ColumnInfo(
         name = "SELL_PRICE_HAF_WHOLE_HT",
         defaultValue = "0"
-    ) val sellPriceHalfWholeHT: Double? = null,
+    ) val sellPriceHalfWholeHT: Double = 0.0,
     @ColumnInfo(
         name = "SELL_PRICE_DETAIL_TTC",
         defaultValue = "0"
-    ) val sellPriceDetailTTC: Double? = null,
+    ) val sellPriceDetailTTC: Double = 0.0,
     @ColumnInfo(
         name = "SELL_PRICE_WHOLE_TTC",
         defaultValue = "0"
-    ) val sellPriceWholeTTC: Double? = null,
+    ) val sellPriceWholeTTC: Double = 0.0,
     @ColumnInfo(
         name = "SELL_PRICE_HAF_WHOLE_TTC",
         defaultValue = "0"
-    ) val sellPriceHalfWholeTTC: Double? = null,
+    ) val sellPriceHalfWholeTTC: Double = 0.0,
     @ColumnInfo(name = "PHOTO") val photo: String? = null,
     @ColumnInfo(name = "QUANTITY_PER_PACKAGE") val quantityPerPackage: Long? = null,
-    @ColumnInfo(name = "PROMO", defaultValue = "0") val promotion: Double? = null,
+    @ColumnInfo(name = "PROMO", defaultValue = "0") val promotion: Double = 0.0,
+    @ColumnInfo(name = "PROMO_THRESHOLD", defaultValue = "1") val promotionThreshold: Int = 1,
     @ColumnInfo(name = "BRAND") val brand: Long? = null
 ) {
+
+    /**
+     * Calculates the sell price details with discount on the HT total
+     */
+    fun calculateSellPriceDOnHT(quantity: Double = 0.0): Double {
+        return (sellPriceDetailHT - if (promotion > 0.0 && quantity > promotionThreshold)
+            calculatePercentageValue(sellPriceDetailHT, promotion) else 0.0) * quantity
+    }
+
+    /**
+     * Calculates the sell price details with discount on the TTC total
+     */
+    fun calculateSellPriceDOnTTC(quantity:Double=0.0):Double{
+        return (sellPriceDetailTTC - if (promotion > 0.0 && quantity > promotionThreshold)
+            calculatePercentageValue(sellPriceDetailHT, promotion) else 0.0) * quantity
+    }
+
+    /**
+     * Calculates the sell price details with discount on the HT total
+     */
+    fun calculateSellPriceHWOnHT(quantity: Double = 0.0): Double {
+        return (sellPriceHalfWholeHT - if (promotion > 0.0 && quantity > promotionThreshold)
+            calculatePercentageValue(sellPriceDetailHT, promotion) else 0.0) * quantity
+    }
+
+    /**
+     * Calculates the sell price details with discount on the TTC total
+     */
+    fun calculateSellPriceHWOnTTC(quantity:Double=0.0):Double{
+        return (sellPriceHalfWholeTTC - if (promotion > 0.0 && quantity > promotionThreshold)
+            calculatePercentageValue(sellPriceDetailHT, promotion) else 0.0) * quantity
+    }
+
+
+    /**
+     * Calculates the sell price details with discount on the HT total
+     */
+    fun calculateSellPriceWOnHT(quantity: Double = 0.0): Double {
+        return (sellPriceWholeHT - if (promotion > 0.0 && quantity > promotionThreshold)
+            calculatePercentageValue(sellPriceDetailHT, promotion) else 0.0) * quantity
+    }
+
+    /**
+     * Calculates the sell price details with discount on the TTC total
+     */
+    fun calculateSellPriceWOnTTC(quantity:Double=0.0):Double{
+        return (sellPriceWholeTTC - if (promotion > 0.0 && quantity > promotionThreshold)
+            calculatePercentageValue(sellPriceDetailHT, promotion) else 0.0) * quantity
+    }
+
+//    fun getDiscount
+
 
     companion object {
         fun generateBarCode(): String {

@@ -25,13 +25,16 @@ data class Purchases(
     @ColumnInfo(name = "TVA") val tva: Double?,
     @ColumnInfo(name = "STAMP") val stamp: Double?,
     @ColumnInfo(name = "DISCOUNT") val discount: Double?,
-    @ColumnInfo(name = "REGLEMENT", defaultValue = "E") val reglement: String = "E",
+    @ColumnInfo(name = "REGLEMENT", defaultValue = "C") val reglement: String = "C",
     @ColumnInfo(name = "TOTAL_QUANTITY") val totalQuantity: Double?,
     @ColumnInfo(name = "NOTE") val note: String?,
     @ColumnInfo(name = "DONE", defaultValue = "0") val done: Boolean,
     @ColumnInfo(name = "PAYMENT", defaultValue = "0") val payment: Double = 0.0
 )
 
+/**
+ * total = quantity * productPriceDiscounted
+ */
 @Entity(
     tableName = "purchase_lines",
     foreignKeys = [ForeignKey(
@@ -56,14 +59,16 @@ data class PurchaseLines(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "PRODUCT") val product: Long,
     @ColumnInfo(name = "QUANTITY") val quantity: Double?,
-    @ColumnInfo(name = "BUY_PRICE_HT") val totalBuyPriceHT: Double=0.0,
-    @ColumnInfo(name = "BUY_PRICE_TTC") val totalBuyPriceTTC: Double=0.0,
-    @ColumnInfo(name = "TVA") val tva: Double?,
+    @ColumnInfo(name = "BUY_PRICE_HT") val totalBuyPriceHT: Double = 0.0,
+    @ColumnInfo(name = "DISCOUNT") val discount: Double = 0.0,
+    @ColumnInfo(name = "BUY_PRICE_TTC") val totalBuyPriceTTC: Double = 0.0,
+    @ColumnInfo(name = "TVA") val tva: Double = 0.0,
     @ColumnInfo(name = "NOTE") val note: String?,
     @ColumnInfo(name = "PURCHASE") val purchase: Long,
 ) {
     @Ignore
     var selectedProduct: AllAboutAProduct? = null
+
 }
 
 data class PurchaseWithLines(
@@ -128,8 +133,9 @@ data class SaleLines(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "PRODUCT") val product: Long,
     @ColumnInfo(name = "QUANTITY") val quantity: Double?,
-    @ColumnInfo(name = "BUY_PRICE_HT") val totalBuyPriceHT: Double=0.0,
-    @ColumnInfo(name = "BUY_PRICE_TTC") val totalBuyPriceTTC: Double=0.0,
+    @ColumnInfo(name = "BUY_PRICE_HT") val totalBuyPriceHT: Double = 0.0,
+    @ColumnInfo(name = "DISCOUNT") val discount: Double = 0.0,
+    @ColumnInfo(name = "BUY_PRICE_TTC") val totalBuyPriceTTC: Double = 0.0,
     @ColumnInfo(name = "TVA") val tva: Double?,
     @ColumnInfo(name = "NOTE") val note: String?,
     @ColumnInfo(name = "SALE") val sale: Long,
@@ -137,6 +143,43 @@ data class SaleLines(
     @Ignore
     var selectedProduct: AllAboutAProduct? = null
 }
+
+@Entity(
+    tableName = "client_payments",
+    foreignKeys = [ForeignKey(
+        entity = Clients::class,
+        parentColumns = arrayOf("CLIENT_ID"),
+        childColumns = arrayOf("CLIENT"),
+        onUpdate = ForeignKey.CASCADE,
+        onDelete = ForeignKey.CASCADE
+    )]
+)
+data class ClientPayments(
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "ID") val id: Long,
+    @ColumnInfo(name = "AMOUNT") val amount: Double,
+    @ColumnInfo(name = "CLIENT") val client: Long,
+    @ColumnInfo(name = "DATE") val date: String,
+    @ColumnInfo(name = "NOTE") val note: String
+)
+
+@Entity(
+    tableName = "provider_payments",
+    foreignKeys = [ForeignKey(
+        entity = Providers::class,
+        parentColumns = arrayOf("PROVIDER_ID"),
+        childColumns = arrayOf("PROVIDER"),
+        onUpdate = ForeignKey.CASCADE,
+        onDelete = ForeignKey.CASCADE
+    )]
+)
+data class ProviderPayments(
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "ID") val id: Long,
+    @ColumnInfo(name = "AMOUNT") val amount: Double,
+    @ColumnInfo(name = "PROVIDER") val provider: Long,
+    @ColumnInfo(name = "DATE") val date: String,
+    @ColumnInfo(name = "NOTE") val note: String
+)
+
 
 
 // TODO: 9/20/2020 make the fucking sales!

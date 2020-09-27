@@ -154,4 +154,8 @@
     <string name="add_discount">Add discount</string>
     <string name="amount">Amount</string>
     <string name="create_sale">Create sale</string>
+    <string name="total_amount">Total Amount: %s DZD</string>
+    <string name="payment">Payment</string>
+    <string name="rest">Rest</string>
+    <string name="purchase_added">Purchase Added successfully</string>
 </resources>

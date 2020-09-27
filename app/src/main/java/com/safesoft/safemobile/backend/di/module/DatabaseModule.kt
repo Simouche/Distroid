@@ -42,6 +42,12 @@ class DatabaseModule {
                     db.execSQL("INSERT INTO barcodes (CODE,PRODUCT) VALUES (${Products.generateBarCode()},$i);")
                 }
 
+                db.execSQL("CREATE TRIGGER IF NOT EXISTS PURCHASE_INSERT_TRIGGER " +
+                        "AFTER INSERT ON purchases WHEN (new.PAYMENT < new.TOTAL_TTC) AND NOT new.DONE" +
+                        " BEGIN  UPDATE providers SET SOLD = SOLD + (new.TOTAL_TTC - new.PAYMENT)" +
+                        " WHERE PROVIDER_ID = new.PROVIDER;" +
+                        " END")
+//                db.execSQL("")
             }
         }
 
@@ -69,6 +75,7 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun providePurchasesDao(db: SafeDatabase): PurchasesDao = db.purchaseDao()
+
     @Provides
     @Singleton
     fun provideSalesDao(db: SafeDatabase): SalesDao = db.salesDao()

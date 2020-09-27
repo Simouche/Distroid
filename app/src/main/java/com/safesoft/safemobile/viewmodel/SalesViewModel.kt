@@ -13,6 +13,12 @@ import com.safesoft.safemobile.backend.utils.getCurrentDateTime
 import com.safesoft.safemobile.forms.SalesForm
 import com.safesoft.safemobile.ui.products.ProductCalculator
 
+/**
+ * Sales ViewModel
+ * Works with @see com.safesoft.safemobile.ui.sales.SalesListFragment and com.safesoft.safemobile.ui.sales.CreateSaleFragment
+ * Process of calculations:
+ * Each product has 3 prices,
+ */
 class SalesViewModel @ViewModelInject constructor(
     private val salesRepository: SalesRepository,
     private val config: PagedList.Config,
@@ -64,6 +70,7 @@ class SalesViewModel @ViewModelInject constructor(
             ),
             sale = 0,
             note = null,
+            tva = 0.0
         ).apply { selectedProduct = product }
 
         invoice.value =

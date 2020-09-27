@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ae8db5985745dfeb87c9fb9becdfabcd",
+    "identityHash": "09ecd817d6d3ff44b4f100727e48bbfd",
     "entities": [
       {
         "tableName": "users",
@@ -101,7 +101,7 @@
       },
       {
         "tableName": "purchases",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `PURCHASE_NUMBER` TEXT, `INVOICE_NUMBER` TEXT, `DATE` TEXT, `PROVIDER` INTEGER, `PRODUCTS_COUNT` INTEGER, `TOTAL_HT` REAL, `TOTAL_TTC` REAL, `TVA` REAL, `STAMP` REAL, `DISCOUNT` REAL, `REGLEMENT` TEXT NOT NULL DEFAULT 'E', `TOTAL_QUANTITY` REAL, `NOTE` TEXT, `DONE` INTEGER NOT NULL DEFAULT 0, `PAYMENT` REAL NOT NULL DEFAULT 0, FOREIGN KEY(`PROVIDER`) REFERENCES `providers`(`PROVIDER_ID`) ON UPDATE CASCADE ON DELETE RESTRICT )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `PURCHASE_NUMBER` TEXT, `INVOICE_NUMBER` TEXT, `DATE` TEXT, `PROVIDER` INTEGER, `PRODUCTS_COUNT` INTEGER, `TOTAL_HT` REAL, `TOTAL_TTC` REAL, `TVA` REAL, `STAMP` REAL, `DISCOUNT` REAL, `REGLEMENT` TEXT NOT NULL DEFAULT 'C', `TOTAL_QUANTITY` REAL, `NOTE` TEXT, `DONE` INTEGER NOT NULL DEFAULT 0, `PAYMENT` REAL NOT NULL DEFAULT 0, FOREIGN KEY(`PROVIDER`) REFERENCES `providers`(`PROVIDER_ID`) ON UPDATE CASCADE ON DELETE RESTRICT )",
         "fields": [
           {
             "fieldPath": "id",
@@ -174,7 +174,7 @@
             "columnName": "REGLEMENT",
             "affinity": "TEXT",
             "notNull": true,
-            "defaultValue": "'E'"
+            "defaultValue": "'C'"
           },
           {
             "fieldPath": "totalQuantity",
@@ -369,7 +369,7 @@
       },
       {
         "tableName": "purchase_lines",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `PRODUCT` INTEGER NOT NULL, `QUANTITY` REAL, `BUY_PRICE_HT` REAL NOT NULL, `BUY_PRICE_TTC` REAL NOT NULL, `TVA` REAL, `NOTE` TEXT, `PURCHASE` INTEGER NOT NULL, FOREIGN KEY(`PURCHASE`) REFERENCES `purchases`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`PRODUCT`) REFERENCES `products`(`PRODUCT_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `PRODUCT` INTEGER NOT NULL, `QUANTITY` REAL, `BUY_PRICE_HT` REAL NOT NULL, `DISCOUNT` REAL NOT NULL, `BUY_PRICE_TTC` REAL NOT NULL, `TVA` REAL NOT NULL, `NOTE` TEXT, `PURCHASE` INTEGER NOT NULL, FOREIGN KEY(`PURCHASE`) REFERENCES `purchases`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`PRODUCT`) REFERENCES `products`(`PRODUCT_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -396,6 +396,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "discount",
+            "columnName": "DISCOUNT",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
             "fieldPath": "totalBuyPriceTTC",
             "columnName": "BUY_PRICE_TTC",
             "affinity": "REAL",
@@ -405,7 +411,7 @@
             "fieldPath": "tva",
             "columnName": "TVA",
             "affinity": "REAL",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "note",
@@ -471,7 +477,7 @@
       },
       {
         "tableName": "providers",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`PROVIDER_ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `CODE` TEXT NOT NULL, `NAME` TEXT, `ACTIVITY` TEXT, `ADDRESS` TEXT, `COMMUNE` INTEGER, `CONTACT` TEXT, `PHONES` TEXT, `FAXES` TEXT, `RIB` TEXT, `WEBSITE` TEXT, `INITIAL_SOLD` REAL DEFAULT 0, `NOTE` TEXT, `CLIENT` INTEGER, `REGISTRE_COMMERCE` TEXT, `ARTCILE_FISCALE` TEXT, `IDENTIFIANT_FISCALE` TEXT, `IDENTIFIANT_STATISTIQUE` TEXT, `LONGITUDE` REAL, `LATITUDE` REAL, FOREIGN KEY(`CLIENT`) REFERENCES `clients`(`CLIENT_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`PROVIDER_ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `CODE` TEXT NOT NULL, `NAME` TEXT, `ACTIVITY` TEXT, `ADDRESS` TEXT, `COMMUNE` INTEGER, `CONTACT` TEXT, `PHONES` TEXT, `FAXES` TEXT, `RIB` TEXT, `WEBSITE` TEXT, `SOLD` REAL DEFAULT 0, `NOTE` TEXT, `CLIENT` INTEGER, `REGISTRE_COMMERCE` TEXT, `ARTCILE_FISCALE` TEXT, `IDENTIFIANT_FISCALE` TEXT, `IDENTIFIANT_STATISTIQUE` TEXT, `LONGITUDE` REAL, `LATITUDE` REAL, FOREIGN KEY(`CLIENT`) REFERENCES `clients`(`CLIENT_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -540,8 +546,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "initialSold",
-            "columnName": "INITIAL_SOLD",
+            "fieldPath": "sold",
+            "columnName": "SOLD",
             "affinity": "REAL",
             "notNull": false,
             "defaultValue": "0"
@@ -696,7 +702,7 @@
       },
       {
         "tableName": "products",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`PRODUCT_ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `REFERENCE` TEXT NOT NULL, `DESIGNATION` TEXT NOT NULL, `QUANTITY` REAL DEFAULT 0, `PURCHASE_PRICE_HT` REAL DEFAULT 0, `TVA` REAL DEFAULT 19, `PURCHASE_PRICE_TTC` REAL DEFAULT 0, `STEADY_PURCHASE_PRICE_HT` REAL DEFAULT 0, `STEADY_PURCHASE_PRICE_TTC` REAL DEFAULT 0, `MARGE` REAL, `SELL_PRICE_DETAIL_HT` REAL DEFAULT 0, `SELL_PRICE_WHOLE_HT` REAL DEFAULT 0, `SELL_PRICE_HAF_WHOLE_HT` REAL DEFAULT 0, `SELL_PRICE_DETAIL_TTC` REAL DEFAULT 0, `SELL_PRICE_WHOLE_TTC` REAL DEFAULT 0, `SELL_PRICE_HAF_WHOLE_TTC` REAL DEFAULT 0, `PHOTO` TEXT, `QUANTITY_PER_PACKAGE` INTEGER, `PROMO` REAL DEFAULT 0, `BRAND` INTEGER, FOREIGN KEY(`BRAND`) REFERENCES `brands`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`PRODUCT_ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `REFERENCE` TEXT NOT NULL, `DESIGNATION` TEXT NOT NULL, `QUANTITY` REAL DEFAULT 0, `PURCHASE_PRICE_HT` REAL DEFAULT 0, `TVA` REAL DEFAULT 19, `PURCHASE_PRICE_TTC` REAL DEFAULT 0, `STEADY_PURCHASE_PRICE_HT` REAL DEFAULT 0, `STEADY_PURCHASE_PRICE_TTC` REAL DEFAULT 0, `MARGE` REAL, `SELL_PRICE_DETAIL_HT` REAL NOT NULL DEFAULT 0, `SELL_PRICE_WHOLE_HT` REAL NOT NULL DEFAULT 0, `SELL_PRICE_HAF_WHOLE_HT` REAL NOT NULL DEFAULT 0, `SELL_PRICE_DETAIL_TTC` REAL NOT NULL DEFAULT 0, `SELL_PRICE_WHOLE_TTC` REAL NOT NULL DEFAULT 0, `SELL_PRICE_HAF_WHOLE_TTC` REAL NOT NULL DEFAULT 0, `PHOTO` TEXT, `QUANTITY_PER_PACKAGE` INTEGER, `PROMO` REAL NOT NULL DEFAULT 0, `PROMO_THRESHOLD` INTEGER NOT NULL DEFAULT 1, `BRAND` INTEGER, FOREIGN KEY(`BRAND`) REFERENCES `brands`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -768,42 +774,42 @@
             "fieldPath": "sellPriceDetailHT",
             "columnName": "SELL_PRICE_DETAIL_HT",
             "affinity": "REAL",
-            "notNull": false,
+            "notNull": true,
             "defaultValue": "0"
           },
           {
             "fieldPath": "sellPriceWholeHT",
             "columnName": "SELL_PRICE_WHOLE_HT",
             "affinity": "REAL",
-            "notNull": false,
+            "notNull": true,
             "defaultValue": "0"
           },
           {
             "fieldPath": "sellPriceHalfWholeHT",
             "columnName": "SELL_PRICE_HAF_WHOLE_HT",
             "affinity": "REAL",
-            "notNull": false,
+            "notNull": true,
             "defaultValue": "0"
           },
           {
             "fieldPath": "sellPriceDetailTTC",
             "columnName": "SELL_PRICE_DETAIL_TTC",
             "affinity": "REAL",
-            "notNull": false,
+            "notNull": true,
             "defaultValue": "0"
           },
           {
             "fieldPath": "sellPriceWholeTTC",
             "columnName": "SELL_PRICE_WHOLE_TTC",
             "affinity": "REAL",
-            "notNull": false,
+            "notNull": true,
             "defaultValue": "0"
           },
           {
             "fieldPath": "sellPriceHalfWholeTTC",
             "columnName": "SELL_PRICE_HAF_WHOLE_TTC",
             "affinity": "REAL",
-            "notNull": false,
+            "notNull": true,
             "defaultValue": "0"
           },
           {
@@ -822,8 +828,15 @@
             "fieldPath": "promotion",
             "columnName": "PROMO",
             "affinity": "REAL",
-            "notNull": false,
+            "notNull": true,
             "defaultValue": "0"
+          },
+          {
+            "fieldPath": "promotionThreshold",
+            "columnName": "PROMO_THRESHOLD",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
           },
           {
             "fieldPath": "brand",
@@ -1187,12 +1200,124 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "client_payments",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `AMOUNT` REAL NOT NULL, `CLIENT` INTEGER NOT NULL, `DATE` TEXT NOT NULL, `NOTE` TEXT NOT NULL, FOREIGN KEY(`CLIENT`) REFERENCES `clients`(`CLIENT_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "AMOUNT",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "client",
+            "columnName": "CLIENT",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "DATE",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "NOTE",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "ID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "clients",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "CLIENT"
+            ],
+            "referencedColumns": [
+              "CLIENT_ID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "provider_payments",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `AMOUNT` REAL NOT NULL, `PROVIDER` INTEGER NOT NULL, `DATE` TEXT NOT NULL, `NOTE` TEXT NOT NULL, FOREIGN KEY(`PROVIDER`) REFERENCES `providers`(`PROVIDER_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "AMOUNT",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "provider",
+            "columnName": "PROVIDER",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "DATE",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "NOTE",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "ID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "providers",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "PROVIDER"
+            ],
+            "referencedColumns": [
+              "PROVIDER_ID"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ae8db5985745dfeb87c9fb9becdfabcd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '09ecd817d6d3ff44b4f100727e48bbfd')"
     ]
   }
 }

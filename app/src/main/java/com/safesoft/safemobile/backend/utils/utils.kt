@@ -19,3 +19,15 @@ fun getCurrentDateTime(): String {
     }
     return theDate
 }
+
+
+fun calculatePercentageDiff(price1: Double, price2: Double): Double =
+    (price1 / price2 - 1) * 100.0
+
+fun calculatePercentageValue(price: Double, percentage: Double): Double = price * percentage / 100.0
+
+fun calculateNewPrice(price: Double, percentage: Double): Double =
+    price + calculatePercentageValue(price, percentage)
+
+
+

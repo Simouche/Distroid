@@ -93,14 +93,14 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_5sdp"
                     android:hint="@string/sell_price_ht"
-                    android:text="@{product.product.sellPriceDetailHT.toString()}" />
+                    android:text="@{String.valueOf(product.product.sellPriceDetailHT)}" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_5sdp"
                     android:hint="@string/sell_price_ttc"
-                    android:text="@{product.product.sellPriceDetailTTC.toString()}" />
+                    android:text="@{String.valueOf(product.product.sellPriceDetailTTC)}" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"

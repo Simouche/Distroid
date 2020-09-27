@@ -87,6 +87,20 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/discount_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:text="@string/total_discount_sum"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/form_items_header_font_size"
+                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
@@ -106,17 +120,6 @@
                             app:layout_constraintStart_toStartOf="@id/delete_header_text"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:text="@string/total_discount_sum"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/form_items_header_font_size"
-                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
-                            app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
@@ -149,6 +152,19 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/total_discount_footer_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:text="@{@string/money_place_holder(viewModel.invoice.discount)}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/form_items_header_font_size"
+                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/total_tva_footer_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -170,18 +186,7 @@
                             app:layout_constraintStart_toStartOf="@id/delete_header_text"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/total_discount_footer_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:text="@{@string/money_place_holder(viewModel.invoice.discount)}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/form_items_header_font_size"
-                            app:layout_constraintStart_toStartOf="@id/delete_header_text"
-                            app:layout_constraintTop_toTopOf="parent" />
+
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/total_ttc_footer_text"

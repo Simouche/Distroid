@@ -9,6 +9,7 @@ import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
 import com.safesoft.safemobile.backend.db.entity.PurchaseLines
 import com.safesoft.safemobile.backend.db.entity.Purchases
 import com.safesoft.safemobile.backend.repository.PurchasesRepository
+import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.backend.utils.getCurrentDateTime
 import com.safesoft.safemobile.forms.PurchaseForm
 import com.safesoft.safemobile.ui.products.ProductCalculator
@@ -20,6 +21,17 @@ class PurchasesViewModel @ViewModelInject constructor(
     val purchaseForm: PurchaseForm
 ) : BaseViewModel(), ProductCalculator {
 
+
+    var paymentType: String = "C"
+        set(value) {
+            invoice.value =
+                invoice.value?.copy(reglement = value)
+        }
+
+    var provider: Long = 0
+        set(value) {
+            invoice.value = invoice.value!!.copy(provider = value)
+        }
 
     val invoice = MutableLiveData<Purchases>().apply {
         value = Purchases(
@@ -34,13 +46,13 @@ class PurchasesViewModel @ViewModelInject constructor(
             0.0,
             0.0,
             0.0,
-            "E",
+            "C",
             0.0,
             "",
             false,
             0.0
         )
-    };
+    }
 
     val purchasesList: LiveData<PagedList<Purchases>> =
         purchasesRepository.getAllPurchases().toLiveData(config = config)
@@ -52,13 +64,13 @@ class PurchasesViewModel @ViewModelInject constructor(
         val line = PurchaseLines(
             id = 0,
             product = product?.product?.id ?: 0,
-            quantity,
-            quantity * (product?.product?.purchasePriceHT ?: 0.0),
-            calculateNewPrice(
+            quantity = quantity,
+            totalBuyPriceHT = quantity * (product?.product?.purchasePriceHT ?: 0.0),
+            totalBuyPriceTTC = calculateNewPrice(
                 quantity * (product?.product?.purchasePriceHT ?: 0.0),
                 product?.product?.tva ?: 0.0
             ),
-            calculatePercentage(
+            tva = calculatePercentage(
                 quantity * (product?.product?.purchasePriceHT ?: 0.0),
                 product?.product?.tva ?: 0.0
             ),
@@ -70,7 +82,7 @@ class PurchasesViewModel @ViewModelInject constructor(
             invoice.value?.copy(
                 totalHT = (invoice.value?.totalHT!! + line.totalBuyPriceHT),
                 productsCount = invoice.value?.productsCount!! + 1,
-                tva = invoice.value?.tva!! + line.tva!!,
+                tva = invoice.value?.tva!! + line.tva,
                 totalTTC = invoice.value?.totalTTC!! + line.totalBuyPriceTTC,
             )
 
@@ -82,28 +94,40 @@ class PurchasesViewModel @ViewModelInject constructor(
             invoice.value?.copy(
                 totalHT = (invoice.value?.totalHT!! - line.totalBuyPriceHT),
                 productsCount = invoice.value?.productsCount!! - 1,
-                tva = invoice.value?.tva!! - line.tva!!,
+                tva = invoice.value?.tva!! - line.tva,
                 totalTTC = invoice.value?.totalTTC!! - line.totalBuyPriceTTC,
             )
     }
 
-    fun saveInvoice(lines: List<PurchaseLines>) {
+    fun saveInvoice(): LiveData<Resource<Long>> {
+        val data = MutableLiveData<Resource<Long>>()
 
+        enqueue(purchasesRepository.insertNewPurchase(invoice.value!!), data)
+        return data
+    }
+
+    fun saveLines(lines: List<PurchaseLines>): LiveData<Resource<List<Long>>> {
+        val data = MutableLiveData<Resource<List<Long>>>()
+        enqueue(purchasesRepository.insertPurchaseLines(*lines.toTypedArray()), data)
+        return data
     }
 
     fun setStamp() {
         invoice.value =
             invoice.value?.copy(
-                stamp = calculateNewPrice(
-                    invoice.value?.totalHT ?: 0.0,
-                    1.0
-                )
+                stamp = calculateStamp(
+                    ((invoice.value?.totalHT ?: 0.0) + (invoice.value?.tva ?: 0.0))
+                ),
+                totalTTC = calculateStamp(
+                    ((invoice.value?.totalHT ?: 0.0) + (invoice.value?.tva ?: 0.0)),
+                ) + invoice.value!!.totalTTC!!
             )
     }
 
     fun removeStamp() {
         invoice.value =
             invoice.value?.copy(
+                totalTTC = invoice.value!!.totalTTC!! - invoice.value!!.stamp!!,
                 stamp = 0.0
             )
     }
@@ -116,6 +140,11 @@ class PurchasesViewModel @ViewModelInject constructor(
             ),
 //            totalTTC = calculateNewPrice(invoice.value?.total)
         )
+    }
+
+    fun setPayment(amount: Double) {
+        invoice.value =
+            invoice.value?.copy(payment = amount, done = amount == invoice.value!!.totalTTC)
     }
 
 }

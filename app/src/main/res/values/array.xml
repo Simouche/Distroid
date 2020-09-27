@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="payment_types">
+        <item>CASH</item>
+        <item>TERM</item>
+        <item>CHECK</item>
+        <item>BANK TRANSACTION</item>
+        <item>BANK TRANSFER</item>
+    </string-array>
+</resources>

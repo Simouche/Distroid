@@ -101,14 +101,14 @@ class ProductsViewModel @ViewModelInject constructor(
             tva = fields.tva.value?.doubleValue(),
             purchasePriceTTC = fields.purchasePriceTTC.value?.doubleValue(),
             marge = fields.marge.value?.doubleValue(),
-            sellPriceDetailHT = fields.sellPriceDetailHT.value?.doubleValue(),
-            sellPriceDetailTTC = fields.sellPriceDetailTTC.value?.doubleValue(),
-            sellPriceWholeHT = fields.sellPriceWholeHT.value?.doubleValue(),
-            sellPriceWholeTTC = fields.sellPriceWholeTTC.value?.doubleValue(),
-            sellPriceHalfWholeHT = fields.sellPrice3HT.value?.doubleValue(),
-            sellPriceHalfWholeTTC = fields.sellPrice3TTC.value?.doubleValue(),
+            sellPriceDetailHT = fields.sellPriceDetailHT.value?.doubleValue() ?: 0.0,
+            sellPriceDetailTTC = fields.sellPriceDetailTTC.value?.doubleValue()?:0.0,
+            sellPriceWholeHT = fields.sellPriceWholeHT.value?.doubleValue()?:0.0,
+            sellPriceWholeTTC = fields.sellPriceWholeTTC.value?.doubleValue()?:0.0,
+            sellPriceHalfWholeHT = fields.sellPrice3HT.value?.doubleValue()?:0.0,
+            sellPriceHalfWholeTTC = fields.sellPrice3TTC.value?.doubleValue()?:0.0,
             brand = fields.brand.value,
-            promotion = fields.promotion.value?.toDouble(),
+            promotion = fields.promotion.value?.toDouble() ?: 0.0,
             photo = fields.photo.value
         )
         return saveProduct(product)
