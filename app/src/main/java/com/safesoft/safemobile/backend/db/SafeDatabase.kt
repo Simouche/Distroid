@@ -6,7 +6,7 @@ import com.safesoft.safemobile.backend.db.dao.*
 import com.safesoft.safemobile.backend.db.entity.*
 
 @Database(
-    entities = [Users::class, Purchases::class, Sales::class, PurchaseLines::class,
+    entities = [Users::class, Purchases::class, Sales::class, PurchaseLines::class, SaleLines::class,
         Providers::class, Barcodes::class, Products::class, ExpirationDates::class, Brands::class,
         ProductProviderCrossRef::class, Clients::class, ClientPayments::class, ProviderPayments::class],
     version = 1

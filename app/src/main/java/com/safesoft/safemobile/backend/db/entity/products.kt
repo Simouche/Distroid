@@ -94,7 +94,7 @@ data class Products(
     /**
      * Calculates the sell price details with discount on the TTC total
      */
-    fun calculateSellPriceDOnTTC(quantity:Double=0.0):Double{
+    fun calculateSellPriceDOnTTC(quantity: Double = 0.0): Double {
         return (sellPriceDetailTTC - if (promotion > 0.0 && quantity > promotionThreshold)
             calculatePercentageValue(sellPriceDetailHT, promotion) else 0.0) * quantity
     }
@@ -110,7 +110,7 @@ data class Products(
     /**
      * Calculates the sell price details with discount on the TTC total
      */
-    fun calculateSellPriceHWOnTTC(quantity:Double=0.0):Double{
+    fun calculateSellPriceHWOnTTC(quantity: Double = 0.0): Double {
         return (sellPriceHalfWholeTTC - if (promotion > 0.0 && quantity > promotionThreshold)
             calculatePercentageValue(sellPriceDetailHT, promotion) else 0.0) * quantity
     }
@@ -127,12 +127,12 @@ data class Products(
     /**
      * Calculates the sell price details with discount on the TTC total
      */
-    fun calculateSellPriceWOnTTC(quantity:Double=0.0):Double{
+    fun calculateSellPriceWOnTTC(quantity: Double = 0.0): Double {
         return (sellPriceWholeTTC - if (promotion > 0.0 && quantity > promotionThreshold)
             calculatePercentageValue(sellPriceDetailHT, promotion) else 0.0) * quantity
     }
 
-//    fun getDiscount
+    fun getDiscountAmountOnDHT(): Double = calculatePercentageValue(sellPriceDetailHT, promotion)
 
 
     companion object {

@@ -118,7 +118,7 @@
             </androidx.core.widget.NestedScrollView>
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/validate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

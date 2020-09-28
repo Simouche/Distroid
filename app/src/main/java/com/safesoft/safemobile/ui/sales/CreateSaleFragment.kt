@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.AdapterView
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -18,8 +19,10 @@ import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
 import com.safesoft.safemobile.backend.db.entity.Clients
 import com.safesoft.safemobile.backend.utils.doubleValue
+import com.safesoft.safemobile.backend.utils.formatted
 import com.safesoft.safemobile.databinding.DialogDiscountInputSaleBinding
 import com.safesoft.safemobile.databinding.FragmentCreateSaleBinding
+import com.safesoft.safemobile.databinding.InvoiceConfirmationDialogBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
 import com.safesoft.safemobile.ui.generics.adapter.GenericSpinnerAdapter
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener
@@ -45,7 +48,6 @@ class CreateSaleFragment : BaseFragment() {
     @Inject
     lateinit var recyclerAdapter: SaleLinesRecyclerAdapter
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,6 +65,7 @@ class CreateSaleFragment : BaseFragment() {
         binding.selectedProductsList.adapter = recyclerAdapter
         binding.footer.viewModel = viewModel
         binding.footer.lifecycleOwner = viewLifecycleOwner
+        binding.validate.setOnClickListener { showValidationDialog() }
         setUpProductSearch()
         setUpClientSearch()
     }
@@ -84,6 +87,7 @@ class CreateSaleFragment : BaseFragment() {
         binding.saleSelectClient.setOnItemClickListener { _, _, i, _ ->
             Log.d(TAG, "setUpProviderSearch: ")
             viewModel.salesForm.fields.client.value = adapter.getItem(i)?.id
+            viewModel.client = adapter.getItem(i)!!.id
         }
         binding.saleSelectClient.onTextChanged { s ->
             clientsViewModel.searchFlow(s).observe(viewLifecycleOwner, Observer {
@@ -170,5 +174,79 @@ class CreateSaleFragment : BaseFragment() {
         fBinding.closeDiscountAmount.setOnClickListener { dialog.dismiss() }
     }
 
+    private fun showValidationDialog() {
+        Log.d(TAG, "Show Dialog Clicked!")
+        val fBinding: InvoiceConfirmationDialogBinding = DataBindingUtil
+            .inflate(
+                LayoutInflater.from(context),
+                R.layout.invoice_confirmation_dialog,
+                null,
+                false
+            )
+        val dialog =
+            AlertDialog.Builder(requireContext()).setView(fBinding.root).setCancelable(true)
+                .create()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+        fBinding.totalAmoutTextView.text = getString(
+            R.string.total_amount,
+            viewModel.invoice.value?.totalTTC?.formatted()
+        )
+        fBinding.cashRest.setText(viewModel.invoice.value?.totalTTC?.formatted())
+        fBinding.cashRest.isEnabled = false
+        fBinding.paymentType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                fBinding.cashPayment.isEnabled = p2 == 0
+                viewModel.paymentType = when (p2) {
+                    0 -> "C"
+                    1 -> "T"
+                    else -> "C"
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                Log.d(TAG, "onNothingSelected: nothing selected")
+            }
+        }
+        fBinding.cashPayment.setText(0.0.formatted())
+        fBinding.cashPayment.onTextChanged { s ->
+            if (fBinding.cashPayment.isFocused) {
+                fBinding.cashRest.setText((viewModel.invoice.value!!.totalTTC!! - s.doubleValue()).formatted())
+                viewModel.setPayment(s.doubleValue())
+            }
+        }
+
+        fBinding.invoiceConfirmationDialogConfirmationButton.setOnClickListener {
+            saveInvoice()
+            dialog.dismiss()
+        }
+    }
+
+    private fun saveInvoice() {
+        viewModel.saveInvoice().observe(viewLifecycleOwner, Observer {
+            when (it.state) {
+                loading -> return@Observer
+                success -> saveLines(invoice = it.data!!)
+                error -> {
+                    it.exception?.printStackTrace()
+                    toast(R.string.unkown_error)
+                }
+            }
+        })
+    }
+
+    private fun saveLines(invoice: Long) {
+        val items = recyclerAdapter.items.map { it.copy(sale = invoice) }
+        viewModel.saveLines(items).observe(viewLifecycleOwner, Observer {
+            when (it.state) {
+                loading -> return@Observer
+                success -> toast(R.string.purchase_added)
+                error -> {
+                    it.exception?.printStackTrace()
+                    toast(R.string.unkown_error)
+                }
+            }
+        })
+    }
 
 }

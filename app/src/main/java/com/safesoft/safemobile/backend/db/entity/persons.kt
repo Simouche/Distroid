@@ -107,7 +107,7 @@ data class Clients(
     @ColumnInfo(name = "FAXES") val faxes: String? = null,
     @ColumnInfo(name = "RIB") val rib: String? = null,
     @ColumnInfo(name = "WEBSITE") val webSite: String? = null,
-    @ColumnInfo(name = "INITIAL_SOLD", defaultValue = "0") val initialSold: Double? = null,
+    @ColumnInfo(name = "SOLD", defaultValue = "0") val sold: Double? = null,
     @ColumnInfo(name = "NOTE") val note: String? = null,
     @ColumnInfo(name = "PROVIDER") val provider: Long? = null,
     @Embedded val fiscalData: FiscalData? = null,

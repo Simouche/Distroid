@@ -79,6 +79,18 @@ data class PurchaseWithLines(
     ) val lines: List<PurchaseLines>
 )
 
+data class AllAboutAPurchase(
+    @Embedded val purchase: Purchases,
+    @Relation(
+        parentColumn = "PURCHASE_ID",
+        entityColumn = "PURCHASE"
+    ) val purchaseLines: List<PurchaseLines>,
+    @Relation(
+        parentColumn = "PROVIDER",
+        entityColumn = "PROVIDER_ID"
+    ) val provider: Providers
+)
+
 @Entity(
     tableName = "sales",
     foreignKeys = [ForeignKey(
@@ -94,7 +106,7 @@ data class Sales(
     @ColumnInfo(name = "SALE_NUMBER") val purchaseNumber: String?,
     @ColumnInfo(name = "INVOICE_NUMBER") val invoiceNumber: String?,
     @ColumnInfo(name = "DATE") val date: String?,
-    @ColumnInfo(name = "CLIENT") val provider: Long?,
+    @ColumnInfo(name = "CLIENT") val client: Long?,
     @ColumnInfo(name = "PRODUCTS_COUNT") val productsCount: Int?,
     @ColumnInfo(name = "TOTAL_HT") val totalHT: Double?,
     @ColumnInfo(name = "TOTAL_TTC") val totalTTC: Double?,
@@ -124,7 +136,7 @@ data class Sales(
         onDelete = ForeignKey.CASCADE,
         onUpdate = ForeignKey.CASCADE
     )],
-    indices = [Index(value = ["PURCHASE"], unique = false), Index(
+    indices = [Index(value = ["SALE"], unique = false), Index(
         value = ["PRODUCT"],
         unique = false
     )]
@@ -133,16 +145,29 @@ data class SaleLines(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "PRODUCT") val product: Long,
     @ColumnInfo(name = "QUANTITY") val quantity: Double?,
-    @ColumnInfo(name = "BUY_PRICE_HT") val totalBuyPriceHT: Double = 0.0,
+    @ColumnInfo(name = "SELL_PRICE_HT") val totalSellPriceHT: Double = 0.0,
     @ColumnInfo(name = "DISCOUNT") val discount: Double = 0.0,
-    @ColumnInfo(name = "BUY_PRICE_TTC") val totalBuyPriceTTC: Double = 0.0,
     @ColumnInfo(name = "TVA") val tva: Double?,
+    @ColumnInfo(name = "SELL_PRICE_TTC") val totalSellPriceTTC: Double = 0.0,
     @ColumnInfo(name = "NOTE") val note: String?,
     @ColumnInfo(name = "SALE") val sale: Long,
 ) {
     @Ignore
     var selectedProduct: AllAboutAProduct? = null
 }
+
+data class AllAboutASale(
+    @Embedded val sale: Sales,
+    @Relation(
+        parentColumn = "SALE_ID",
+        entityColumn = "SALE"
+    ) val saleLines: List<SaleLines>,
+    @Relation(
+        parentColumn = "SALE",
+        entityColumn = "SALE_ID"
+    ) val client: Clients
+)
+
 
 @Entity(
     tableName = "client_payments",
@@ -179,7 +204,6 @@ data class ProviderPayments(
     @ColumnInfo(name = "DATE") val date: String,
     @ColumnInfo(name = "NOTE") val note: String
 )
-
 
 
 // TODO: 9/20/2020 make the fucking sales!

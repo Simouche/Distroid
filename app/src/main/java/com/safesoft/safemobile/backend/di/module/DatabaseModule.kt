@@ -42,12 +42,49 @@ class DatabaseModule {
                     db.execSQL("INSERT INTO barcodes (CODE,PRODUCT) VALUES (${Products.generateBarCode()},$i);")
                 }
 
-                db.execSQL("CREATE TRIGGER IF NOT EXISTS PURCHASE_INSERT_TRIGGER " +
-                        "AFTER INSERT ON purchases WHEN (new.PAYMENT < new.TOTAL_TTC) AND NOT new.DONE" +
-                        " BEGIN  UPDATE providers SET SOLD = SOLD + (new.TOTAL_TTC - new.PAYMENT)" +
-                        " WHERE PROVIDER_ID = new.PROVIDER;" +
-                        " END")
-//                db.execSQL("")
+                /**
+                 * this is the trigger for updating the provider balance after a purchase is done
+                 */
+                db.execSQL(
+                    "CREATE TRIGGER IF NOT EXISTS PURCHASE_INSERT_TRIGGER " +
+                            "AFTER INSERT ON purchases WHEN (new.PAYMENT < new.TOTAL_TTC) AND NOT new.DONE" +
+                            " BEGIN  UPDATE providers SET SOLD = SOLD + (new.TOTAL_TTC - new.PAYMENT)" +
+                            " WHERE PROVIDER_ID = new.PROVIDER;" +
+                            " END"
+                )
+
+                /**
+                 * this is the trigger for updating the client balance after a purchase is done
+                 */
+                db.execSQL(
+                    "CREATE TRIGGER IF NOT EXISTS SALE_INSERT_TRIGGER " +
+                            "AFTER INSERT ON sales WHEN (NEW.PAYMENT < new.TOTAL_TTC) AND NOT NEW.DONE" +
+                            " BEGIN  UPDATE clients SET SOLD = SOLD + (new.TOTAL_TTC - new.PAYMENT)" +
+                            " WHERE CLIENT_ID = NEW.CLIENT;" +
+                            " END"
+                )
+
+                /**
+                 * A trigger that adds the purchased amount to the product's stock
+                 */
+                db.execSQL(
+                    "CREATE TRIGGER IF NOT EXISTS PURCHASE_LINE_INSERT_TRIGGER " +
+                            "AFTER INSERT ON purchase_lines" +
+                            "BEGIN " +
+                            "UPDATE products SET QUANTITY = QUANTITY + NEW.QUANTITY WHERE PRODUCT_ID = NEW.PRODUCT;" +
+                            "END"
+                )
+
+                /**
+                 * A trigger that subs the sold quantity from the product's stock
+                 */
+                db.execSQL(
+                    "CREATE TRIGGER IF NOT EXISTS SALE_LINE_INSERT_TRIGGER " +
+                            "AFTER INSERT ON sale_lines" +
+                            "BEGIN " +
+                            "UPDATE products SET QUANTITY = QUANTITY - NEW.QUANTITY WHERE PRODUCT_ID = NEW.PRODUCT;" +
+                            "END"
+                )
             }
         }
 

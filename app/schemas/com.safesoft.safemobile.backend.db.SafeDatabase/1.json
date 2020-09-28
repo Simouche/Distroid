@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "09ecd817d6d3ff44b4f100727e48bbfd",
+    "identityHash": "c800d839233d37a23021961b3e6878ad",
     "entities": [
       {
         "tableName": "users",
@@ -262,7 +262,7 @@
             "notNull": false
           },
           {
-            "fieldPath": "provider",
+            "fieldPath": "client",
             "columnName": "CLIENT",
             "affinity": "INTEGER",
             "notNull": false
@@ -457,6 +457,114 @@
             "onUpdate": "CASCADE",
             "columns": [
               "PURCHASE"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "products",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "PRODUCT"
+            ],
+            "referencedColumns": [
+              "PRODUCT_ID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "sale_lines",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `PRODUCT` INTEGER NOT NULL, `QUANTITY` REAL, `SELL_PRICE_HT` REAL NOT NULL, `DISCOUNT` REAL NOT NULL, `TVA` REAL, `SELL_PRICE_TTC` REAL NOT NULL, `NOTE` TEXT, `SALE` INTEGER NOT NULL, FOREIGN KEY(`SALE`) REFERENCES `sales`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`PRODUCT`) REFERENCES `products`(`PRODUCT_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "product",
+            "columnName": "PRODUCT",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "QUANTITY",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalSellPriceHT",
+            "columnName": "SELL_PRICE_HT",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "discount",
+            "columnName": "DISCOUNT",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tva",
+            "columnName": "TVA",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalSellPriceTTC",
+            "columnName": "SELL_PRICE_TTC",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "NOTE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sale",
+            "columnName": "SALE",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_sale_lines_SALE",
+            "unique": false,
+            "columnNames": [
+              "SALE"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sale_lines_SALE` ON `${TABLE_NAME}` (`SALE`)"
+          },
+          {
+            "name": "index_sale_lines_PRODUCT",
+            "unique": false,
+            "columnNames": [
+              "PRODUCT"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sale_lines_PRODUCT` ON `${TABLE_NAME}` (`PRODUCT`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "sales",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "SALE"
             ],
             "referencedColumns": [
               "id"
@@ -1317,7 +1425,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '09ecd817d6d3ff44b4f100727e48bbfd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c800d839233d37a23021961b3e6878ad')"
     ]
   }
 }
