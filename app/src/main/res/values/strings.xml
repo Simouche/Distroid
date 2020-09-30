@@ -158,4 +158,18 @@
     <string name="payment">Payment</string>
     <string name="rest">Rest</string>
     <string name="purchase_added">Purchase Added successfully</string>
+    <string name="inventories">Inventories</string>
+    <string name="create_inventory">Create Inventory</string>
+    <string name="no_inventory_yet">You didn\'t make any inventory</string>
+    <string name="logical_quantity">LQ</string>
+    <string name="physical_quantity">PhQ</string>
+    <string name="gap">Gap</string>
+    <string name="ppttc">PP TTC</string>
+    <string name="ttc_gap">TTC Gap</string>
+    <string name="label">Label</string>
+    <string name="numero_hint">№</string>
+    <string name="total_ttc">Logical TTC Amount: %.2f</string>
+    <string name="total_tva">Total TVA: %.2f</string>
+    <string name="physical_ttc_amount">Physical TTC Amount: %.2f</string>
+    <string name="ttc_gap_amount">TTC Gap Amount: %.2f</string>
 </resources>

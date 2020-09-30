@@ -1,14 +1,11 @@
 package com.safesoft.safemobile.ui.providers
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.databinding.FragmentProvidersBinding

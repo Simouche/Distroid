@@ -127,6 +127,10 @@ class DatabaseModule {
 
     @Provides
     @Singleton
+    fun provideInventoryDao(db: SafeDatabase): InventoryDao = db.inventoryDao()
+
+    @Provides
+    @Singleton
     fun providesSharedPreferences(application: Application): SharedPreferences {
         return SecurePreferences(application, PREFERENCES_ENCRYPT_KEY, PREFERENCES_NAME)
     }

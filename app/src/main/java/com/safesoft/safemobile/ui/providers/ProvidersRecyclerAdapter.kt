@@ -1,7 +1,5 @@
 package com.safesoft.safemobile.ui.providers
 
-import android.view.ContextMenu
-import android.view.View
 import androidx.recyclerview.widget.DiffUtil
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.db.entity.Providers

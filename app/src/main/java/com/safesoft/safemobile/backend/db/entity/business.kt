@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.backend.db.entity
 
 import androidx.room.*
+import java.util.*
 
 
 @Entity(
@@ -17,7 +18,7 @@ data class Purchases(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "PURCHASE_NUMBER") val purchaseNumber: String?,
     @ColumnInfo(name = "INVOICE_NUMBER") val invoiceNumber: String?,
-    @ColumnInfo(name = "DATE") val date: String?,
+    @ColumnInfo(name = "DATE") val date: Date?,
     @ColumnInfo(name = "PROVIDER") val provider: Long?,
     @ColumnInfo(name = "PRODUCTS_COUNT") val productsCount: Int?,
     @ColumnInfo(name = "TOTAL_HT") val totalHT: Double?,
@@ -105,7 +106,7 @@ data class Sales(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "SALE_NUMBER") val purchaseNumber: String?,
     @ColumnInfo(name = "INVOICE_NUMBER") val invoiceNumber: String?,
-    @ColumnInfo(name = "DATE") val date: String?,
+    @ColumnInfo(name = "DATE") val date: Date?,
     @ColumnInfo(name = "CLIENT") val client: Long?,
     @ColumnInfo(name = "PRODUCTS_COUNT") val productsCount: Int?,
     @ColumnInfo(name = "TOTAL_HT") val totalHT: Double?,
@@ -183,7 +184,7 @@ data class ClientPayments(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "ID") val id: Long,
     @ColumnInfo(name = "AMOUNT") val amount: Double,
     @ColumnInfo(name = "CLIENT") val client: Long,
-    @ColumnInfo(name = "DATE") val date: String,
+    @ColumnInfo(name = "DATE") val date: Date,
     @ColumnInfo(name = "NOTE") val note: String
 )
 
@@ -201,7 +202,7 @@ data class ProviderPayments(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "ID") val id: Long,
     @ColumnInfo(name = "AMOUNT") val amount: Double,
     @ColumnInfo(name = "PROVIDER") val provider: Long,
-    @ColumnInfo(name = "DATE") val date: String,
+    @ColumnInfo(name = "DATE") val date: Date,
     @ColumnInfo(name = "NOTE") val note: String
 )
 

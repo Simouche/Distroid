@@ -13,6 +13,7 @@ import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.backend.utils.getCurrentDateTime
 import com.safesoft.safemobile.forms.PurchaseForm
 import com.safesoft.safemobile.ui.products.ProductCalculator
+import java.util.*
 
 
 class PurchasesViewModel @ViewModelInject constructor(
@@ -38,7 +39,7 @@ class PurchasesViewModel @ViewModelInject constructor(
             0,
             "",
             "",
-            getCurrentDateTime(),
+            Date(),
             0,
             0,
             0.0,

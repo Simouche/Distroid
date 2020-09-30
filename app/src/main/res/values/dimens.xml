@@ -31,6 +31,7 @@
     <dimen name="form_icons_size">@dimen/_32sdp</dimen>
     <dimen name="form_items_header_font_size">@dimen/_13ssp</dimen>
     <dimen name="form_items_header_margin_start">@dimen/_15sdp</dimen>
+    <dimen name="inventory_form_items_header_margin_start">@dimen/_12sdp</dimen>
     <dimen name="form_items_item_font_size">@dimen/_10ssp</dimen>
 
     <!--    Lists dimensions-->

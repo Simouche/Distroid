@@ -2,6 +2,7 @@ package com.safesoft.safemobile.backend.db.entity
 
 import androidx.room.*
 import com.safesoft.safemobile.backend.utils.calculatePercentageValue
+import java.util.*
 
 @Entity(
     tableName = "barcodes",
@@ -134,6 +135,7 @@ data class Products(
 
     fun getDiscountAmountOnDHT(): Double = calculatePercentageValue(sellPriceDetailHT, promotion)
 
+    fun getTvaValue() : Double = calculatePercentageValue(sellPriceDetailHT,tva)
 
     companion object {
         fun generateBarCode(): String {
@@ -158,7 +160,7 @@ data class Products(
 )
 data class ExpirationDates(
     @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo(name = "DATE") val date: String,
+    @ColumnInfo(name = "DATE") val date: Date,
     @ColumnInfo(name = "DISABLED", defaultValue = "0") val disabled: Boolean,
     @ColumnInfo(name = "PRODUCT") val product: Long
 )

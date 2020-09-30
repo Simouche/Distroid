@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c800d839233d37a23021961b3e6878ad",
+    "identityHash": "88a5daa456430d8fe1b1d1e0af104be0",
     "entities": [
       {
         "tableName": "users",
@@ -1147,7 +1147,7 @@
       },
       {
         "tableName": "clients",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CLIENT_ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `CODE` TEXT NOT NULL, `NAME` TEXT, `ACTIVITY` TEXT, `ADDRESS` TEXT, `COMMUNE` INTEGER, `CONTACT` TEXT, `PHONES` TEXT, `FAXES` TEXT, `RIB` TEXT, `WEBSITE` TEXT, `INITIAL_SOLD` REAL DEFAULT 0, `NOTE` TEXT, `PROVIDER` INTEGER, `REGISTRE_COMMERCE` TEXT, `ARTCILE_FISCALE` TEXT, `IDENTIFIANT_FISCALE` TEXT, `IDENTIFIANT_STATISTIQUE` TEXT, `LONGITUDE` REAL, `LATITUDE` REAL, FOREIGN KEY(`PROVIDER`) REFERENCES `providers`(`PROVIDER_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CLIENT_ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `CODE` TEXT NOT NULL, `NAME` TEXT, `ACTIVITY` TEXT, `ADDRESS` TEXT, `COMMUNE` INTEGER, `CONTACT` TEXT, `PHONES` TEXT, `FAXES` TEXT, `RIB` TEXT, `WEBSITE` TEXT, `SOLD` REAL DEFAULT 0, `NOTE` TEXT, `PROVIDER` INTEGER, `REGISTRE_COMMERCE` TEXT, `ARTCILE_FISCALE` TEXT, `IDENTIFIANT_FISCALE` TEXT, `IDENTIFIANT_STATISTIQUE` TEXT, `LONGITUDE` REAL, `LATITUDE` REAL, FOREIGN KEY(`PROVIDER`) REFERENCES `providers`(`PROVIDER_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -1216,8 +1216,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "initialSold",
-            "columnName": "INITIAL_SOLD",
+            "fieldPath": "sold",
+            "columnName": "SOLD",
             "affinity": "REAL",
             "notNull": false,
             "defaultValue": "0"
@@ -1420,12 +1420,231 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "inventories",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `NAME` TEXT NOT NULL, `DATE` TEXT NOT NULL, `TIME` TEXT NOT NULL, `LABEL` TEXT NOT NULL, `PRODUCTS_COUNT` INTEGER NOT NULL DEFAULT 0, `HT_AMOUNT` REAL NOT NULL DEFAULT 0.0, `TVA_AMOUNT` REAL NOT NULL DEFAULT 0.0, `NEW_HT_AMOUNT` REAL NOT NULL DEFAULT 0.0, `NEW_TVA_AMOUNT` REAL NOT NULL DEFAULT 0.0, `HT_DIFFERENCE` REAL NOT NULL DEFAULT 0.0, `TVA_DIFFERENCE` REAL NOT NULL DEFAULT 0.0, `STATUS` TEXT NOT NULL, `WAREHOUSE` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "NAME",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "DATE",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "TIME",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "LABEL",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "productsCount",
+            "columnName": "PRODUCTS_COUNT",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "htAmount",
+            "columnName": "HT_AMOUNT",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0.0"
+          },
+          {
+            "fieldPath": "TVAAmount",
+            "columnName": "TVA_AMOUNT",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0.0"
+          },
+          {
+            "fieldPath": "newHTAmount",
+            "columnName": "NEW_HT_AMOUNT",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0.0"
+          },
+          {
+            "fieldPath": "newTVAAmount",
+            "columnName": "NEW_TVA_AMOUNT",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0.0"
+          },
+          {
+            "fieldPath": "htDifference",
+            "columnName": "HT_DIFFERENCE",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0.0"
+          },
+          {
+            "fieldPath": "tvaDifference",
+            "columnName": "TVA_DIFFERENCE",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0.0"
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "STATUS",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "warehouse",
+            "columnName": "WAREHOUSE",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "ID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "inventory_lines",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `INVENTORY` INTEGER NOT NULL, `BARCODE` INTEGER, `BATCH_CODE` TEXT, `BUY_PRICE_HT` REAL NOT NULL, `TVA` REAL NOT NULL, `QUANTITY` REAL NOT NULL, `TEMP_QUANTITY` REAL NOT NULL, `NEW_QUANTITY` REAL NOT NULL, `HT_DIFFERENCE` REAL NOT NULL, FOREIGN KEY(`INVENTORY`) REFERENCES `inventories`(`ID`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`BARCODE`) REFERENCES `barcodes`(`id`) ON UPDATE CASCADE ON DELETE SET NULL )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "inventory",
+            "columnName": "INVENTORY",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "barcode",
+            "columnName": "BARCODE",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lot",
+            "columnName": "BATCH_CODE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "buyPriceHT",
+            "columnName": "BUY_PRICE_HT",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tva",
+            "columnName": "TVA",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "QUANTITY",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tempQuantity",
+            "columnName": "TEMP_QUANTITY",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "newQuantity",
+            "columnName": "NEW_QUANTITY",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "htDifference",
+            "columnName": "HT_DIFFERENCE",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "ID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_inventory_lines_BARCODE",
+            "unique": false,
+            "columnNames": [
+              "BARCODE"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_inventory_lines_BARCODE` ON `${TABLE_NAME}` (`BARCODE`)"
+          },
+          {
+            "name": "index_inventory_lines_INVENTORY",
+            "unique": false,
+            "columnNames": [
+              "INVENTORY"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_inventory_lines_INVENTORY` ON `${TABLE_NAME}` (`INVENTORY`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "inventories",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "INVENTORY"
+            ],
+            "referencedColumns": [
+              "ID"
+            ]
+          },
+          {
+            "table": "barcodes",
+            "onDelete": "SET NULL",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "BARCODE"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c800d839233d37a23021961b3e6878ad')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '88a5daa456430d8fe1b1d1e0af104be0')"
     ]
   }
 }
