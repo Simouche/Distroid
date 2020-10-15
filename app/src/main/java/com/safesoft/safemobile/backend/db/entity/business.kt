@@ -178,7 +178,7 @@ data class AllAboutASale(
         childColumns = arrayOf("CLIENT"),
         onUpdate = ForeignKey.CASCADE,
         onDelete = ForeignKey.CASCADE
-    )]
+    )],indices = [Index(value = ["CLIENT"], unique = false)]
 )
 data class ClientPayments(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "ID") val id: Long,
@@ -196,7 +196,8 @@ data class ClientPayments(
         childColumns = arrayOf("PROVIDER"),
         onUpdate = ForeignKey.CASCADE,
         onDelete = ForeignKey.CASCADE
-    )]
+    )],
+    indices = [Index(value = ["PROVIDER"], unique = false)]
 )
 data class ProviderPayments(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "ID") val id: Long,

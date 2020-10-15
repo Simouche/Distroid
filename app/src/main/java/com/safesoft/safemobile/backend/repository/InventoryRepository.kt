@@ -14,8 +14,8 @@ class InventoryRepository @Inject constructor(private val inventoryDao: Inventor
     fun updateInventory(vararg inventories: Inventories) =
         inventoryDao.updateInventory(* inventories)
 
-    fun insertInventory(vararg inventories: Inventories) =
-        inventoryDao.insertInventory(* inventories)
+    fun insertInventory(inventories: Inventories) =
+        inventoryDao.insertInventory(inventories)
 
     fun deleteInventory(vararg inventories: Inventories) =
         inventoryDao.deleteInventory(* inventories)

@@ -135,7 +135,7 @@ data class Products(
 
     fun getDiscountAmountOnDHT(): Double = calculatePercentageValue(sellPriceDetailHT, promotion)
 
-    fun getTvaValue() : Double = calculatePercentageValue(sellPriceDetailHT,tva)
+    fun getTvaValue(): Double = calculatePercentageValue(sellPriceDetailHT, tva ?: 0.0)
 
     companion object {
         fun generateBarCode(): String {

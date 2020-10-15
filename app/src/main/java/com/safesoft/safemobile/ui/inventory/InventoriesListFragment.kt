@@ -30,8 +30,7 @@ class InventoriesListFragment : BaseFragment() {
 
     @Inject
     lateinit var recyclerAdapter: InventoriesRecyclerAdapter
-
-
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

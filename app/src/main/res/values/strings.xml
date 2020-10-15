@@ -172,4 +172,5 @@
     <string name="total_tva">Total TVA: %.2f</string>
     <string name="physical_ttc_amount">Physical TTC Amount: %.2f</string>
     <string name="ttc_gap_amount">TTC Gap Amount: %.2f</string>
+    <string name="inventory_added">Inventory added successfully</string>
 </resources>

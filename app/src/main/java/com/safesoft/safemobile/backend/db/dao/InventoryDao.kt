@@ -18,7 +18,7 @@ interface InventoryDao {
     fun updateInventory(vararg inventories: Inventories)
 
     @Insert
-    fun insertInventory(vararg inventories: Inventories): Single<Long>
+    fun insertInventory(inventories: Inventories): Single<Long>
 
     @Delete
     fun deleteInventory(vararg inventories: Inventories)
@@ -32,7 +32,8 @@ interface InventoryDao {
     @Delete
     fun deleteInventoryLines(vararg inventoryLines: InventoryLines)
 
-    @Query("SELECT * FROM inventories WHERE NAME LIKE '%'||:query||'%' OR LABEL LIKE '%'||:query||'%'")
+    @Transaction
+    @Query("SELECT * FROM inventories WHERE LABEL LIKE '%'||:query||'%' OR LABEL LIKE '%'||:query||'%'")
     fun searchInventory(query: String): DataSource.Factory<Int, InventoryWithLines>
 
 //    @Transaction

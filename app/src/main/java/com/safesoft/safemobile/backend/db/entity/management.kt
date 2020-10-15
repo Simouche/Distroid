@@ -48,7 +48,7 @@ data class Inventories(
 )
 data class InventoryLines(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "ID") val id: Long,
-    @ColumnInfo(name = "INVENTORY") val inventory: Int,
+    @ColumnInfo(name = "INVENTORY") val inventory: Long,
     @ColumnInfo(name = "BARCODE") val barcode: Long? = null,
     @ColumnInfo(name = "BATCH_CODE") val lot: String? = null,
     @ColumnInfo(name = "BUY_PRICE_HT") val buyPriceHT: Double = 0.0,
@@ -59,6 +59,7 @@ data class InventoryLines(
     @ColumnInfo(name = "HT_DIFFERENCE") val htDifference: Double = 0.0,
     @ColumnInfo(name = "TVA_DIFFERENCE") val tvaDifference: Double = 0.0
 ) {
+    @Ignore
     var selectedProduct: AllAboutAProduct? = null
 }
 

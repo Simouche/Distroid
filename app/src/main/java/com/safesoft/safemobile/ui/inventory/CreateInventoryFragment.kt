@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
+import com.safesoft.safemobile.backend.db.entity.Inventories
 import com.safesoft.safemobile.databinding.FragmentCreateInventoryBinding
 import com.safesoft.safemobile.databinding.FragmentCreatePurchaseBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
@@ -117,15 +118,34 @@ class CreateInventoryFragment : BaseFragment() {
     }
 
     private fun validate() {
-        // TODO: 9/30/2020 implement the validation
+        saveInventory()
     }
 
     private fun saveInventory() {
-
+        viewModel.saveInventory().observe(viewLifecycleOwner, Observer {
+            when (it.state) {
+                loading -> return@Observer
+                success -> saveLines(inventory = it.data!!)
+                error -> {
+                    it.exception?.printStackTrace()
+                    toast(R.string.unkown_error)
+                }
+            }
+        })
     }
 
-    private fun saveLines() {
-
+    private fun saveLines(inventory: Long) {
+        val items = recyclerAdapter.items.map { it.copy(inventory = inventory) }
+        viewModel.saveLines(items).observe(viewLifecycleOwner, Observer {
+            when (it.state) {
+                loading -> return@Observer
+                success -> toast(R.string.inventory_added)
+                error -> {
+                    it.exception?.printStackTrace()
+                    toast(R.string.unkown_error)
+                }
+            }
+        })
     }
 
 
