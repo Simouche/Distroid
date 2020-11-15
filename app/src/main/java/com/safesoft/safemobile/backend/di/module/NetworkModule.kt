@@ -1,5 +1,6 @@
 package com.safesoft.safemobile.backend.di.module
 
+import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
 import com.safesoft.safemobile.BuildConfig
 import com.safesoft.safemobile.backend.di.UnAuthInterceptorOkHttpClient
@@ -20,7 +21,8 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-object NetworkModule {
+class NetworkModule {
+
     @Provides
     @Singleton
     fun provideOkHttpLoggingInterceptor(): HttpLoggingInterceptor {
@@ -40,7 +42,7 @@ object NetworkModule {
     fun provideOkHttpClient(logger: HttpLoggingInterceptor, cache: Cache): OkHttpClient {
         val client = OkHttpClient().newBuilder()
             .cache(cache)
-            .readTimeout(5, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(10, TimeUnit.SECONDS)
         if (BuildConfig.DEBUG)
             client.addInterceptor(interceptor = logger)
@@ -50,10 +52,13 @@ object NetworkModule {
     @Provides
     @Singleton
     @UnAuthRetrofitClient
-    fun provideRetrofitClient(@UnAuthInterceptorOkHttpClient okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofitClient(
+        @UnAuthInterceptorOkHttpClient okHttpClient: OkHttpClient,
+        preferences: SharedPreferences
+    ): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://baseurl.com/")
+            .baseUrl(preferences.getString("base_url", "https//:127.0.0.1:8080/")!!)
             .addConverterFactory(
                 GsonConverterFactory.create(
                     GsonBuilder()

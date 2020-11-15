@@ -112,4 +112,6 @@ class ClientsViewModel @ViewModelInject constructor(
         fields.longitude.value = 0.0
         fields.latitude.value = 0.0
     }
+
+    fun loadClientsFromServer() = clientsRepository.loadClientsFromServer()
 }
