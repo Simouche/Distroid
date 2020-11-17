@@ -173,4 +173,12 @@
     <string name="physical_ttc_amount">Physical TTC Amount: %.2f</string>
     <string name="ttc_gap_amount">TTC Gap Amount: %.2f</string>
     <string name="inventory_added">Inventory added successfully</string>
+    <string name="synchronization">Synchronization</string>
+    <string name="users">Users</string>
+    <string name="application">Application</string>
+    <string name="automatic_synchronization">Automatic Synchronization</string>
+    <string name="periodic_synchronization">Periodic Synchronization</string>
+    <string name="modules_to_synchronize">Modules to Synchronize</string>
+    <string name="tracking_history">Tracking History</string>
+    <string name="sync_now">Synchronize Now</string>
 </resources>

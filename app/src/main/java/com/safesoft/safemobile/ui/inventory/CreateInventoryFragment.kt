@@ -32,8 +32,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateInventoryFragment : BaseFragment() {
-
-    private val TAG = CreateInventoryFragment::class.simpleName
     private lateinit var binding: FragmentCreateInventoryBinding
 
 

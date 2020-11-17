@@ -19,7 +19,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProvidersListFragment : BaseFragment() {
-    private val TAG = ProvidersListFragment::class.simpleName
 
     private val providersViewModel: ProvidersViewModel by viewModels(this::requireActivity)
     private lateinit var binding: FragmentProvidersListBinding

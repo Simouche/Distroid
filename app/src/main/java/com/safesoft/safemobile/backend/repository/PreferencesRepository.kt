@@ -1,4 +1,9 @@
 package com.safesoft.safemobile.backend.repository
 
-class PreferencesRepository {
+import android.content.SharedPreferences
+import javax.inject.Inject
+
+class PreferencesRepository @Inject constructor(private val sharedPreferences: SharedPreferences) {
+
+    fun getAutomaticSync() = sharedPreferences.getBoolean("auto_sync", true)
 }

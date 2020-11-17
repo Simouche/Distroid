@@ -7,4 +7,12 @@
         <item>BANK TRANSACTION</item>
         <item>BANK TRANSFER</item>
     </string-array>
+
+    <string-array name="synchronization_periods">
+        <item>15 Min</item>>
+        <item>30 Min</item>>
+        <item>45 Min</item>>
+        <item>60 Min</item>>
+    </string-array>
+
 </resources>

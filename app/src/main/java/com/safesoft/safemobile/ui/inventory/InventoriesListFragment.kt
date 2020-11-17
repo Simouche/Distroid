@@ -23,7 +23,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class InventoriesListFragment : BaseFragment() {
-    private val TAG = InventoriesListFragment::class.simpleName
 
     private val inventoryViewModel: InventoryViewModel by viewModels(this::requireActivity)
     private lateinit var binding: FragmentInventoriesListBinding

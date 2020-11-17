@@ -9,7 +9,7 @@ import com.safesoft.safemobile.backend.utils.ResourceState
 import com.safesoft.safemobile.ui.generics.adapter.BaseFragmentAdapter
 
 abstract class BaseFragment : Fragment() {
-    private val TAG = BaseFragment::class.simpleName
+    protected val TAG = this::class.simpleName
 
     protected var currentItemPosition: Int = -1
 

@@ -16,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProvidersFragment : BaseFragment() {
-    private val TAG = ProvidersFragment::class.simpleName
 
     private lateinit var binding: FragmentProvidersBinding
     private val viewModel: ProvidersViewModel by viewModels(this::requireActivity)

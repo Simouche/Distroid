@@ -29,7 +29,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CreateClientFragment() : BaseFragment(), BaseFormOwner {
-    val TAG = CreateClientFragment::class.simpleName
 
     private val viewModel: ClientsViewModel by viewModels(this::requireActivity)
     private val providersViewModel: ProvidersViewModel by viewModels(this::requireActivity)

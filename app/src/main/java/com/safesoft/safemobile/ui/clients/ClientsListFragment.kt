@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ClientsListFragment : BaseFragment() {
-    private val TAG = ClientsListFragment::class.simpleName
 
     private val clientsViewModel: ClientsViewModel by viewModels(this::requireActivity)
     private lateinit var binding : FragmentClientsListBinding

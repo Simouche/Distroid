@@ -37,7 +37,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreatePurchaseFragment : BaseFragment(), ProductCalculator {
-    private val TAG = CreatePurchaseFragment::class.simpleName
     private lateinit var binding: FragmentCreatePurchaseBinding
 
 

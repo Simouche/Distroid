@@ -33,8 +33,6 @@ import java.lang.StringBuilder
 @AndroidEntryPoint
 class CreateProviderFragment : BaseFragment(), BaseFormOwner {
 
-    val TAG = CreateProviderFragment::class.simpleName
-
     private val providersViewModel: ProvidersViewModel by viewModels(this::requireActivity)
     private val clientsViewModel: ClientsViewModel by viewModels(this::requireActivity)
 

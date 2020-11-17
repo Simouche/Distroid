@@ -9,7 +9,7 @@
         android:id="@+id/nav_dashboard"
         android:name="com.safesoft.safemobile.ui.dashboard.HomeFragment"
         android:label="@string/menu_dashboard"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_dashboard_to_nav_purchases"
             app:destination="@id/nav_purchases" />
@@ -73,7 +73,7 @@
         tools:layout="@layout/fragment_providers" />
 
     <fragment
-        android:id="@+id/action_settings"
+        android:id="@+id/nav_settings"
         android:name="com.safesoft.safemobile.ui.settings.SettingsFragment"
         android:label="@string/settings"
         tools:layout="@layout/fragment_settings" />

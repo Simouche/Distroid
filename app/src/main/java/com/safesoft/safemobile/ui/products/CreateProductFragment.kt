@@ -40,7 +40,6 @@ import kotlinx.android.synthetic.main.fragment_create_product.*
 @AndroidEntryPoint
 class CreateProductFragment : BaseFragment(), ProductCalculator, BaseFormOwner {
 
-    private val TAG = CreateProductFragment::class.simpleName
     private val SCAN_BARCODE = 100
 
     private val viewModel: ProductsViewModel by viewModels(this::requireActivity)

@@ -26,7 +26,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProductsListFragment : BaseFragment() {
-    private val TAG = ProductsListFragment::class.simpleName
 
     private val productsViewModel: ProductsViewModel by viewModels(this::requireActivity)
     private lateinit var binding: FragmentProductsListBinding

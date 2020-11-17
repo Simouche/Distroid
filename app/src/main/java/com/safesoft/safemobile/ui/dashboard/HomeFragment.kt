@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
-    private val TAG = HomeFragment::class.simpleName
 
     private lateinit var binding: FragmentHomeBinding
 

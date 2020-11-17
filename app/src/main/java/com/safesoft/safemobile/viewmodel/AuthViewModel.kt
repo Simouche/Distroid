@@ -17,8 +17,7 @@ import com.safesoft.safemobile.backend.db.entity.Users as entityUser
 class AuthViewModel @ViewModelInject constructor(
     private val authRepository: AuthRepository,
     val loginForm: LoginForm
-) :
-    BaseViewModel() {
+) : BaseViewModel() {
 
     private lateinit var user: entityUser
 

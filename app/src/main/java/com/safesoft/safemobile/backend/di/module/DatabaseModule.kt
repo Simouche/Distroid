@@ -30,17 +30,17 @@ class DatabaseModule {
                 super.onCreate(db)
                 val password = "123456789".asSHA256()
                 db.execSQL("INSERT INTO users (USERNAME,PASSWORD,LOGGED) VALUES ('ADMIN','$password',0);")
-//                for (i in 0..200)
-//                    db.execSQL("INSERT INTO providers (CODE,NAME) VALUES ('123$i','TEST $i PROVIDER $i');")
-//
-//                for (i in 0..200)
-//                    db.execSQL("INSERT INTO clients (CODE,NAME) VALUES ('$i','TEST $i CLIENT $i');")
-//
-//                for (i in 0..8000) {
-//                    db.execSQL("INSERT INTO products (REFERENCE,DESIGNATION,QUANTITY,PURCHASE_PRICE_HT,PURCHASE_PRICE_TTC,MARGE,SELL_PRICE_DETAIL_HT) VALUES ('$i','DESIGNATION $i',$i,$i,$i,$i,$i);")
-//                    db.execSQL("INSERT INTO barcodes (CODE,PRODUCT) VALUES (${Products.generateBarCode()},$i);")
-//                    db.execSQL("INSERT INTO barcodes (CODE,PRODUCT) VALUES (${Products.generateBarCode()},$i);")
-//                }
+                /*for (i in 0..200)
+                    db.execSQL("INSERT INTO providers (CODE,NAME) VALUES ('123$i','TEST $i PROVIDER $i');")
+
+                for (i in 0..200)
+                    db.execSQL("INSERT INTO clients (CODE,NAME) VALUES ('$i','TEST $i CLIENT $i');")
+
+                for (i in 0..8000) {
+                    db.execSQL("INSERT INTO products (REFERENCE,DESIGNATION,QUANTITY,PURCHASE_PRICE_HT,PURCHASE_PRICE_TTC,MARGE,SELL_PRICE_DETAIL_HT) VALUES ('$i','DESIGNATION $i',$i,$i,$i,$i,$i);")
+                    db.execSQL("INSERT INTO barcodes (CODE,PRODUCT) VALUES (${Products.generateBarCode()},$i);")
+                    db.execSQL("INSERT INTO barcodes (CODE,PRODUCT) VALUES (${Products.generateBarCode()},$i);")
+                }*/
 
                 /**
                  * this is the trigger for updating the provider balance after a purchase is done

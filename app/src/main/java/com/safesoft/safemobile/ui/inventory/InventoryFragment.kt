@@ -15,8 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class InventoryFragment : BaseFragment() {
 
-    private val TAG = InventoryFragment::class.simpleName
-
     private lateinit var binding: FragmentInventoryBinding
 
     override fun onCreateView(

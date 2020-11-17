@@ -9,6 +9,7 @@
         <item name="windowNoTitle">true</item>
         <item name="colorButtonNormal">@color/colorPrimaryDark</item>
         <item name="android:colorButtonNormal">@color/colorPrimaryDark</item>
+        <item name="floatingActionButtonStyle">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
