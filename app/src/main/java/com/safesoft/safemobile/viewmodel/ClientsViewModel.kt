@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
+import com.safesoft.safemobile.backend.api.response.ClientsResponse
 import com.safesoft.safemobile.backend.db.entity.Clients
 import com.safesoft.safemobile.backend.db.entity.FiscalData
 import com.safesoft.safemobile.backend.db.entity.Location
@@ -114,4 +115,10 @@ class ClientsViewModel @ViewModelInject constructor(
     }
 
     fun loadClientsFromServer() = clientsRepository.loadClientsFromServer()
+
+    fun loadClientsFromServerUI(): LiveData<Resource<ClientsResponse>> {
+        val data = MutableLiveData<Resource<ClientsResponse>>()
+        enqueue(clientsRepository.loadClientsFromServer(), data)
+        return data
+    }
 }

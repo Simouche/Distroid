@@ -1,10 +1,15 @@
 package com.safesoft.safemobile.backend.repository
 
+import com.safesoft.safemobile.backend.api.service.ClientService
+import com.safesoft.safemobile.backend.api.service.ProviderService
 import com.safesoft.safemobile.backend.db.dao.ProvidersDao
 import com.safesoft.safemobile.backend.db.entity.Providers
 import javax.inject.Inject
 
-class ProvidersRepository @Inject constructor(private val providersDao: ProvidersDao) {
+class ProvidersRepository @Inject constructor(
+    private val providersDao: ProvidersDao,
+    private val providerService: ProviderService
+) {
 
     fun getAllProviders() = providersDao.getAllProviders()
 
@@ -24,5 +29,6 @@ class ProvidersRepository @Inject constructor(private val providersDao: Provider
 
     fun deleteProviders(vararg providers: Providers) = providersDao.deleteProviders(*providers)
 
+    fun loadProvidersFromServer() = providerService.getAllProviders()
 
 }

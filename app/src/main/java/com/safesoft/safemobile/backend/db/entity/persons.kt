@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.backend.db.entity
 
 import androidx.room.*
+import com.google.gson.annotations.SerializedName
 
 data class FiscalData(
     @ColumnInfo(name = "REGISTRE_COMMERCE") val registreCommerce: String?,
@@ -27,19 +28,22 @@ data class Location(
 )
 data class Providers(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "PROVIDER_ID") val id: Long,
-    @ColumnInfo(name = "CODE") val code: String,
-    @ColumnInfo(name = "NAME") val name: String? = null,
+    @SerializedName("codeFournis") @ColumnInfo(name = "CODE") val code: String,
+    @SerializedName("fournis") @ColumnInfo(name = "NAME") val name: String? = null,
     @ColumnInfo(name = "ACTIVITY") val activity: String? = null,
     @ColumnInfo(name = "ADDRESS") val address: String? = null,
-    @ColumnInfo(name = "COMMUNE") val commune: Long? = null,
+    @ColumnInfo(name = "COMMUNE") val commune: String? = null,
     @ColumnInfo(name = "CONTACT") val contact: String? = null,
-    @ColumnInfo(name = "PHONES") val phones: String? = null,
+    @SerializedName("phone") @ColumnInfo(name = "PHONES") val phones: String? = null,
     @ColumnInfo(name = "FAXES") val faxes: String? = null,
     @ColumnInfo(name = "RIB") val rib: String? = null,
-    @ColumnInfo(name = "WEBSITE") val webSite: String? = null,
-    @ColumnInfo(name = "SOLD", defaultValue = "0") val sold: Double? = null,
-    @ColumnInfo(name = "NOTE") val note: String? = null,
-    @ColumnInfo(name = "CLIENT") val client: Long? = null,
+    @SerializedName("siteWeb") @ColumnInfo(name = "WEBSITE") val webSite: String? = null,
+    @SerializedName("solde") @ColumnInfo(
+        name = "SOLD",
+        defaultValue = "0"
+    ) val sold: Double? = null,
+    @SerializedName("notes") @ColumnInfo(name = "NOTE") val note: String? = null,
+    /*@SerializedName("codeClient")*/ @ColumnInfo(name = "CLIENT") val client: Long? = null,
     @Embedded val fiscalData: FiscalData? = null,
     @Embedded val location: Location? = null
 ) {
@@ -97,18 +101,21 @@ data class ProviderWithPurchases(
 )
 data class Clients(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "CLIENT_ID") val id: Long,
-    @ColumnInfo(name = "CODE") val code: String,
-    @ColumnInfo(name = "NAME") val name: String? = null,
-    @ColumnInfo(name = "ACTIVITY") val activity: String? = null,
-    @ColumnInfo(name = "ADDRESS") val address: String? = null,
-    @ColumnInfo(name = "COMMUNE") val commune: Long? = null,
-    @ColumnInfo(name = "CONTACT") val contact: String? = null,
-    @ColumnInfo(name = "PHONES") val phones: String? = null,
-    @ColumnInfo(name = "FAXES") val faxes: String? = null,
-    @ColumnInfo(name = "RIB") val rib: String? = null,
-    @ColumnInfo(name = "WEBSITE") val webSite: String? = null,
-    @ColumnInfo(name = "SOLD", defaultValue = "0") val sold: Double? = null,
-    @ColumnInfo(name = "NOTE") val note: String? = null,
+    @SerializedName("codeClient") @ColumnInfo(name = "CODE") val code: String,
+    @SerializedName("client") @ColumnInfo(name = "NAME") val name: String? = null,
+    @SerializedName("activity") @ColumnInfo(name = "ACTIVITY") val activity: String? = null,
+    @SerializedName("address") @ColumnInfo(name = "ADDRESS") val address: String? = null,
+    @SerializedName("commune") @ColumnInfo(name = "COMMUNE") val commune: String? = null,
+    @SerializedName("contact") @ColumnInfo(name = "CONTACT") val contact: String? = null,
+    @SerializedName("phone") @ColumnInfo(name = "PHONES") val phones: String? = null,
+    @SerializedName("fax") @ColumnInfo(name = "FAXES") val faxes: String? = null,
+    @SerializedName("rib") @ColumnInfo(name = "RIB") val rib: String? = null,
+    @SerializedName("siteweb") @ColumnInfo(name = "WEBSITE") val webSite: String? = null,
+    @SerializedName("solde") @ColumnInfo(
+        name = "SOLD",
+        defaultValue = "0"
+    ) val sold: Double? = null,
+    @SerializedName("note") @ColumnInfo(name = "NOTE") val note: String? = null,
     @ColumnInfo(name = "PROVIDER") val provider: Long? = null,
     @Embedded val fiscalData: FiscalData? = null,
     @Embedded val location: Location? = null

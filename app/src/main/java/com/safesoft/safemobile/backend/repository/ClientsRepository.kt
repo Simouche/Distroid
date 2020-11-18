@@ -25,6 +25,8 @@ class ClientsRepository @Inject constructor(
 
     fun deleteClients(vararg clients: Clients) = clientsDao.deleteClients(*clients)
 
+    fun deleteAllClients() = clientsDao.deleteAllClients()
+
     fun loadClientsFromServer() = clientService.getAllClients()
 
 

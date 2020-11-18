@@ -21,7 +21,9 @@ class SyncWorker @WorkerInject constructor(
     }
 
     override fun createWork(): Single<Result> {
-        TODO()
+        return Single.fromCallable {
+            Result.failure()
+        }
     }
 
 }

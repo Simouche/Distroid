@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.backend.di.module
 
 import com.safesoft.safemobile.backend.api.service.ClientService
+import com.safesoft.safemobile.backend.api.service.ProviderService
 import com.safesoft.safemobile.backend.di.UnAuthRetrofitClient
 import dagger.Module
 import dagger.Provides
@@ -15,5 +16,9 @@ class ServiceModule {
     @Provides
     fun provideClientService(@UnAuthRetrofitClient retrofit: Retrofit): ClientService =
         retrofit.create(ClientService::class.java)
+
+    @Provides
+    fun provideProviderService(@UnAuthRetrofitClient retrofit: Retrofit): ProviderService =
+        retrofit.create(ProviderService::class.java)
 
 }

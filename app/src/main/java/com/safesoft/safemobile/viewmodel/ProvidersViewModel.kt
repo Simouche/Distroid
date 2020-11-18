@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-import com.safesoft.safemobile.backend.db.entity.Clients
 import com.safesoft.safemobile.backend.db.entity.FiscalData
 import com.safesoft.safemobile.backend.db.entity.Location
 import com.safesoft.safemobile.backend.db.entity.Providers

@@ -51,6 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
+                android:checked="@={viewModel.clientsSync}"
                 android:text="@string/clients" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
@@ -58,6 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
+                android:checked="@={viewModel.providersSync}"
                 android:text="@string/providers" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
@@ -65,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
+                android:checked="@={viewModel.productsSync}"
                 android:text="@string/products" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
@@ -72,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
+                android:checked="@={viewModel.salesSync}"
                 android:text="@string/sales" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
@@ -79,6 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
+                android:checked="@={viewModel.purchasesSync}"
                 android:text="@string/purchases" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
@@ -86,6 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
+                android:checked="@={viewModel.inventoriesSync}"
                 android:text="@string/inventories" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
@@ -93,6 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
+                android:checked="@={viewModel.trackingSync}"
                 android:text="@string/tracking_history" />
 
             <com.google.android.material.button.MaterialButton

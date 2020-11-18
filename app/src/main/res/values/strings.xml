@@ -181,4 +181,7 @@
     <string name="modules_to_synchronize">Modules to Synchronize</string>
     <string name="tracking_history">Tracking History</string>
     <string name="sync_now">Synchronize Now</string>
+    <string name="sync_completed">%s has finished synching successfully.</string>
+    <string name="synchronization_channel_name">Synchronization Results</string>
+    <string name="channel_description">Notification for synchronization results.</string>
 </resources>

@@ -31,4 +31,7 @@ interface ClientsDao {
     @Delete
     fun deleteClients(vararg clients: Clients): Completable
 
+    @Query("DELETE FROM clients")
+    fun deleteAllClients(): Completable
+
 }

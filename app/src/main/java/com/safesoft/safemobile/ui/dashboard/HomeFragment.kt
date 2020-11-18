@@ -10,8 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.safesoft.safemobile.R
+import com.safesoft.safemobile.backend.utils.ResourceState
 import com.safesoft.safemobile.databinding.FragmentHomeBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
+import com.safesoft.safemobile.viewmodel.ClientsViewModel
 import com.safesoft.safemobile.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,6 +23,7 @@ class HomeFragment : BaseFragment() {
     private lateinit var binding: FragmentHomeBinding
 
     private val homeViewModel: HomeViewModel by viewModels()
+    private val clientsViewModel: ClientsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +47,7 @@ class HomeFragment : BaseFragment() {
                 R.id.action_nav_dashboard_to_nav_purchases, null
             )
         )
+
         binding.salesCard.setOnClickListener(
             Navigation.createNavigateOnClickListener(
                 R.id.action_nav_dashboard_to_nav_sales,

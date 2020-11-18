@@ -12,7 +12,7 @@ class ClientFields @Inject constructor() {
     var name = MutableLiveData<String>()
     var activity = MutableLiveData<String>()
     var address = MutableLiveData<String>()
-    var commune = MutableLiveData<Long>()
+    var commune = MutableLiveData<String>()
     var contact = MutableLiveData<String>()
     var phones = MutableLiveData<String>()
     var faxes = MutableLiveData<String>()

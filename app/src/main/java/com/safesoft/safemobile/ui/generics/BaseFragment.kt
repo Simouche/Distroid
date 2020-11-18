@@ -1,6 +1,5 @@
 package com.safesoft.safemobile.ui.generics
 
-import android.util.Log
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment

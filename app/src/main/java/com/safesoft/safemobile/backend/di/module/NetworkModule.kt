@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.backend.di.module
 
 import android.content.SharedPreferences
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.safesoft.safemobile.BuildConfig
 import com.safesoft.safemobile.backend.di.UnAuthInterceptorOkHttpClient
@@ -33,7 +34,7 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpCache(): Cache {
-        return Cache(File(""), 2000);
+        return Cache(File("/cache"), 2000);
     }
 
     @Provides
@@ -50,24 +51,28 @@ class NetworkModule {
     }
 
     @Provides
+    fun provideGson(): Gson {
+        return GsonBuilder()
+            .enableComplexMapKeySerialization()
+            .serializeNulls()
+            .setPrettyPrinting()
+            .setLenient()
+            .create()
+    }
+
+    @Provides
     @Singleton
     @UnAuthRetrofitClient
     fun provideRetrofitClient(
         @UnAuthInterceptorOkHttpClient okHttpClient: OkHttpClient,
-        preferences: SharedPreferences
+        preferences: SharedPreferences,
+        gson: Gson
     ): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl(preferences.getString("base_url", "https//:127.0.0.1:8080/")!!)
-            .addConverterFactory(
-                GsonConverterFactory.create(
-                    GsonBuilder()
-                        .enableComplexMapKeySerialization()
-                        .serializeNulls()
-                        .setPrettyPrinting()
-                        .create()
-                )
-            ).addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .baseUrl(preferences.getString("base_url", "http://192.168.1.18:8080/")!!)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
             .build()
     }
