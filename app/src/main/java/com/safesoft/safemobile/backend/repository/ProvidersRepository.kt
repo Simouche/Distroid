@@ -29,6 +29,8 @@ class ProvidersRepository @Inject constructor(
 
     fun deleteProviders(vararg providers: Providers) = providersDao.deleteProviders(*providers)
 
+    fun deleteAllProviders() = providersDao.deleteAllProviders()
+
     fun loadProvidersFromServer() = providerService.getAllProviders()
 
 }

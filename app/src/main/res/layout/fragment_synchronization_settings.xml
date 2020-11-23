@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
                 android:checked="@={viewModel.autoSync}"
+                android:enabled="false"
                 android:text="@string/automatic_synchronization" />
 
             <androidx.appcompat.widget.AppCompatSpinner
@@ -39,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
+                android:enabled="false"
                 android:entries="@array/synchronization_periods" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -102,12 +104,33 @@
                 android:checked="@={viewModel.trackingSync}"
                 android:text="@string/tracking_history" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/save_button"
-                android:layout_width="wrap_content"
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/save" />
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/reinitialize_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_40sdp"
+                    android:layout_weight="1"
+                    android:onClick="@{()->viewModel.reinitialize()}"
+                    android:text="@string/reinitialize" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/save_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:onClick="@{()->viewModel.syncNowFab()}"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:drawableStart="@drawable/ic_sync"
+                    android:layout_weight="1"
+                    android:text="@string/sync_now" />
+
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/sync_fab"
@@ -115,6 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:contentDescription=""
+                android:onClick="@{()->viewModel.syncNowFab()}"
                 android:src="@drawable/ic_sync"
                 android:tooltipText="@string/sync_now"
                 app:fabSize="normal" />

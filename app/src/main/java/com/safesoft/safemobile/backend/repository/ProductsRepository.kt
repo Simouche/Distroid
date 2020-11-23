@@ -1,12 +1,16 @@
 package com.safesoft.safemobile.backend.repository
 
+import com.safesoft.safemobile.backend.api.service.ProductService
 import com.safesoft.safemobile.backend.db.dao.ProductsDao
 import com.safesoft.safemobile.backend.db.entity.Barcodes
 import com.safesoft.safemobile.backend.db.entity.Brands
 import com.safesoft.safemobile.backend.db.entity.Products
 import javax.inject.Inject
 
-class ProductsRepository @Inject constructor(private val productsDao: ProductsDao) {
+class ProductsRepository @Inject constructor(
+    private val productsDao: ProductsDao,
+    private val productsService: ProductService
+) {
 
     fun getAllProductsWithBarcodes() = productsDao.getAllProductsWithBarcodes()
 
@@ -33,6 +37,8 @@ class ProductsRepository @Inject constructor(private val productsDao: ProductsDa
     fun getAllBrands(query: String) = productsDao.getAllBrands(query)
 
     fun addBrand(brand: Brands) = productsDao.addBrand(brand)
+
+    fun getAllProductsFromServer() = productsService.getAllProducts()
 
     suspend fun addBarCodes(vararg barCodes: Barcodes) = productsDao.addBarCodeSuspend(*barCodes)
 

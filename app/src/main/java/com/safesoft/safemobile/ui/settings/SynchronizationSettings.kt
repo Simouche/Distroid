@@ -10,9 +10,11 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -64,64 +66,62 @@ class SynchronizationSettings : BaseFragment() {
 
     override fun setUpObservers() {
         super.setUpObservers()
-        binding.syncFab.setOnClickListener {
-            syncNowFab()
+        binding.checkboxAutoSync.setOnCheckedChangeListener { _, b ->
+            viewModel.setAutomaticSync(b)
+        }
+        binding.checkboxClients.setOnCheckedChangeListener { _, b ->
+            viewModel.setSyncClientsModule(
+                b
+            )
+        }
+        binding.checkboxProviders.setOnCheckedChangeListener { _, b ->
+            viewModel.setSyncProviderModule(
+                b
+            )
+        }
+        binding.checkboxProducts.setOnCheckedChangeListener { _, b ->
+            viewModel.setSyncProductsModule(
+                b
+            )
+        }
+        binding.checkboxSales.setOnCheckedChangeListener { _, b ->
+            viewModel.setSyncSalesModule(b)
+        }
+        binding.checkboxPurchases.setOnCheckedChangeListener { _, b ->
+            viewModel.setSyncPurchasesModule(
+                b
+            )
+        }
+        binding.checkboxInventories.setOnCheckedChangeListener { _, b ->
+            viewModel.setSyncInventoriesModule(
+                b
+            )
+        }
+        binding.checkboxTracking.setOnCheckedChangeListener { _, b ->
+            viewModel.setSyncTrackingModule(
+                b
+            )
+        }
+        binding.syncPeriod.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                viewModel.setAutomaticSyncDuration(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                Log.i(TAG, "onNothingSelected: No Duration Selected!")
+            }
         }
     }
 
-    private fun syncNowFab() {
-        val requestsArray = mutableListOf<OneTimeWorkRequest>()
-        val constraints: Constraints = Constraints
-            .Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
+    private fun reinitialize() {
 
-        if (viewModel.clientsSync.value != false) {
-            val request = OneTimeWorkRequestBuilder<ClientsWorker>().setConstraints(constraints)
-                .addTag("clients_sync").build()
-            ids["clients"] = request.id
-            requestsArray.add(request)
-        }
-
-        if (viewModel.providersSync.value != false) {
-            val request = OneTimeWorkRequestBuilder<ProvidersWorker>().setConstraints(constraints)
-                .addTag("providers_sync").build()
-            ids["providers"] = request.id
-            requestsArray.add(request)
-        }
-
-//        if (viewModel.clientsSync.value != false)
-//            requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())
-//
-//        if (viewModel.clientsSync.value != false)
-//            requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())
-//
-//        if (viewModel.clientsSync.value != false)
-//            requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())
-//
-//        if (viewModel.clientsSync.value != false)
-//            requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())
-//
-//        if (viewModel.clientsSync.value != false)
-//            requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())
-//
-//        if (viewModel.clientsSync.value != false)
-//            requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())
-        WorkManager.getInstance(requireContext()).beginWith(requestsArray).enqueue()
-        observeWorkers()
     }
 
-    private fun observeWorkers() {
-        if (ids.containsKey("clients"))
-            WorkManager.getInstance(requireContext()).getWorkInfoByIdLiveData(ids["clients"]!!)
-                .observe(viewLifecycleOwner,
-                    {
-                        if (it != null) {
-                            if (it.state.isFinished)
-                                showNotification("Clients")
-                        }
-                    })
-    }
 
     private fun showNotification(task: String) {
         val intent = Intent(requireContext(), MainActivity::class.java).apply {

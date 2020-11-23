@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.backend.db.entity
 
 import androidx.room.*
+import com.google.gson.annotations.SerializedName
 import com.safesoft.safemobile.backend.utils.calculatePercentageValue
 import java.util.*
 
@@ -35,12 +36,18 @@ data class Barcodes(
 )
 data class Products(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "PRODUCT_ID") val id: Long,
-    @ColumnInfo(name = "REFERENCE") val reference: String,
-    @ColumnInfo(name = "DESIGNATION") val designation: String,
-    @ColumnInfo(name = "QUANTITY", defaultValue = "0") val quantity: Double? = null,
-    @ColumnInfo(name = "PURCHASE_PRICE_HT", defaultValue = "0") val purchasePriceHT: Double? = null,
-    @ColumnInfo(name = "TVA", defaultValue = "19") val tva: Double? = null,
-    @ColumnInfo(
+    @SerializedName("refProduit") @ColumnInfo(name = "REFERENCE") val reference: String,
+    @SerializedName("produit") @ColumnInfo(name = "DESIGNATION") val designation: String,
+    @SerializedName("stock") @ColumnInfo(
+        name = "QUANTITY",
+        defaultValue = "0"
+    ) val quantity: Double? = null,
+    @SerializedName("paHT") @ColumnInfo(
+        name = "PURCHASE_PRICE_HT",
+        defaultValue = "0"
+    ) val purchasePriceHT: Double? = null,
+    @SerializedName("tva") @ColumnInfo(name = "TVA", defaultValue = "19") val tva: Double? = null,
+    @SerializedName("paTTC") @ColumnInfo(
         name = "PURCHASE_PRICE_TTC",
         defaultValue = "0"
     ) val purchasePriceTTC: Double? = null,
@@ -53,33 +60,33 @@ data class Products(
         defaultValue = "0"
     ) val steadyPurchasePriceTTC: Double? = null,
     @ColumnInfo(name = "MARGE") val marge: Double? = null,
-    @ColumnInfo(
+    @SerializedName("pv1HT") @ColumnInfo(
         name = "SELL_PRICE_DETAIL_HT",
         defaultValue = "0"
     ) val sellPriceDetailHT: Double = 0.0,
-    @ColumnInfo(
+    @SerializedName("pv2HT") @ColumnInfo(
         name = "SELL_PRICE_WHOLE_HT",
         defaultValue = "0"
     ) val sellPriceWholeHT: Double = 0.0,
-    @ColumnInfo(
+    @SerializedName("pv3HT") @ColumnInfo(
         name = "SELL_PRICE_HAF_WHOLE_HT",
         defaultValue = "0"
     ) val sellPriceHalfWholeHT: Double = 0.0,
-    @ColumnInfo(
+    @SerializedName("pv1TTC") @ColumnInfo(
         name = "SELL_PRICE_DETAIL_TTC",
         defaultValue = "0"
     ) val sellPriceDetailTTC: Double = 0.0,
-    @ColumnInfo(
+    @SerializedName("pv2TTC") @ColumnInfo(
         name = "SELL_PRICE_WHOLE_TTC",
         defaultValue = "0"
     ) val sellPriceWholeTTC: Double = 0.0,
-    @ColumnInfo(
+    @SerializedName("pv3TTC") @ColumnInfo(
         name = "SELL_PRICE_HAF_WHOLE_TTC",
         defaultValue = "0"
     ) val sellPriceHalfWholeTTC: Double = 0.0,
     @ColumnInfo(name = "PHOTO") val photo: String? = null,
     @ColumnInfo(name = "QUANTITY_PER_PACKAGE") val quantityPerPackage: Long? = null,
-    @ColumnInfo(name = "PROMO", defaultValue = "0") val promotion: Double = 0.0,
+    @SerializedName("promo") @ColumnInfo(name = "PROMO", defaultValue = "0") val promotion: Double = 0.0,
     @ColumnInfo(name = "PROMO_THRESHOLD", defaultValue = "1") val promotionThreshold: Int = 1,
     @ColumnInfo(name = "BRAND") val brand: Long? = null
 ) {

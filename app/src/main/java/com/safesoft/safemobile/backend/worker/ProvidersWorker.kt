@@ -23,7 +23,8 @@ class ProvidersWorker @WorkerInject constructor(
 
     override fun createWork(): Single<Result> {
         return providersRepository
-            .loadProvidersFromServer()
+            .deleteProviders()
+            .andThen(providersRepository.loadProvidersFromServer())
             .flatMapCompletable { providersRepository.addProviders(*it.providers.toTypedArray()) }
             .toSingleDefault(Result.success())
             .onErrorReturn {

@@ -40,4 +40,7 @@ interface ProvidersDao {
     @Delete
     fun deleteProviders(vararg providers: Providers): Completable
 
+    @Query("DELETE FROM providers")
+    fun deleteAllProviders(): Completable
+
 }
