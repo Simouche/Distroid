@@ -77,6 +77,4 @@ class LoginActivity : BaseActivity() {
         binding.lifecycleOwner = this
     }
 
-
-
 }
