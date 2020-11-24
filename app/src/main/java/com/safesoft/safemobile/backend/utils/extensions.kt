@@ -37,10 +37,10 @@ fun Double.formatted(
 }
 
 fun String.doubleValue(): Double {
-    return (if (this.isEmptyOrBlank()) "0.0" else this).replace(",", "").toDouble()
+    return (if (this.isEmptyOrBlank() || this.justADot()) "0.0" else this).replace(",", "")
+        .toDouble()
 }
 
-fun String.containsOnly(literal: String): Boolean {
-    for (s in this)
-        if ((s + "") != literal)
+fun String.justADot(): Boolean {
+    return this.length == 1 && this.contains(".")
 }

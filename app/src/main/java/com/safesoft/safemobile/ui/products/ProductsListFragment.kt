@@ -99,6 +99,11 @@ class ProductsListFragment : BaseFragment() {
             )
     }
 
+    override fun onResume() {
+        super.onResume()
+        productsViewModel.page = 0
+    }
+
     companion object {
         fun showProductDetailsDialog(
             context: Context,

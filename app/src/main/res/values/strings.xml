@@ -185,4 +185,5 @@
     <string name="synchronization_channel_name">Synchronization Results</string>
     <string name="channel_description">Notification for synchronization results.</string>
     <string name="reinitialize">Reinitialize</string>
+    <string name="update_product">Update Product</string>
 </resources>

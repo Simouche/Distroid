@@ -73,6 +73,7 @@
                     android:selectAllOnFocus="true" />
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/product_icon"
                     android:layout_width="@dimen/form_icons_size"
                     android:layout_height="@dimen/form_icons_size"
                     android:layout_weight="0.1"

@@ -71,9 +71,12 @@ class CreateProductFragment : BaseFragment(), ProductCalculator, BaseFormOwner {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_create_product, container, false)
+
+        Log.d(TAG, "onCreateView: came here")
+
         return binding.root
     }
 
@@ -438,6 +441,7 @@ may reactivate this in case of the user wants to change the marge when changing 
     override fun onResume() {
         super.onResume()
         restoreChildren()
+        viewModel.page = 1
     }
 
     override fun onPause() {

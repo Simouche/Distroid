@@ -15,6 +15,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
 import com.safesoft.safemobile.backend.db.entity.Clients
@@ -50,7 +52,7 @@ class CreateSaleFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_create_sale, container, false)
         return binding.root
@@ -138,6 +140,10 @@ class CreateSaleFragment : BaseFragment() {
             )
         }
         binding.saleSelectProduct.setAdapter(adapter)
+        binding.productIcon.setOnClickListener {
+            Log.d(TAG, "setUpClientSearch: added product from sales")
+            it.findNavController().navigate(R.id.action_nav_sales_to_nav_create_product)
+        }
     }
 
     private fun addLine(product: AllAboutAProduct?, quantity: Double) {

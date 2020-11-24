@@ -132,17 +132,6 @@
 
             </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/sync_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:contentDescription=""
-                android:onClick="@{()->viewModel.syncNowFab()}"
-                android:src="@drawable/ic_sync"
-                android:tooltipText="@string/sync_now"
-                app:fabSize="normal" />
-
         </com.google.android.material.circularreveal.CircularRevealLinearLayout>
     </ScrollView>
 </layout>
