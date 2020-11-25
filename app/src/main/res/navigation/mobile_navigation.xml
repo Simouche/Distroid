@@ -40,7 +40,14 @@
         android:id="@+id/nav_purchases"
         android:name="com.safesoft.safemobile.ui.purchases.PurchasesFragment"
         android:label="@string/menu_purchases"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_nav_purchases_to_nav_create_product"
+            app:destination="@id/nav_create_product" />
+        <action
+            android:id="@+id/action_nav_purchases_to_nac_create_provider"
+            app:destination="@id/nac_create_provider" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_sales"
@@ -56,6 +63,9 @@
         <action
             android:id="@+id/action_nav_sales_to_nav_create_product"
             app:destination="@id/nav_create_product" />
+        <action
+            android:id="@+id/action_nav_sales_to_nav_create_client"
+            app:destination="@id/nav_create_client" />
     </fragment>
 
     <fragment
@@ -68,7 +78,11 @@
         android:id="@+id/nav_inventory"
         android:name="com.safesoft.safemobile.ui.inventory.InventoryFragment"
         android:label="@string/inventory"
-        tools:layout="@layout/fragment_inventory" />
+        tools:layout="@layout/fragment_inventory" >
+        <action
+            android:id="@+id/action_nav_inventory_to_nav_create_product"
+            app:destination="@id/nav_create_product" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_clients"
@@ -94,5 +108,16 @@
         android:label="@string/product"
         tools:layout="@layout/fragment_create_product" />
 
+    <fragment
+        android:id="@+id/nav_create_client"
+        android:name="com.safesoft.safemobile.ui.clients.CreateClientFragment"
+        android:label="@string/client"
+        tools:layout="@layout/fragment_create_client" />
+
+    <fragment
+        android:id="@+id/nac_create_provider"
+        android:name="com.safesoft.safemobile.ui.providers.CreateProviderFragment"
+        android:label="@string/provider"
+        tools:layout="@layout/fragment_create_provider" />
 
 </navigation>

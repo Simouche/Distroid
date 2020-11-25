@@ -103,6 +103,7 @@ class CreateSaleFragment : BaseFragment() {
             })
         }
         binding.saleSelectClient.setAdapter(adapter)
+        binding.clientIcon.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_sales_to_nav_create_client))
     }
 
     private fun setUpProductSearch() {
@@ -140,10 +141,7 @@ class CreateSaleFragment : BaseFragment() {
             )
         }
         binding.saleSelectProduct.setAdapter(adapter)
-        binding.productIcon.setOnClickListener {
-            Log.d(TAG, "setUpClientSearch: added product from sales")
-            it.findNavController().navigate(R.id.action_nav_sales_to_nav_create_product)
-        }
+        binding.productIcon.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_sales_to_nav_create_product))
     }
 
     private fun addLine(product: AllAboutAProduct?, quantity: Double) {

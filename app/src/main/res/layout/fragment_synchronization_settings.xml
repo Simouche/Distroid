@@ -24,6 +24,25 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/server_address" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ip_address_setting"
+                android:layout_width="@dimen/_160sdp"
+                android:layout_height="wrap_content"
+                android:hint="@string/ip_address"
+                android:inputType="text"
+                android:text="@={viewModel.ipAddress}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@color/black" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/periodic_synchronization" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
@@ -43,6 +62,12 @@
                 android:enabled="false"
                 android:entries="@array/synchronization_periods" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@color/black" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,6 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
                 android:checked="@={viewModel.clientsSync}"
+                android:drawableEnd="@drawable/ic_clients_small"
+                android:drawablePadding="@dimen/_2sdp"
                 android:text="@string/clients" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
@@ -104,18 +131,26 @@
                 android:checked="@={viewModel.trackingSync}"
                 android:text="@string/tracking_history" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@color/black" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/actions" />
+
             <com.google.android.material.circularreveal.CircularRevealLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/reinitialize_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_40sdp"
-                    android:layout_weight="1"
                     android:onClick="@{()->viewModel.reinitialize()}"
                     android:text="@string/reinitialize" />
 
@@ -123,11 +158,9 @@
                     android:id="@+id/save_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:onClick="@{()->viewModel.syncNowFab()}"
-                    android:layout_marginStart="@dimen/_10sdp"
+
                     android:drawableStart="@drawable/ic_sync"
-                    android:layout_weight="1"
+                    android:onClick="@{()->viewModel.syncNowFab()}"
                     android:text="@string/sync_now" />
 
             </com.google.android.material.circularreveal.CircularRevealLinearLayout>

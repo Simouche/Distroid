@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
 import com.safesoft.safemobile.backend.db.entity.Inventories
@@ -96,6 +97,7 @@ class CreateInventoryFragment : BaseFragment() {
             )
         }
         binding.inventorySelectProduct.setAdapter(adapter)
+        binding.productIcon.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_inventory_to_nav_create_product))
     }
 
     private fun addLine(product: AllAboutAProduct?, quantity: Double) {

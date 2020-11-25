@@ -20,6 +20,8 @@ class SettingsViewModel @ViewModelInject constructor(
 
     private val ids = mutableMapOf<String, UUID>()
 
+    val ipAddress = MutableLiveData<String>().apply { value = preferencesRepository.getServerIp() }
+
     val isSyncing = MutableLiveData<Boolean>().apply { value = false }
 
     val autoSync: MutableLiveData<Boolean> =

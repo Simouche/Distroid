@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
 import com.safesoft.safemobile.backend.db.entity.Providers
@@ -104,6 +105,7 @@ class CreatePurchaseFragment : BaseFragment(), ProductCalculator {
             })
         }
         binding.purchaseSelectProvider.setAdapter(adapter)
+        binding.providerIcon.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_purchases_to_nac_create_provider))
     }
 
     private fun setUpProductSearch() {
@@ -141,6 +143,8 @@ class CreatePurchaseFragment : BaseFragment(), ProductCalculator {
             )
         }
         binding.purchaseSelectProduct.setAdapter(adapter)
+        binding.productIcon.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_purchases_to_nav_create_product))
+
     }
 
     private fun addLine(product: AllAboutAProduct?, quantity: Double) {

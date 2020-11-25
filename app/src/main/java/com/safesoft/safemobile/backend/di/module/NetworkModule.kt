@@ -70,7 +70,7 @@ class NetworkModule {
     ): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl(preferences.getString("base_url", "http://192.168.1.18:8080/")!!)
+            .baseUrl("http://${preferences.getString("server_ip", "192.168.1.18:8080")!!}/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)

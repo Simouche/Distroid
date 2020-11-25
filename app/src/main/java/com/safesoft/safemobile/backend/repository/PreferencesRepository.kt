@@ -9,7 +9,8 @@ class PreferencesRepository @Inject constructor(private val sharedPreferences: S
 
     fun getAutomaticSync() = sharedPreferences.getBoolean("auto_sync", true)
 
-    fun setAutomaticSync(value: Boolean) = sharedPreferencesEditor.putBoolean("auto_sync", value).commit()
+    fun setAutomaticSync(value: Boolean) =
+        sharedPreferencesEditor.putBoolean("auto_sync", value).commit()
 
     fun getAutomaticSyncDuration() = sharedPreferences.getInt("auto_sync_duration", 0)
 
@@ -21,39 +22,42 @@ class PreferencesRepository @Inject constructor(private val sharedPreferences: S
     fun setSyncClientsModule(value: Boolean) =
         sharedPreferencesEditor.putBoolean("sync_clients_module", value).commit()
 
-
     fun getSyncProvidersModule() = sharedPreferences.getBoolean("sync_providers_module", true)
 
     fun setSyncProviderModule(value: Boolean) =
         sharedPreferencesEditor.putBoolean(("sync_providers_module"), value).commit()
-
 
     fun getSyncProductsModule() = sharedPreferences.getBoolean("sync_products_module", true)
 
     fun setSyncProductsModule(value: Boolean) =
         sharedPreferencesEditor.putBoolean("sync_products_module", value).commit()
 
-
     fun getSyncSalesModule() = sharedPreferences.getBoolean("sync_sales_module", true)
 
     fun setSyncSalesModule(value: Boolean) =
         sharedPreferencesEditor.putBoolean("sync_sales_module", value).commit()
-
 
     fun getSyncPurchasesModule() = sharedPreferences.getBoolean("sync_purchases_module", true)
 
     fun setSyncPurchasesModule(value: Boolean) =
         sharedPreferencesEditor.putBoolean("sync_purchases_module", value).commit()
 
-
     fun getSyncInventoriesModule() = sharedPreferences.getBoolean("sync_inventories_module", true)
 
     fun setSyncInventoriesModule(value: Boolean) =
         sharedPreferencesEditor.putBoolean("sync_inventories_module", value).commit()
 
-
     fun getSyncTrackingModule() = sharedPreferences.getBoolean("sync_tracking_module", true)
 
     fun setSyncTrackingModule(value: Boolean) =
         sharedPreferencesEditor.putBoolean("sync_tracking_module", value).commit()
+
+    fun getLanguage() = sharedPreferences.getString("language", "fr")
+
+    fun setLanguage(value: String) = sharedPreferencesEditor.putString("language", value).commit()
+
+    fun getServerIp() = sharedPreferences.getString("server_ip", "192.168.1.18:8080")
+
+    fun setServerIp(value: String) =
+        sharedPreferencesEditor.putString("server_ip", value).commit()
 }

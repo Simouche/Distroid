@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/list_item_content_margin"
-                android:text="@string/numero"
+                android:text="@{@string/numero(purchase.purchaseNumber)}"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/list_item_content_margin"
-                android:text="@string/invoice_number"
+                android:text="@{@string/invoice_number(purchase.invoiceNumber)}"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/purchase_number_display"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/list_item_content_margin"
-                android:text="@string/invoice_date"
+                android:text="@{@string/invoice_date(purchase.date)}"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/purchase_invoice_number_display"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/list_item_content_margin"
-                android:text="@string/products_count"
+                android:text="@{@string/products_count(purchase.productsCount)}"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/purchase_number_display" />
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/list_item_content_margin"
-                android:text="@string/total_sum"
+                android:text="@{@string/total_sum(purchase.totalTTC)}"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/purchase_products_count_display"
                 app:layout_constraintTop_toBottomOf="@id/purchase_invoice_number_display" />

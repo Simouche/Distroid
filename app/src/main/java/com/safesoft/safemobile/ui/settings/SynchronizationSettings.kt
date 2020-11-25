@@ -61,47 +61,20 @@ class SynchronizationSettings : BaseFragment() {
         super.setUpViews()
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-
+        binding.syncPeriod.setSelection(viewModel.syncDuration.value!!)
     }
 
     override fun setUpObservers() {
         super.setUpObservers()
-        binding.checkboxAutoSync.setOnCheckedChangeListener { _, b ->
-            viewModel.setAutomaticSync(b)
-        }
-        binding.checkboxClients.setOnCheckedChangeListener { _, b ->
-            viewModel.setSyncClientsModule(
-                b
-            )
-        }
-        binding.checkboxProviders.setOnCheckedChangeListener { _, b ->
-            viewModel.setSyncProviderModule(
-                b
-            )
-        }
-        binding.checkboxProducts.setOnCheckedChangeListener { _, b ->
-            viewModel.setSyncProductsModule(
-                b
-            )
-        }
-        binding.checkboxSales.setOnCheckedChangeListener { _, b ->
-            viewModel.setSyncSalesModule(b)
-        }
-        binding.checkboxPurchases.setOnCheckedChangeListener { _, b ->
-            viewModel.setSyncPurchasesModule(
-                b
-            )
-        }
-        binding.checkboxInventories.setOnCheckedChangeListener { _, b ->
-            viewModel.setSyncInventoriesModule(
-                b
-            )
-        }
-        binding.checkboxTracking.setOnCheckedChangeListener { _, b ->
-            viewModel.setSyncTrackingModule(
-                b
-            )
-        }
+        viewModel.autoSync.observe(viewLifecycleOwner, viewModel::setAutomaticSync)
+        viewModel.clientsSync.observe(viewLifecycleOwner, viewModel::setSyncClientsModule)
+        viewModel.providersSync.observe(viewLifecycleOwner, viewModel::setSyncProviderModule)
+        viewModel.productsSync.observe(viewLifecycleOwner, viewModel::setSyncProductsModule)
+        viewModel.salesSync.observe(viewLifecycleOwner, viewModel::setSyncSalesModule)
+        viewModel.purchasesSync.observe(viewLifecycleOwner, viewModel::setSyncPurchasesModule)
+        viewModel.inventoriesSync.observe(viewLifecycleOwner, viewModel::setSyncInventoriesModule)
+        viewModel.trackingSync.observe(viewLifecycleOwner, viewModel::setSyncTrackingModule)
+
         binding.syncPeriod.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,

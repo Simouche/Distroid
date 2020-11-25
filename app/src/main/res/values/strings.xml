@@ -1,14 +1,16 @@
 <resources>
-    <string name="app_name">SafeMobile</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="app_name" translatable="false">SafeMobile</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+
+
     <string name="action_settings">Settings</string>
 
     <string name="menu_dashboard">Home</string>
-    <string name="menu_purchases">Gallery</string>
+    <string name="menu_purchases">Purchases</string>
     <string name="menu_slideshow">Slideshow</string>
 
     <!--    Dashboard Strings-->
@@ -46,7 +48,7 @@
     <string name="invoice_number">Invoice №: %s</string>
     <string name="invoice_date">Date: %s</string>
     <string name="products_count">%d product</string>
-    <string name="total_sum">Total: %d</string>
+    <string name="total_sum">Total: %.2f</string>
     <string name="create_purchase">Create Purchase</string>
     <string name="provider">Provider</string>
     <string name="product">Product</string>
@@ -186,4 +188,8 @@
     <string name="channel_description">Notification for synchronization results.</string>
     <string name="reinitialize">Reinitialize</string>
     <string name="update_product">Update Product</string>
+    <string name="default_tva">Default Tva</string>
+    <string name="server_address">Server Address</string>
+    <string name="ip_address">IP Address</string>
+    <string name="actions">Actions</string>
 </resources>

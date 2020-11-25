@@ -37,7 +37,16 @@ fun Double.formatted(
 }
 
 fun String.doubleValue(): Double {
-    return (if (this.isEmptyOrBlank() || this.justADot()) "0.0" else this).replace(",", "")
+    var value: String = if (this.isEmptyOrBlank() || this.justADot()) "0.0" else this
+    val dotCount = value.count { it == '.' }
+    if (dotCount == 0) {
+        value = value.reversed()
+        value = value.replaceFirst(",", ".")
+        value = value.reversed()
+    }
+//    value.indexOfLast { it == ',' }
+    return value.replace(",", " ")
+        .replace(" ", "")
         .toDouble()
 }
 
