@@ -76,8 +76,7 @@ class MainActivity : AppCompatActivity() {
                 i?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(i)
             }
-            else -> {
-                println(item.itemId)
+            android.R.id.home -> {
                 if (drawerLayout.isDrawerOpen(GravityCompat.START))
                     drawerLayout.closeDrawer(GravityCompat.START)
                 else

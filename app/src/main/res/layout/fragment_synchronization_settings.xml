@@ -158,10 +158,17 @@
                     android:id="@+id/save_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:drawableStart="@drawable/ic_sync"
                     android:onClick="@{()->viewModel.syncNowFab()}"
                     android:text="@string/sync_now" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/send_to_server"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_sync"
+                    android:onClick="@{()->viewModel.updateServer()}"
+                    android:text="@string/send_to_server" />
 
             </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 

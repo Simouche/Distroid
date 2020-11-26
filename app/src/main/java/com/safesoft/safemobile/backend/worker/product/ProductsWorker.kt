@@ -1,4 +1,4 @@
-package com.safesoft.safemobile.backend.worker
+package com.safesoft.safemobile.backend.worker.product
 
 import android.content.Context
 import androidx.hilt.Assisted

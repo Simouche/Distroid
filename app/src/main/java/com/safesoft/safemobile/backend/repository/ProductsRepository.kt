@@ -44,4 +44,6 @@ class ProductsRepository @Inject constructor(
 
     suspend fun getLatestProduct() = productsDao.getLatestProduct()
 
+    fun updateProducts(products: List<Products>) = productsService.updateProducts(products)
+
 }

@@ -182,4 +182,9 @@
     <string name="reinitialize">Réinitialiser</string>
     <string name="update_product">Mettre à jour le produit</string>
     <string name="default_tva">Default Tva</string>
+
+    <string name="server_address">Adresse Serveur</string>
+    <string name="ip_address">Adresse IP</string>
+    <string name="actions">Actions</string>
+    <string name="send_to_server">Envoyer les mises à jour au serveur</string>
 </resources>

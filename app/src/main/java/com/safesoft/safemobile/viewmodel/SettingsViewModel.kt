@@ -7,8 +7,9 @@ import androidx.work.*
 import com.safesoft.safemobile.backend.repository.PreferencesRepository
 import com.safesoft.safemobile.backend.worker.ClearTablesWorker
 import com.safesoft.safemobile.backend.worker.ClientsWorker
-import com.safesoft.safemobile.backend.worker.ProductsWorker
+import com.safesoft.safemobile.backend.worker.product.ProductsWorker
 import com.safesoft.safemobile.backend.worker.ProvidersWorker
+import com.safesoft.safemobile.backend.worker.product.UpdateProductsWorker
 import java.util.*
 
 class SettingsViewModel @ViewModelInject constructor(
@@ -97,6 +98,13 @@ class SettingsViewModel @ViewModelInject constructor(
         if (viewModel.clientsSync.value != false)
             requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())*/
         workManagerInstance.beginWith(requestsArray).enqueue()
+    }
+
+    fun updateServer() {
+        workManagerInstance.enqueue(
+            OneTimeWorkRequestBuilder<UpdateProductsWorker>()
+                .addTag("clients_sync").build()
+        )
     }
 
     fun reinitialize() {

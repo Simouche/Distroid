@@ -1,8 +1,12 @@
 package com.safesoft.safemobile.backend.api.service
 
+import com.safesoft.safemobile.backend.api.response.BaseResponse
 import com.safesoft.safemobile.backend.api.response.ProductsResponse
+import com.safesoft.safemobile.backend.db.entity.Products
 import io.reactivex.Single
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ProductService {
@@ -11,4 +15,7 @@ interface ProductService {
 
     @GET("synchronize-products")
     fun synchronizeProducts(@Query("ids") ids: Array<Int>): Single<ProductsResponse>
+
+    @POST("add-products")
+    fun updateProducts(@Body products: List<Products>): Single<BaseResponse>
 }

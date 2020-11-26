@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -24,6 +25,7 @@ import com.safesoft.safemobile.backend.utils.formatted
 import com.safesoft.safemobile.databinding.DialogDiscountInputBinding
 import com.safesoft.safemobile.databinding.FragmentCreatePurchaseBinding
 import com.safesoft.safemobile.databinding.InvoiceConfirmationDialogBinding
+import com.safesoft.safemobile.ui.generics.BaseFormOwner
 import com.safesoft.safemobile.ui.generics.BaseFragment
 import com.safesoft.safemobile.ui.generics.adapter.GenericSpinnerAdapter
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener
@@ -37,7 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CreatePurchaseFragment : BaseFragment(), ProductCalculator {
+class CreatePurchaseFragment : BaseFragment(), ProductCalculator, BaseFormOwner {
     private lateinit var binding: FragmentCreatePurchaseBinding
 
 
@@ -246,13 +248,24 @@ class CreatePurchaseFragment : BaseFragment(), ProductCalculator {
         viewModel.saveLines(items).observe(viewLifecycleOwner, Observer {
             when (it.state) {
                 loading -> return@Observer
-                success -> toast(R.string.purchase_added)
+                success -> {
+                    toast(R.string.purchase_added)
+                    viewModel
+                }
                 error -> {
                     it.exception?.printStackTrace()
                     toast(R.string.unkown_error)
                 }
             }
         })
+    }
+
+    override fun switchVisibility() {
+        return
+    }
+
+    override fun reInitViews() {
+        viewModel.reInitFields()
     }
 
 

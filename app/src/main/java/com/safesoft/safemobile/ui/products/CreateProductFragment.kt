@@ -481,4 +481,14 @@ may reactivate this in case of the user wants to change the marge when changing 
         binding.createProductBarcodes.addView(view)
     }
 
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.d(TAG, "onOptionsItemSelected: item pressed!!!")
+        if (item.itemId == android.R.id.home) {
+            requireActivity().onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }

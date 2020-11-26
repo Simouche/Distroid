@@ -20,8 +20,7 @@ class PurchasesViewModel @ViewModelInject constructor(
     private val purchasesRepository: PurchasesRepository,
     private val config: PagedList.Config,
     val purchaseForm: PurchaseForm
-) : BaseViewModel(), ProductCalculator {
-
+) : BaseViewModel(), ProductCalculator,BaseFormOwner {
 
     var paymentType: String = "C"
         set(value) {
@@ -146,6 +145,25 @@ class PurchasesViewModel @ViewModelInject constructor(
     fun setPayment(amount: Double) {
         invoice.value =
             invoice.value?.copy(payment = amount, done = amount == invoice.value!!.totalTTC)
+    }
+
+    override fun reInitFields() {
+        val fields = purchaseForm.fields
+        fields.date.value = ""
+        fields.done.value = false
+        fields.purchaseNumber.value = ""
+        fields.invoiceNumber.value = ""
+        fields.provider.value = 0
+        fields.providerName.value = ""
+        fields.productsCount.value = 0
+        fields.totalHT.value = 0.0
+        fields.totalTTC.value = 0.0
+        fields.tva.value = 0.0
+        fields.stamp.value = 0.0
+        fields.reglement.value = ""
+        fields.totalQuantity.value =0.0
+        fields.note.value = ""
+        fields.payment.value = 0.0
     }
 
 }
