@@ -2,7 +2,7 @@ package com.safesoft.safemobile.backend.api.service
 
 import com.safesoft.safemobile.backend.api.response.BaseResponse
 import com.safesoft.safemobile.backend.api.response.ProductsResponse
-import com.safesoft.safemobile.backend.db.entity.Products
+import com.safesoft.safemobile.backend.db.entity.ProductWithBarcodes
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -17,5 +17,5 @@ interface ProductService {
     fun synchronizeProducts(@Query("ids") ids: Array<Int>): Single<ProductsResponse>
 
     @POST("add-products")
-    fun updateProducts(@Body products: List<Products>): Single<BaseResponse>
+    fun updateProducts(@Body products: List<ProductWithBarcodes>): Single<BaseResponse>
 }

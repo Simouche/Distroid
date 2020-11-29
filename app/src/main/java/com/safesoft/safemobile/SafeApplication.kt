@@ -28,11 +28,13 @@ class SafeApplication : Application(), Configuration.Provider {
             .setConstraints(constraints)
             .build()
 
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-            "synchronization",
-            ExistingPeriodicWorkPolicy.KEEP,
-            syncRequest
-        )
+//        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+//            "synchronization",
+//            ExistingPeriodicWorkPolicy.KEEP,
+//            syncRequest
+//        )
+
+        WorkManager.getInstance(this).cancelAllWork()
     }
 
     override fun getWorkManagerConfiguration(): Configuration =

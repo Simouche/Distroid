@@ -122,11 +122,9 @@ class ProductsViewModel @ViewModelInject constructor(
     fun saveBarCodes(barCodes: List<Barcodes>) {
         viewModelScope.launch {
             val product = productsRepository.getLatestProduct()
-            val newList = mutableListOf<Barcodes>()
-            for (item in barCodes)
-                newList.add(item.copy(product = product.id))
+            val newList = barCodes.map { it.copy(product = product.id) }.toTypedArray()
             try {
-                productsRepository.addBarCodes(*newList.toTypedArray())
+                productsRepository.addBarCodes(*newList)
             } catch (e: SQLiteConstraintException) {
                 e.printStackTrace()
             }

@@ -217,7 +217,7 @@ data class ProductWithBarcodes(
     @Relation(
         parentColumn = "PRODUCT_ID",
         entityColumn = "PRODUCT"
-    ) val bardcodes: List<Barcodes>
+    ) val barcodes: List<Barcodes>
 )
 
 data class BrandWithProducts(

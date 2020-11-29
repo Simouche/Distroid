@@ -4,6 +4,7 @@ import com.safesoft.safemobile.backend.api.service.ProductService
 import com.safesoft.safemobile.backend.db.dao.ProductsDao
 import com.safesoft.safemobile.backend.db.entity.Barcodes
 import com.safesoft.safemobile.backend.db.entity.Brands
+import com.safesoft.safemobile.backend.db.entity.ProductWithBarcodes
 import com.safesoft.safemobile.backend.db.entity.Products
 import javax.inject.Inject
 
@@ -13,6 +14,8 @@ class ProductsRepository @Inject constructor(
 ) {
 
     fun getAllProductsWithBarcodes() = productsDao.getAllProductsWithBarcodes()
+
+    fun getAllProductsWithBarCodesSingle() = productsDao.getAllProductsWithBarCodesSingle()
 
     fun getAllProductsAllInfo() = productsDao.getAllProductsWithAllInfo()
 
@@ -44,6 +47,6 @@ class ProductsRepository @Inject constructor(
 
     suspend fun getLatestProduct() = productsDao.getLatestProduct()
 
-    fun updateProducts(products: List<Products>) = productsService.updateProducts(products)
+    fun updateProducts(products: List<ProductWithBarcodes>) = productsService.updateProducts(products)
 
 }

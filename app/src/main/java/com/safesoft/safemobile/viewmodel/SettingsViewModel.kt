@@ -103,7 +103,7 @@ class SettingsViewModel @ViewModelInject constructor(
     fun updateServer() {
         workManagerInstance.enqueue(
             OneTimeWorkRequestBuilder<UpdateProductsWorker>()
-                .addTag("clients_sync").build()
+                .addTag("products_update").build()
         )
     }
 
@@ -148,6 +148,8 @@ class SettingsViewModel @ViewModelInject constructor(
         preferencesRepository.setSyncInventoriesModule(value)
 
     fun setSyncTrackingModule(value: Boolean) = preferencesRepository.setSyncTrackingModule(value)
+
+    fun setServerIp(value: String) = preferencesRepository.setServerIp(value)
 
 
 }

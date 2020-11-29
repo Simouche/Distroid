@@ -16,30 +16,18 @@ class UpdateProductsWorker @WorkerInject constructor(
     @Assisted workersParams: WorkerParameters,
     private val productsRepository: ProductsRepository
 ) : RxWorker(appContext, workersParams) {
+    val TAG = this::class.simpleName
 
     override fun createWork(): Single<Result> {
-        val products =
-            listOf(
-                Products(0, "produit6", "produit6", 50.0, 100.0, 19.0, 119.0),
-                Products(1, "produit19", "produit19", 50.0, 100.0, 19.0, 119.0),
-                Products(
-                    1,
-                    "produit1",
-                    "produit1",
-                    50.0,
-                    100.0,
-                    19.0,
-                    119.0
-                )
-            )
         return Single.fromObservable {
-            productsRepository.updateProducts(products).observeOn(Schedulers.io())
-                .doOnSuccess {
-                    Log.d("TAG", "createWork: success")
-                    return@doOnSuccess
-                }.doOnError { it.printStackTrace() }.subscribe()
+            productsRepository
+                .getAllProductsWithBarCodesSingle()
+                .flatMap { productsRepository.updateProducts(it) }
+                .doOnSuccess { Log.d(TAG, "createWork: finished sending products to server") }
+                .doOnError { it.printStackTrace() }
+                .observeOn(Schedulers.io())
+                .subscribe()
         }
-
     }
 
 }

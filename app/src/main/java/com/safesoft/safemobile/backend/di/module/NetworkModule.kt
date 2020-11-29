@@ -61,7 +61,6 @@ class NetworkModule {
     }
 
     @Provides
-    @Singleton
     @UnAuthRetrofitClient
     fun provideRetrofitClient(
         @UnAuthInterceptorOkHttpClient okHttpClient: OkHttpClient,

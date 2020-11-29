@@ -4,10 +4,8 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -18,15 +16,10 @@ import android.widget.AdapterView
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.work.*
 import com.safesoft.safemobile.MainActivity
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.worker.ClientsWorker
-import com.safesoft.safemobile.backend.worker.ProvidersWorker
 import com.safesoft.safemobile.databinding.FragmentSynchronizationSettingsBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
 import com.safesoft.safemobile.viewmodel.SettingsViewModel
@@ -47,7 +40,7 @@ class SynchronizationSettings : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_synchronization_settings,
@@ -74,6 +67,7 @@ class SynchronizationSettings : BaseFragment() {
         viewModel.purchasesSync.observe(viewLifecycleOwner, viewModel::setSyncPurchasesModule)
         viewModel.inventoriesSync.observe(viewLifecycleOwner, viewModel::setSyncInventoriesModule)
         viewModel.trackingSync.observe(viewLifecycleOwner, viewModel::setSyncTrackingModule)
+        viewModel.ipAddress.observe(viewLifecycleOwner, viewModel::setServerIp)
 
         binding.syncPeriod.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(

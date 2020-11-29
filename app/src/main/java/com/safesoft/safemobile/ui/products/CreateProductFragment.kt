@@ -297,7 +297,7 @@ may reactivate this in case of the user wants to change the marge when changing 
             if (binding.createProductMargeWhole.isFocused) {
                 binding.createProductSellPriceWholeHt.setText(
                     calculateNewPrice(
-                        viewModel.getFields().purchasePriceTTC.value!!.doubleValue(),
+                        viewModel.getFields().purchasePriceHT.value!!.doubleValue(),
                         it.doubleValue()
                     ).formatted()
                 )
@@ -309,7 +309,7 @@ may reactivate this in case of the user wants to change the marge when changing 
                 )
             }
         })
-        viewModel.getFields().sellPriceDetailHT.observe(viewLifecycleOwner, Observer {
+        viewModel.getFields().sellPriceWholeHT.observe(viewLifecycleOwner, Observer {
             if (binding.createProductSellPriceWholeHt.isFocused) {
 /*
 may reactivate this in case of the user wants to change the marge when changing the sell price HT
@@ -332,7 +332,7 @@ may reactivate this in case of the user wants to change the marge when changing 
             if (binding.createProductMargeHalfWhole.isFocused) {
                 binding.createProductSellPriceHalfWholeHt.setText(
                     calculateNewPrice(
-                        viewModel.getFields().purchasePriceTTC.value!!.doubleValue(),
+                        viewModel.getFields().purchasePriceHT.value!!.doubleValue(),
                         it.doubleValue()
                     ).formatted()
                 )
@@ -409,13 +409,13 @@ may reactivate this in case of the user wants to change the marge when changing 
     }
 
     override fun reInitViews() {
-        viewModel.reInitFields()
-        binding.createProductImage.setImageResource(R.drawable.ic_product)
-
         val childCount = binding.createProductBarcodes.childCount
         if (childCount > 1)
             for (i in 1 until childCount)
-                binding.createProductBarcodes.removeViewAt(i)
+                binding.createProductBarcodes.removeViewAt(1)
+
+        viewModel.reInitFields()
+        binding.createProductImage.setImageResource(R.drawable.ic_product)
     }
 
     private fun handleBarcodeScan(code: String) {
@@ -480,7 +480,6 @@ may reactivate this in case of the user wants to change the marge when changing 
             viewModel.codesList.value?.add("temporary")
         binding.createProductBarcodes.addView(view)
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         Log.d(TAG, "onOptionsItemSelected: item pressed!!!")

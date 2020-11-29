@@ -15,6 +15,10 @@ interface ProductsDao {
     fun getAllProductsWithBarcodes(): DataSource.Factory<Int, ProductWithBarcodes>
 
     @Transaction
+    @Query("SELECT * FROM products")
+    fun getAllProductsWithBarCodesSingle(): Single<List<ProductWithBarcodes>>
+
+    @Transaction
     @Query("SELECT * FROM products JOIN barcodes ON products.PRODUCT_ID = barcodes.PRODUCT WHERE barcodes.CODE LIKE '%'||:barcode||'%'")
     fun searchProductByBarcode(barcode: String): DataSource.Factory<Int, AllAboutAProduct>
 
