@@ -193,4 +193,6 @@
     <string name="ip_address">IP Address</string>
     <string name="actions">Actions</string>
     <string name="send_to_server">Send Updates To Server</string>
+    <string name="warehouse">Warhouse</string>
+    <string name="warehouse_code">Warehouse Code</string>
 </resources>

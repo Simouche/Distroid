@@ -1,11 +1,15 @@
 package com.safesoft.safemobile.ui.purchases
 
+import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.db.entity.Purchases
 import com.safesoft.safemobile.databinding.FragmentPurchasesListItemBinding
 import com.safesoft.safemobile.ui.generics.adapter.GenericPagedListAdapter
 import com.safesoft.safemobile.ui.generics.viewholder.BindingViewHolder
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.*
 import javax.inject.Inject
 
 class PurchasesRecyclerAdapter @Inject constructor() :
@@ -21,6 +25,7 @@ class PurchasesRecyclerAdapter @Inject constructor() :
     ) {
         if (getItemViewType(position) != emptyView)
             holder.binding?.purchase = getItem(position)
+
         super.onBindViewHolder(holder, position)
     }
 

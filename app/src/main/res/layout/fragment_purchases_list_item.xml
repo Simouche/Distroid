@@ -6,6 +6,8 @@
         <variable
             name="purchase"
             type="com.safesoft.safemobile.backend.db.entity.Purchases" />
+
+        <import type="com.safesoft.safemobile.backend.utils.ExtensionsKt" />
     </data>
 
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -46,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/list_item_content_margin"
-                android:text="@{@string/invoice_date(purchase.date)}"
+                android:text="@{@string/invoice_date(ExtensionsKt.formatted(purchase.date))}"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/purchase_invoice_number_display"
                 app:layout_constraintTop_toTopOf="parent" />

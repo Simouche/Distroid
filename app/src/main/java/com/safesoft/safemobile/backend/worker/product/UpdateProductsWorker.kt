@@ -19,21 +19,12 @@ class UpdateProductsWorker @WorkerInject constructor(
     val TAG = this::class.simpleName
 
     override fun createWork(): Single<Result> {
-        return Single.fromObservable {
-            productsRepository
-                .getAllProductsWithBarCodesSingle()
-                .flatMap { productsRepository.updateProducts(it) }
-                .doOnSuccess { Log.d(TAG, "createWork: finished sending products to server") }
-                .doOnError { it.printStackTrace() }
-                .observeOn(Schedulers.io())
-                .subscribe()
-        }
+        return productsRepository
+            .getAllProductsWithBarCodesSingle()
+            .flatMap { productsRepository.updateProducts(it) }
+            .map { Result.success() }
+            .observeOn(Schedulers.io())
+            .onErrorReturn { Result.retry() }
     }
 
-/*
-    return  productsRepository.updateProducts(products).doOnSuccess {
-        Log.d(
-            TAG,
-            "createWork: syccess"
-        ) }.map { Result.success() }.onErrorReturn { Result.failure() }*/
 }

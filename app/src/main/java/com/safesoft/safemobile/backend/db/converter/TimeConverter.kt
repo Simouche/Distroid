@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.backend.db.converter
 
 import androidx.room.TypeConverter
+import java.time.LocalDate
 import java.util.*
 
 class TimeConverter {

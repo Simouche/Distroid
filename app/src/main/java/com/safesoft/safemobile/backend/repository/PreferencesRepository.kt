@@ -60,4 +60,8 @@ class PreferencesRepository @Inject constructor(private val sharedPreferences: S
 
     fun setServerIp(value: String) =
         sharedPreferencesEditor.putString("server_ip", value).commit()
+
+    fun getWarehouseCode() = sharedPreferences.getString("warehouse_code", "01")
+
+    fun setWareHouseCode(value: String) = sharedPreferencesEditor.putString("warehouse_code", value)
 }

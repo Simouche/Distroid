@@ -187,4 +187,5 @@
     <string name="ip_address">Adresse IP</string>
     <string name="actions">Actions</string>
     <string name="send_to_server">Envoyer les mises à jour au serveur</string>
+    <string name="warehouse_code">Warehouse Code</string>
 </resources>

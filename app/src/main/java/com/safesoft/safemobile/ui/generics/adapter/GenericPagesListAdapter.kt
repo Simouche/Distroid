@@ -15,6 +15,8 @@ import com.safesoft.safemobile.ui.generics.viewholder.BindingViewHolder
 open class GenericPagedListAdapter<O, T : ViewDataBinding>(DIFF_CALLBACK: DiffUtil.ItemCallback<O>) :
     PagedListAdapter<O, BindingViewHolder<T>>(DIFF_CALLBACK) {
 
+    protected val TAG = this::class.simpleName
+
     var onNormalClickListener: OnItemClickListener? = null
     var onLongClickListener: OnItemLongClickListener? = null
     open var layout: Int = 0

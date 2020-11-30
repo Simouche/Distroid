@@ -5,6 +5,8 @@ import java.math.BigInteger
 import java.math.RoundingMode
 import java.security.MessageDigest
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 //extension function into the String class
@@ -52,4 +54,10 @@ fun String.doubleValue(): Double {
 
 fun String.justADot(): Boolean {
     return this.length == 1 && this.contains(".")
+}
+
+fun Date.formatted(): String {
+    val pattern = "dd/MM/yyyy HH:mm"
+    val dateFormat = SimpleDateFormat(pattern)
+    return dateFormat.format(this)
 }

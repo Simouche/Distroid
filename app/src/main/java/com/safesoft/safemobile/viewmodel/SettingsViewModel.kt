@@ -9,6 +9,7 @@ import com.safesoft.safemobile.backend.worker.ClearTablesWorker
 import com.safesoft.safemobile.backend.worker.ClientsWorker
 import com.safesoft.safemobile.backend.worker.product.ProductsWorker
 import com.safesoft.safemobile.backend.worker.ProvidersWorker
+import com.safesoft.safemobile.backend.worker.PurchaseWorker
 import com.safesoft.safemobile.backend.worker.product.UpdateProductsWorker
 import java.util.*
 
@@ -22,6 +23,9 @@ class SettingsViewModel @ViewModelInject constructor(
     private val ids = mutableMapOf<String, UUID>()
 
     val ipAddress = MutableLiveData<String>().apply { value = preferencesRepository.getServerIp() }
+
+    val warehouseCode =
+        MutableLiveData<String>().apply { value = preferencesRepository.getWarehouseCode() }
 
     val isSyncing = MutableLiveData<Boolean>().apply { value = false }
 
@@ -102,8 +106,8 @@ class SettingsViewModel @ViewModelInject constructor(
 
     fun updateServer() {
         workManagerInstance.enqueue(
-            OneTimeWorkRequestBuilder<UpdateProductsWorker>()
-                .addTag("products_update").build()
+            OneTimeWorkRequestBuilder<PurchaseWorker>()
+                .addTag("purchases_update").build()
         )
     }
 

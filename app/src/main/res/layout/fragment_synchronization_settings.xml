@@ -43,6 +43,27 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/warehouse" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/warehouse_code_setting"
+                android:layout_width="@dimen/_160sdp"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint="@string/warehouse_code"
+                android:inputType="text"
+                android:text="@={viewModel.warehouseCode}" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@color/black" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/periodic_synchronization" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
@@ -128,6 +149,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
+                android:enabled="false"
                 android:checked="@={viewModel.trackingSync}"
                 android:text="@string/tracking_history" />
 

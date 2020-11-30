@@ -31,7 +31,10 @@ data class Purchases(
     @ColumnInfo(name = "NOTE") val note: String?,
     @ColumnInfo(name = "DONE", defaultValue = "0") val done: Boolean,
     @ColumnInfo(name = "PAYMENT", defaultValue = "0") val payment: Double = 0.0
-)
+) {
+    @Ignore
+    lateinit var stringDate: String
+}
 
 /**
  * total = quantity * productPriceDiscounted
@@ -83,7 +86,7 @@ data class PurchaseWithLines(
 data class AllAboutAPurchase(
     @Embedded val purchase: Purchases,
     @Relation(
-        parentColumn = "PURCHASE_ID",
+        parentColumn = "id",
         entityColumn = "PURCHASE"
     ) val purchaseLines: List<PurchaseLines>,
     @Relation(
@@ -178,7 +181,7 @@ data class AllAboutASale(
         childColumns = arrayOf("CLIENT"),
         onUpdate = ForeignKey.CASCADE,
         onDelete = ForeignKey.CASCADE
-    )],indices = [Index(value = ["CLIENT"], unique = false)]
+    )], indices = [Index(value = ["CLIENT"], unique = false)]
 )
 data class ClientPayments(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "ID") val id: Long,

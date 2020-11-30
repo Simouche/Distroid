@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
+import com.safesoft.safemobile.backend.db.entity.AllAboutAPurchase
 import com.safesoft.safemobile.backend.db.entity.PurchaseLines
 import com.safesoft.safemobile.backend.db.entity.PurchaseWithLines
 import com.safesoft.safemobile.backend.db.entity.Purchases
@@ -23,6 +24,10 @@ interface PurchasesDao {
     @Transaction
     @Query("SELECT * FROM Purchases")
     fun getAllPurchasesWithLines(): Flowable<List<PurchaseWithLines>>
+
+    @Transaction
+    @Query("SELECT * FROM Purchases")
+    fun getAllPurchasesWithAllInfo(): Single<List<AllAboutAPurchase>>
 
     @Insert
     fun insertNewPurchase(purchase: Purchases): Single<Long>
