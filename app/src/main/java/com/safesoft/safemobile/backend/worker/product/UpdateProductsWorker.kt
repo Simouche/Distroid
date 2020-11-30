@@ -30,4 +30,10 @@ class UpdateProductsWorker @WorkerInject constructor(
         }
     }
 
+/*
+    return  productsRepository.updateProducts(products).doOnSuccess {
+        Log.d(
+            TAG,
+            "createWork: syccess"
+        ) }.map { Result.success() }.onErrorReturn { Result.failure() }*/
 }
