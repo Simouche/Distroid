@@ -17,6 +17,8 @@ class ProductsRepository @Inject constructor(
 
     fun getAllProductsWithBarCodesSingle() = productsDao.getAllProductsWithBarCodesSingle()
 
+    fun getAllNewProductsWithBarCodes() = productsDao.getAllNewProductsWithBarCodes()
+
     fun getAllProductsAllInfo() = productsDao.getAllProductsWithAllInfo()
 
     fun getAllProductsWithExpirationDates() = productsDao.getAllProductsWithExpirationDates()
@@ -37,6 +39,8 @@ class ProductsRepository @Inject constructor(
 
     fun addProducts(vararg products: Products) = productsDao.addProducts(*products)
 
+    fun addProduct(product:Products) = productsDao.addProduct(product)
+
     fun getAllBrands(query: String) = productsDao.getAllBrands(query)
 
     fun addBrand(brand: Brands) = productsDao.addBrand(brand)
@@ -47,6 +51,7 @@ class ProductsRepository @Inject constructor(
 
     suspend fun getLatestProduct() = productsDao.getLatestProduct()
 
-    fun updateProducts(products: List<ProductWithBarcodes>) = productsService.updateProducts(products)
+    fun updateProducts(products: List<ProductWithBarcodes>) =
+        productsService.updateProducts(products)
 
 }

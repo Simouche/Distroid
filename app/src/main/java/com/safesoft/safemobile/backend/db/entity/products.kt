@@ -86,10 +86,18 @@ data class Products(
     ) val sellPriceHalfWholeTTC: Double = 0.0,
     @ColumnInfo(name = "PHOTO") val photo: String? = null,
     @ColumnInfo(name = "QUANTITY_PER_PACKAGE") val quantityPerPackage: Long? = null,
-    @SerializedName("promo") @ColumnInfo(name = "PROMO", defaultValue = "0") val promotion: Double = 0.0,
+    @SerializedName("promo") @ColumnInfo(
+        name = "PROMO",
+        defaultValue = "0"
+    ) val promotion: Double = 0.0,
     @ColumnInfo(name = "PROMO_THRESHOLD", defaultValue = "1") val promotionThreshold: Int = 1,
-    @ColumnInfo(name = "BRAND") val brand: Long? = null
+    @ColumnInfo(name = "BRAND") val brand: Long? = null,
+    @ColumnInfo(name = "IN_APP") val inApp: Boolean = false,
+    @ColumnInfo(name = "SYNCHED") val synched: Boolean = false
 ) {
+    @Ignore
+    @SerializedName("barcodes")
+    lateinit var barcodes: List<BarCode>
 
     /**
      * Calculates the sell price details with discount on the HT total
@@ -154,6 +162,8 @@ data class Products(
             return randomString
         }
     }
+
+    data class BarCode(val codeBareSyn: String)
 }
 
 @Entity(
@@ -175,7 +185,9 @@ data class ExpirationDates(
 @Entity(tableName = "brands", indices = [Index(value = ["NAME"], unique = true)])
 data class Brands(
     @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo(name = "NAME") val name: String
+    @ColumnInfo(name = "NAME") val name: String,
+    @ColumnInfo(name = "IN_APP") val inApp: Boolean = false,
+    @ColumnInfo(name = "SYNCHED") val synched: Boolean = false
 ) {
     override fun toString(): String = name
 }

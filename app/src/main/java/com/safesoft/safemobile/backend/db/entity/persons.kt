@@ -45,7 +45,9 @@ data class Providers(
     @SerializedName("notes") @ColumnInfo(name = "NOTE") val note: String? = null,
     /*@SerializedName("codeClient")*/ @ColumnInfo(name = "CLIENT") val client: Long? = null,
     @Embedded val fiscalData: FiscalData? = null,
-    @Embedded val location: Location? = null
+    @Embedded val location: Location? = null,
+    @ColumnInfo(name = "IN_APP") val inApp: Boolean = false,
+    @ColumnInfo(name = "SYNCHED") val synched: Boolean = false
 ) {
 
     fun getAllPhones(): List<String>? {
@@ -118,7 +120,9 @@ data class Clients(
     @SerializedName("note") @ColumnInfo(name = "NOTE") val note: String? = null,
     @ColumnInfo(name = "PROVIDER") val provider: Long? = null,
     @Embedded val fiscalData: FiscalData? = null,
-    @Embedded val location: Location? = null
+    @Embedded val location: Location? = null,
+    @ColumnInfo(name = "IN_APP") val inApp: Boolean = false,
+    @ColumnInfo(name = "SYNCHED") val synched: Boolean = false
 ) {
     override fun toString(): String = "$code $name"
 

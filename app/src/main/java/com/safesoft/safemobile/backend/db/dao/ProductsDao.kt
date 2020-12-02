@@ -19,6 +19,10 @@ interface ProductsDao {
     fun getAllProductsWithBarCodesSingle(): Single<List<ProductWithBarcodes>>
 
     @Transaction
+    @Query("SELECT * FROM products WHERE IN_APP = 1 And SYNCHED = 0")
+    fun getAllNewProductsWithBarCodes(): Single<List<ProductWithBarcodes>>
+
+    @Transaction
     @Query("SELECT * FROM products JOIN barcodes ON products.PRODUCT_ID = barcodes.PRODUCT WHERE barcodes.CODE LIKE '%'||:barcode||'%'")
     fun searchProductByBarcode(barcode: String): DataSource.Factory<Int, AllAboutAProduct>
 
@@ -61,13 +65,16 @@ interface ProductsDao {
     fun getAllBrands(query: String): Flowable<List<Brands>>
 
     @Insert
-    fun addProducts(vararg providers: Products): Completable
+    fun addProducts(vararg products: Products): Completable
+
+    @Insert
+    fun addProduct( product: Products): Single<Long>
 
     @Update
-    fun updateProducts(vararg providers: Products): Completable
+    fun updateProducts(vararg products: Products): Completable
 
     @Delete
-    fun deleteProducts(vararg providers: Products): Completable
+    fun deleteProducts(vararg products: Products): Completable
 
     @Insert
     fun addBrand(vararg brands: Brands): Completable

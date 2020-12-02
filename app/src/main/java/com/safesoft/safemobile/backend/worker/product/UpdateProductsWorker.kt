@@ -20,7 +20,7 @@ class UpdateProductsWorker @WorkerInject constructor(
 
     override fun createWork(): Single<Result> {
         return productsRepository
-            .getAllProductsWithBarCodesSingle()
+            .getAllNewProductsWithBarCodes()
             .flatMap { productsRepository.updateProducts(it) }
             .map { Result.success() }
             .observeOn(Schedulers.io())

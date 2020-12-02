@@ -114,7 +114,9 @@ class ProductsViewModel @ViewModelInject constructor(
             sellPriceHalfWholeTTC = fields.sellPrice3TTC.value?.doubleValue() ?: 0.0,
             brand = fields.brand.value,
             promotion = fields.promotion.value?.toDouble() ?: 0.0,
-            photo = fields.photo.value
+            photo = fields.photo.value,
+            synched = false,
+            inApp = true
         )
         return saveProduct(product)
     }

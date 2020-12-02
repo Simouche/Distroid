@@ -86,7 +86,9 @@ class ClientsViewModel @ViewModelInject constructor(
             Location(
                 fields.longitude.value ?: 0.0,
                 fields.latitude.value ?: 0.0
-            )
+            ),
+            synched = false,
+            inApp = true
         )
         return saveProvider(client)
     }

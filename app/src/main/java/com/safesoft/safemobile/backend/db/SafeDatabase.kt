@@ -12,7 +12,7 @@ import com.safesoft.safemobile.backend.db.entity.*
         Providers::class, Barcodes::class, Products::class, ExpirationDates::class, Brands::class,
         ProductProviderCrossRef::class, Clients::class, ClientPayments::class, ProviderPayments::class,
         Inventories::class, InventoryLines::class],
-    version = 1
+    version = 2
 )
 @TypeConverters(TimeConverter::class)
 abstract class SafeDatabase : RoomDatabase() {
