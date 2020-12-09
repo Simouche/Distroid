@@ -6,7 +6,7 @@
 
         <variable
             name="client"
-            type="com.safesoft.safemobile.backend.db.entity.Clients" />
+            type="com.safesoft.safemobile.backend.db.local.entity.Clients" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

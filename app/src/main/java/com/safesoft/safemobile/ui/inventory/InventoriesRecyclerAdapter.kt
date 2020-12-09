@@ -2,7 +2,7 @@ package com.safesoft.safemobile.ui.inventory
 
 import androidx.recyclerview.widget.DiffUtil
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.InventoryWithLines
+import com.safesoft.safemobile.backend.db.local.entity.InventoryWithLines
 import com.safesoft.safemobile.databinding.FragmentInventoryListItemBinding
 import com.safesoft.safemobile.ui.generics.adapter.GenericPagedListAdapter
 import com.safesoft.safemobile.ui.generics.viewholder.BindingViewHolder

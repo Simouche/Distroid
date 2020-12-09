@@ -1,9 +1,8 @@
 package com.safesoft.safemobile.backend.repository
 
-import com.safesoft.safemobile.backend.api.service.ClientService
 import com.safesoft.safemobile.backend.api.service.ProviderService
-import com.safesoft.safemobile.backend.db.dao.ProvidersDao
-import com.safesoft.safemobile.backend.db.entity.Providers
+import com.safesoft.safemobile.backend.db.local.dao.ProvidersDao
+import com.safesoft.safemobile.backend.db.local.entity.Providers
 import javax.inject.Inject
 
 class ProvidersRepository @Inject constructor(

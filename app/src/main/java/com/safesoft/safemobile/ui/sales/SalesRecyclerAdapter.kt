@@ -2,7 +2,7 @@ package com.safesoft.safemobile.ui.sales
 
 import androidx.recyclerview.widget.DiffUtil
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.Sales
+import com.safesoft.safemobile.backend.db.local.entity.Sales
 import com.safesoft.safemobile.databinding.FragmentSalesListItemBinding
 import com.safesoft.safemobile.ui.generics.adapter.GenericPagedListAdapter
 import com.safesoft.safemobile.ui.generics.viewholder.BindingViewHolder

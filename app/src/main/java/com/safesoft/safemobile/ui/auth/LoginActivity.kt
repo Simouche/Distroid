@@ -5,13 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.room.EmptyResultSetException
 import com.safesoft.safemobile.MainActivity
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.Users
+import com.safesoft.safemobile.backend.db.local.entity.Users
 import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.databinding.ActivityLoginBinding
 import com.safesoft.safemobile.ui.generics.BaseActivity

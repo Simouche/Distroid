@@ -2,7 +2,7 @@ package com.safesoft.safemobile.ui.providers
 
 import androidx.recyclerview.widget.DiffUtil
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.Providers
+import com.safesoft.safemobile.backend.db.local.entity.Providers
 import com.safesoft.safemobile.databinding.FragmentProviderListItemBinding
 import com.safesoft.safemobile.ui.generics.ContactRecycler
 import com.safesoft.safemobile.ui.generics.adapter.GenericPagedListAdapter

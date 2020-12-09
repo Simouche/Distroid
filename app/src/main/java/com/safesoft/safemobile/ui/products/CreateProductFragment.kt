@@ -17,8 +17,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.textfield.TextInputLayout
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.Barcodes
-import com.safesoft.safemobile.backend.db.entity.Brands
+import com.safesoft.safemobile.backend.db.local.entity.Barcodes
+import com.safesoft.safemobile.backend.db.local.entity.Brands
 import com.safesoft.safemobile.backend.utils.doubleValue
 import com.safesoft.safemobile.backend.utils.formatted
 import com.safesoft.safemobile.backend.utils.isEmptyOrBlank

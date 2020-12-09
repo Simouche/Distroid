@@ -5,12 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
-import com.safesoft.safemobile.backend.db.entity.PurchaseLines
-import com.safesoft.safemobile.backend.db.entity.Purchases
+import com.safesoft.safemobile.backend.db.local.entity.AllAboutAProduct
+import com.safesoft.safemobile.backend.db.local.entity.PurchaseLines
+import com.safesoft.safemobile.backend.db.local.entity.Purchases
 import com.safesoft.safemobile.backend.repository.PurchasesRepository
 import com.safesoft.safemobile.backend.utils.Resource
-import com.safesoft.safemobile.backend.utils.getCurrentDateTime
 import com.safesoft.safemobile.forms.PurchaseForm
 import com.safesoft.safemobile.ui.products.ProductCalculator
 import java.util.*

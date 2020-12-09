@@ -68,6 +68,7 @@ class SynchronizationSettings : BaseFragment() {
         viewModel.inventoriesSync.observe(viewLifecycleOwner, viewModel::setSyncInventoriesModule)
         viewModel.trackingSync.observe(viewLifecycleOwner, viewModel::setSyncTrackingModule)
         viewModel.ipAddress.observe(viewLifecycleOwner, viewModel::setServerIp)
+        viewModel.dbPath.observe(viewLifecycleOwner, viewModel::setDBPath)
 
         binding.syncPeriod.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(

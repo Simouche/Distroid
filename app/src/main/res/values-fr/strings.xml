@@ -188,4 +188,6 @@
     <string name="actions">Actions</string>
     <string name="send_to_server">Envoyer les mises à jour au serveur</string>
     <string name="warehouse_code">Warehouse Code</string>
+    <string name="test">Test</string>
+    <string name="database">Database</string>
 </resources>

@@ -1,11 +1,10 @@
-package com.safesoft.safemobile.backend.db.dao
+package com.safesoft.safemobile.backend.db.local.dao
 
 import androidx.paging.DataSource
 import androidx.room.*
-import com.safesoft.safemobile.backend.db.entity.*
+import com.safesoft.safemobile.backend.db.local.entity.*
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Single
 
 @Dao

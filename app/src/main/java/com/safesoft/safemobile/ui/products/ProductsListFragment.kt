@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
+import com.safesoft.safemobile.backend.db.local.entity.AllAboutAProduct
 import com.safesoft.safemobile.backend.utils.doubleValue
 import com.safesoft.safemobile.databinding.DialogSelectProductBinding
 import com.safesoft.safemobile.databinding.FragmentProductsListBinding

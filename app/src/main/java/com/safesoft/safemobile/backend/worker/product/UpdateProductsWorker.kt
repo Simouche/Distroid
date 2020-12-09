@@ -1,12 +1,10 @@
 package com.safesoft.safemobile.backend.worker.product
 
 import android.content.Context
-import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
-import com.safesoft.safemobile.backend.db.entity.Products
 import com.safesoft.safemobile.backend.repository.ProductsRepository
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers

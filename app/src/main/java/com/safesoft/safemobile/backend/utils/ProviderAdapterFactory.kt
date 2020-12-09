@@ -5,9 +5,8 @@ import com.google.gson.TypeAdapter
 import com.google.gson.TypeAdapterFactory
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
-import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import com.safesoft.safemobile.backend.db.entity.Providers
+import com.safesoft.safemobile.backend.db.local.entity.Providers
 
 class ProviderAdapterFactory : TypeAdapterFactory {
 

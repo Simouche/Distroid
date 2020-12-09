@@ -1,11 +1,11 @@
-package com.safesoft.safemobile.backend.db
+package com.safesoft.safemobile.backend.db.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.safesoft.safemobile.backend.db.converter.TimeConverter
-import com.safesoft.safemobile.backend.db.dao.*
-import com.safesoft.safemobile.backend.db.entity.*
+import com.safesoft.safemobile.backend.db.local.converter.TimeConverter
+import com.safesoft.safemobile.backend.db.local.dao.*
+import com.safesoft.safemobile.backend.db.local.entity.*
 
 @Database(
     entities = [Users::class, Purchases::class, Sales::class, PurchaseLines::class, SaleLines::class,

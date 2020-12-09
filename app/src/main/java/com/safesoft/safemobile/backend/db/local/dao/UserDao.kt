@@ -1,7 +1,7 @@
-package com.safesoft.safemobile.backend.db.dao
+package com.safesoft.safemobile.backend.db.local.dao
 
 import androidx.room.*
-import com.safesoft.safemobile.backend.db.entity.Users
+import com.safesoft.safemobile.backend.db.local.entity.Users
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single

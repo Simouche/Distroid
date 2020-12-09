@@ -15,7 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.textfield.TextInputEditText
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.Providers
+import com.safesoft.safemobile.backend.db.local.entity.Providers
 import com.safesoft.safemobile.databinding.DialogFiscalInformationsClientBinding
 import com.safesoft.safemobile.databinding.DialogNoteClientBinding
 import com.safesoft.safemobile.databinding.FragmentCreateClientBinding

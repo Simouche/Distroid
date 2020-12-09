@@ -1,6 +1,6 @@
 package com.safesoft.safemobile.backend.api.response
 
-import com.safesoft.safemobile.backend.db.entity.Products
+import com.safesoft.safemobile.backend.db.local.entity.Products
 
 class ProductReponse(status: Boolean, message: String, product: Products) :
     BaseResponse(status, message)

@@ -1,10 +1,10 @@
-package com.safesoft.safemobile.backend.db.dao
+package com.safesoft.safemobile.backend.db.local.dao
 
 import androidx.paging.DataSource
 import androidx.room.*
-import com.safesoft.safemobile.backend.db.entity.Inventories
-import com.safesoft.safemobile.backend.db.entity.InventoryLines
-import com.safesoft.safemobile.backend.db.entity.InventoryWithLines
+import com.safesoft.safemobile.backend.db.local.entity.Inventories
+import com.safesoft.safemobile.backend.db.local.entity.InventoryLines
+import com.safesoft.safemobile.backend.db.local.entity.InventoryWithLines
 import io.reactivex.Single
 
 @Dao

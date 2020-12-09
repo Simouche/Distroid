@@ -5,7 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-import com.safesoft.safemobile.backend.db.entity.*
+import com.safesoft.safemobile.backend.db.local.entity.AllAboutAProduct
+import com.safesoft.safemobile.backend.db.local.entity.Inventories
+import com.safesoft.safemobile.backend.db.local.entity.InventoryLines
+import com.safesoft.safemobile.backend.db.local.entity.InventoryWithLines
 import com.safesoft.safemobile.backend.repository.InventoryRepository
 import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.forms.InventoryForm

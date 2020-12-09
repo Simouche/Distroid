@@ -1,13 +1,11 @@
-package com.safesoft.safemobile.backend.db.dao
+package com.safesoft.safemobile.backend.db.local.dao
 
 import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Transaction
-import com.safesoft.safemobile.backend.db.entity.SaleLines
-import com.safesoft.safemobile.backend.db.entity.Sales
-import io.reactivex.Flowable
+import com.safesoft.safemobile.backend.db.local.entity.SaleLines
+import com.safesoft.safemobile.backend.db.local.entity.Sales
 import io.reactivex.Single
 
 @Dao

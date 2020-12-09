@@ -11,7 +11,7 @@ import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.backend.utils.setError
 import com.safesoft.safemobile.forms.LoginForm
 import java.util.*
-import com.safesoft.safemobile.backend.db.entity.Users as entityUser
+import com.safesoft.safemobile.backend.db.local.entity.Users as entityUser
 
 
 class AuthViewModel @ViewModelInject constructor(

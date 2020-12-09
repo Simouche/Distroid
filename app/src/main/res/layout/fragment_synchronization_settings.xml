@@ -34,6 +34,27 @@
                 android:inputType="text"
                 android:text="@={viewModel.ipAddress}" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/database" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/database_path_setting"
+                android:layout_width="@dimen/_160sdp"
+                android:layout_height="wrap_content"
+                android:hint="@string/database"
+                android:inputType="text"
+                android:text="@={viewModel.dbPath}" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:onClick="@{()->viewModel.testConnection()}"
+                android:text="@string/test" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
@@ -149,8 +170,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
-                android:enabled="false"
                 android:checked="@={viewModel.trackingSync}"
+                android:enabled="false"
                 android:text="@string/tracking_history" />
 
             <View

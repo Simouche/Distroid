@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.backend.repository
 
 import android.content.SharedPreferences
+import java.util.*
 import javax.inject.Inject
 
 class PreferencesRepository @Inject constructor(private val sharedPreferences: SharedPreferences) {
@@ -56,10 +57,20 @@ class PreferencesRepository @Inject constructor(private val sharedPreferences: S
 
     fun setLanguage(value: String) = sharedPreferencesEditor.putString("language", value).commit()
 
-    fun getServerIp() = sharedPreferences.getString("server_ip", "192.168.1.18:8080")
+    fun getLocalServerIp() = sharedPreferences.getString("local_server_ip", "192.168.1.18")
 
-    fun setServerIp(value: String) =
-        sharedPreferencesEditor.putString("server_ip", value).commit()
+    fun setLocalServerIp(value: String) =
+        sharedPreferencesEditor.putString("local_server_ip", value).commit()
+
+    fun getDBPath(): String {
+        var path = sharedPreferences.getString("local_db_path", "D:\\PME PRO")
+        path = if (!path?.toLowerCase(Locale.getDefault())?.endsWith("fdb")!!) "$path.FDB" else path
+        return path
+    }
+
+    fun setDBPath(value: String) =
+        sharedPreferencesEditor.putString("local_db_path", value.replace("/", "\\")).commit()
+
 
     fun getWarehouseCode() = sharedPreferences.getString("warehouse_code", "01")
 

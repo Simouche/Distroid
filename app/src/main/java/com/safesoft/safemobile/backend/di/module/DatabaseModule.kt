@@ -7,8 +7,8 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.safesoft.safemobile.backend.PREFERENCES_ENCRYPT_KEY
 import com.safesoft.safemobile.backend.PREFERENCES_NAME
-import com.safesoft.safemobile.backend.db.SafeDatabase
-import com.safesoft.safemobile.backend.db.dao.*
+import com.safesoft.safemobile.backend.db.local.SafeDatabase
+import com.safesoft.safemobile.backend.db.local.dao.*
 import com.safesoft.safemobile.backend.utils.asSHA256
 import com.securepreferences.SecurePreferences
 import dagger.Module

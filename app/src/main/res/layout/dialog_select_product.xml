@@ -8,7 +8,7 @@
 
         <variable
             name="product"
-            type="com.safesoft.safemobile.backend.db.entity.AllAboutAProduct" />
+            type="com.safesoft.safemobile.backend.db.local.entity.AllAboutAProduct" />
 
         <variable
             name="detail_mode"

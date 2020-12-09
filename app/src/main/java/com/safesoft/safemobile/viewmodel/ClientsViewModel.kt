@@ -9,10 +9,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.safesoft.safemobile.backend.api.response.ClientsResponse
-import com.safesoft.safemobile.backend.db.entity.Clients
-import com.safesoft.safemobile.backend.db.entity.FiscalData
-import com.safesoft.safemobile.backend.db.entity.Location
-import com.safesoft.safemobile.backend.db.entity.Providers
+import com.safesoft.safemobile.backend.db.local.entity.Clients
+import com.safesoft.safemobile.backend.db.local.entity.FiscalData
+import com.safesoft.safemobile.backend.db.local.entity.Location
+import com.safesoft.safemobile.backend.db.local.entity.Providers
 import com.safesoft.safemobile.backend.repository.ClientsRepository
 import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.forms.ClientForm

@@ -1,6 +1,6 @@
 package com.safesoft.safemobile.backend.model
 
-import com.safesoft.safemobile.backend.db.entity.Products
+import com.safesoft.safemobile.backend.db.local.entity.Products
 
 data class PurchaseLineModel(
     val product: Products,

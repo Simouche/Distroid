@@ -2,9 +2,7 @@ package com.safesoft.safemobile.ui.products
 
 import androidx.recyclerview.widget.DiffUtil
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
-import com.safesoft.safemobile.backend.db.entity.ProductWithBarcodes
-import com.safesoft.safemobile.backend.db.entity.Products
+import com.safesoft.safemobile.backend.db.local.entity.AllAboutAProduct
 import com.safesoft.safemobile.databinding.ProductListItemBinding
 import com.safesoft.safemobile.ui.generics.adapter.GenericPagedListAdapter
 import com.safesoft.safemobile.ui.generics.viewholder.BindingViewHolder

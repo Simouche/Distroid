@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.PurchaseLines
 import com.safesoft.safemobile.databinding.NoProductsPlaceholderBinding
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener
 import com.safesoft.safemobile.ui.generics.listeners.OnItemLongClickListener

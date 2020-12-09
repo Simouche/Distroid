@@ -16,10 +16,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
-import com.safesoft.safemobile.backend.db.entity.Clients
+import com.safesoft.safemobile.backend.db.local.entity.AllAboutAProduct
+import com.safesoft.safemobile.backend.db.local.entity.Clients
 import com.safesoft.safemobile.backend.utils.doubleValue
 import com.safesoft.safemobile.backend.utils.formatted
 import com.safesoft.safemobile.databinding.DialogDiscountInputSaleBinding

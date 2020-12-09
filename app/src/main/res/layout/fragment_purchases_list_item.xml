@@ -5,7 +5,7 @@
 
         <variable
             name="purchase"
-            type="com.safesoft.safemobile.backend.db.entity.Purchases" />
+            type="com.safesoft.safemobile.backend.db.local.entity.Purchases" />
 
         <import type="com.safesoft.safemobile.backend.utils.ExtensionsKt" />
     </data>

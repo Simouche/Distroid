@@ -5,7 +5,7 @@
 
         <variable
             name="inventory"
-            type="com.safesoft.safemobile.backend.db.entity.InventoryWithLines" />
+            type="com.safesoft.safemobile.backend.db.local.entity.InventoryWithLines" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

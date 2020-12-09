@@ -2,7 +2,7 @@ package com.safesoft.safemobile.backend.api.service
 
 import com.safesoft.safemobile.backend.api.response.BaseResponse
 import com.safesoft.safemobile.backend.api.response.ProductsResponse
-import com.safesoft.safemobile.backend.db.entity.ProductWithBarcodes
+import com.safesoft.safemobile.backend.db.local.entity.ProductWithBarcodes
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.GET

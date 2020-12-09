@@ -6,7 +6,7 @@
 
         <variable
             name="provider"
-            type="com.safesoft.safemobile.backend.db.entity.Providers" />
+            type="com.safesoft.safemobile.backend.db.local.entity.Providers" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

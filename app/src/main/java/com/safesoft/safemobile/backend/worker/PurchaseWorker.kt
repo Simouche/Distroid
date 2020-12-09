@@ -6,8 +6,8 @@ import androidx.hilt.work.WorkerInject
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
 import com.safesoft.safemobile.backend.api.wrapper.UpdatePurchaseWrapper
-import com.safesoft.safemobile.backend.db.entity.AllAboutAPurchase
-import com.safesoft.safemobile.backend.db.entity.ProductWithBarcodes
+import com.safesoft.safemobile.backend.db.local.entity.AllAboutAPurchase
+import com.safesoft.safemobile.backend.db.local.entity.ProductWithBarcodes
 import com.safesoft.safemobile.backend.repository.ProductsRepository
 import com.safesoft.safemobile.backend.repository.PurchasesRepository
 import com.safesoft.safemobile.backend.utils.formatted

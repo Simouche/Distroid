@@ -1,4 +1,4 @@
-package com.safesoft.safemobile.backend.db.entity
+package com.safesoft.safemobile.backend.db.local.entity
 
 import androidx.room.*
 import com.google.gson.annotations.SerializedName

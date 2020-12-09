@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -18,8 +17,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
-import com.safesoft.safemobile.backend.db.entity.Providers
+import com.safesoft.safemobile.backend.db.local.entity.AllAboutAProduct
+import com.safesoft.safemobile.backend.db.local.entity.Providers
 import com.safesoft.safemobile.backend.utils.doubleValue
 import com.safesoft.safemobile.backend.utils.formatted
 import com.safesoft.safemobile.databinding.DialogDiscountInputBinding

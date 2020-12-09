@@ -1,4 +1,4 @@
-package com.safesoft.safemobile.backend.db.dao
+package com.safesoft.safemobile.backend.db.local.dao
 
 import androidx.room.Dao
 import androidx.room.Query

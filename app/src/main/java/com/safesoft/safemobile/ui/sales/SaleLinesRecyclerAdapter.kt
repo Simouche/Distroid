@@ -1,7 +1,7 @@
 package com.safesoft.safemobile.ui.sales
 
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.SaleLines
+import com.safesoft.safemobile.backend.db.local.entity.SaleLines
 import com.safesoft.safemobile.databinding.SaleFormProductsListItemBinding
 import com.safesoft.safemobile.ui.generics.adapter.GenericRecyclerAdapter
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener

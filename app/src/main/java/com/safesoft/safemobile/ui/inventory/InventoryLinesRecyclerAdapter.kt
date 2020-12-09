@@ -1,7 +1,7 @@
 package com.safesoft.safemobile.ui.inventory
 
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.InventoryLines
+import com.safesoft.safemobile.backend.db.local.entity.InventoryLines
 import com.safesoft.safemobile.databinding.InventoryFormProductsListItemBinding
 import com.safesoft.safemobile.ui.generics.adapter.GenericRecyclerAdapter
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener

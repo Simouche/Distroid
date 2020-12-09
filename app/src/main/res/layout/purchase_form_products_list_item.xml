@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="com.safesoft.safemobile.backend.db.entity.PurchaseLines" />
+            type="com.safesoft.safemobile.backend.db.local.entity.PurchaseLines" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

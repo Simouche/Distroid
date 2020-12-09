@@ -1,10 +1,8 @@
 package com.safesoft.safemobile.backend.repository
 
-import com.safesoft.safemobile.backend.db.dao.SalesDao
-import com.safesoft.safemobile.backend.db.entity.PurchaseLines
-import com.safesoft.safemobile.backend.db.entity.Purchases
-import com.safesoft.safemobile.backend.db.entity.SaleLines
-import com.safesoft.safemobile.backend.db.entity.Sales
+import com.safesoft.safemobile.backend.db.local.dao.SalesDao
+import com.safesoft.safemobile.backend.db.local.entity.SaleLines
+import com.safesoft.safemobile.backend.db.local.entity.Sales
 import javax.inject.Inject
 
 class SalesRepository @Inject constructor(private val salesDao: SalesDao) {

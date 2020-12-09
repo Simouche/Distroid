@@ -3,26 +3,35 @@ package com.safesoft.safemobile.viewmodel
 import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.work.*
+import com.safesoft.safemobile.backend.db.remote.RemoteDBRepository
 import com.safesoft.safemobile.backend.repository.PreferencesRepository
 import com.safesoft.safemobile.backend.worker.ClearTablesWorker
 import com.safesoft.safemobile.backend.worker.ClientsWorker
 import com.safesoft.safemobile.backend.worker.product.ProductsWorker
 import com.safesoft.safemobile.backend.worker.ProvidersWorker
 import com.safesoft.safemobile.backend.worker.PurchaseWorker
-import com.safesoft.safemobile.backend.worker.product.UpdateProductsWorker
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class SettingsViewModel @ViewModelInject constructor(
     application: Application,
-    private val preferencesRepository: PreferencesRepository
+    private val preferencesRepository: PreferencesRepository,
+    private val remoteDBRepository: RemoteDBRepository
 ) : BaseAndroidViewModel(application) {
 
     private val workManagerInstance: WorkManager = WorkManager.getInstance(getApplication())
 
     private val ids = mutableMapOf<String, UUID>()
 
-    val ipAddress = MutableLiveData<String>().apply { value = preferencesRepository.getServerIp() }
+    val ipAddress =
+        MutableLiveData<String>().apply { value = preferencesRepository.getLocalServerIp() }
+
+    val dbPath =
+        MutableLiveData<String>().apply { value = preferencesRepository.getDBPath() }
 
     val warehouseCode =
         MutableLiveData<String>().apply { value = preferencesRepository.getWarehouseCode() }
@@ -129,6 +138,15 @@ class SettingsViewModel @ViewModelInject constructor(
 //                    })
     }
 
+    fun testConnection(): Boolean {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                remoteDBRepository.connect()
+            }
+        }
+        return true
+    }
+
 
     fun save() {
 
@@ -153,7 +171,9 @@ class SettingsViewModel @ViewModelInject constructor(
 
     fun setSyncTrackingModule(value: Boolean) = preferencesRepository.setSyncTrackingModule(value)
 
-    fun setServerIp(value: String) = preferencesRepository.setServerIp(value)
+    fun setServerIp(value: String) = preferencesRepository.setLocalServerIp(value)
+
+    fun setDBPath(value: String) = preferencesRepository.setDBPath(value)
 
 
 }

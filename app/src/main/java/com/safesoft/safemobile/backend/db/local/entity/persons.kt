@@ -1,4 +1,4 @@
-package com.safesoft.safemobile.backend.db.entity
+package com.safesoft.safemobile.backend.db.local.entity
 
 import androidx.room.*
 import com.google.gson.annotations.SerializedName
@@ -42,6 +42,8 @@ data class Providers(
         name = "SOLD",
         defaultValue = "0"
     ) val sold: Double? = null,
+    @ColumnInfo(name = "PURCHASES", defaultValue = "0") val purchases: Double? = null,
+    @ColumnInfo(name = "PAYMENT", defaultValue = "0") val payments: Double? = null,
     @SerializedName("notes") @ColumnInfo(name = "NOTE") val note: String? = null,
     /*@SerializedName("codeClient")*/ @ColumnInfo(name = "CLIENT") val client: Long? = null,
     @Embedded val fiscalData: FiscalData? = null,
@@ -59,6 +61,10 @@ data class Providers(
     }
 
     override fun toString(): String = "$code $name"
+
+    fun toMap(): Map<Int, Any> {
+        return mapOf()
+    }
 
     companion object {
         fun generateProviderCode(): String {

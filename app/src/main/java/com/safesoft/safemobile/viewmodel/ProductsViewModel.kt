@@ -4,7 +4,6 @@ import android.database.sqlite.SQLiteConstraintException
 import android.util.Log
 import android.view.View
 import android.widget.EditText
-import androidx.databinding.ObservableArrayList
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,10 +11,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
-import com.safesoft.safemobile.backend.db.entity.Barcodes
-import com.safesoft.safemobile.backend.db.entity.Brands
-import com.safesoft.safemobile.backend.db.entity.Products
+import com.safesoft.safemobile.backend.db.local.entity.AllAboutAProduct
+import com.safesoft.safemobile.backend.db.local.entity.Barcodes
+import com.safesoft.safemobile.backend.db.local.entity.Brands
+import com.safesoft.safemobile.backend.db.local.entity.Products
 import com.safesoft.safemobile.backend.repository.ProductsRepository
 import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.backend.utils.ResourceState

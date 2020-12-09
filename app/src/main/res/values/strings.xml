@@ -195,4 +195,6 @@
     <string name="send_to_server">Send Updates To Server</string>
     <string name="warehouse">Warhouse</string>
     <string name="warehouse_code">Warehouse Code</string>
+    <string name="test">Test</string>
+    <string name="database">Database</string>
 </resources>

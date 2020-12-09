@@ -1,8 +1,8 @@
 package com.safesoft.safemobile.backend.repository
 
-import com.safesoft.safemobile.backend.db.dao.InventoryDao
-import com.safesoft.safemobile.backend.db.entity.Inventories
-import com.safesoft.safemobile.backend.db.entity.InventoryLines
+import com.safesoft.safemobile.backend.db.local.dao.InventoryDao
+import com.safesoft.safemobile.backend.db.local.entity.Inventories
+import com.safesoft.safemobile.backend.db.local.entity.InventoryLines
 import javax.inject.Inject
 
 class InventoryRepository @Inject constructor(private val inventoryDao: InventoryDao) {

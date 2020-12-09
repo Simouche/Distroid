@@ -1,7 +1,7 @@
 package com.safesoft.safemobile.ui.purchases
 
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.PurchaseLines
+import com.safesoft.safemobile.backend.db.local.entity.PurchaseLines
 import com.safesoft.safemobile.databinding.PurchaseFormProductsListItemBinding
 import com.safesoft.safemobile.ui.generics.adapter.GenericRecyclerAdapter
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener

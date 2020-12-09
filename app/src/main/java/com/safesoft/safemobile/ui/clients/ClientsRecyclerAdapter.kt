@@ -1,10 +1,8 @@
 package com.safesoft.safemobile.ui.clients
 
-import android.content.Intent
-import android.net.Uri
 import androidx.recyclerview.widget.DiffUtil
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.Clients
+import com.safesoft.safemobile.backend.db.local.entity.Clients
 import com.safesoft.safemobile.databinding.FragmentClientListItemBinding
 import com.safesoft.safemobile.ui.generics.ContactRecycler
 import com.safesoft.safemobile.ui.generics.adapter.GenericPagedListAdapter

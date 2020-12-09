@@ -13,21 +13,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.safesoft.safemobile.R
-import com.safesoft.safemobile.backend.db.entity.AllAboutAProduct
-import com.safesoft.safemobile.backend.db.entity.Inventories
+import com.safesoft.safemobile.backend.db.local.entity.AllAboutAProduct
 import com.safesoft.safemobile.databinding.FragmentCreateInventoryBinding
-import com.safesoft.safemobile.databinding.FragmentCreatePurchaseBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
 import com.safesoft.safemobile.ui.generics.adapter.GenericSpinnerAdapter
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener
 import com.safesoft.safemobile.ui.generics.onTextChanged
 import com.safesoft.safemobile.ui.products.ProductsListFragment
-import com.safesoft.safemobile.ui.purchases.CreatePurchaseFragment
-import com.safesoft.safemobile.ui.purchases.PurchaseLinesRecyclerAdapter
 import com.safesoft.safemobile.viewmodel.InventoryViewModel
 import com.safesoft.safemobile.viewmodel.ProductsViewModel
-import com.safesoft.safemobile.viewmodel.ProvidersViewModel
-import com.safesoft.safemobile.viewmodel.PurchasesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

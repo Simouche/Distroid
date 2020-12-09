@@ -7,14 +7,10 @@ import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
-import com.safesoft.safemobile.backend.db.entity.Barcodes
-import com.safesoft.safemobile.backend.db.entity.Products
+import com.safesoft.safemobile.backend.db.local.entity.Barcodes
 import com.safesoft.safemobile.backend.repository.ProductsRepository
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class ProductsWorker @WorkerInject constructor(
