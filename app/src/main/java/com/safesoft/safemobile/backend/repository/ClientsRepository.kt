@@ -3,11 +3,13 @@ package com.safesoft.safemobile.backend.repository
 import com.safesoft.safemobile.backend.api.service.ClientService
 import com.safesoft.safemobile.backend.db.local.dao.ClientsDao
 import com.safesoft.safemobile.backend.db.local.entity.Clients
+import com.safesoft.safemobile.backend.db.remote.dao.RemoteClientDao
 import javax.inject.Inject
 
 class ClientsRepository @Inject constructor(
     private val clientsDao: ClientsDao,
-    private val clientService: ClientService
+    private val clientService: ClientService,
+    private val remoteClientDao: RemoteClientDao
 ) {
 
     fun getAllClients() = clientsDao.getAllClients()
@@ -28,5 +30,6 @@ class ClientsRepository @Inject constructor(
 
     fun loadClientsFromServer() = clientService.getAllClients()
 
+    fun loadClientsFromRemote() = remoteClientDao.select()
 
 }

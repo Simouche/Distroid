@@ -99,6 +99,9 @@ data class Products(
     @SerializedName("barcodes")
     lateinit var barcodes: List<BarCode>
 
+    @Ignore
+    lateinit var barcode: String
+
     /**
      * Calculates the sell price details with discount on the HT total
      */
@@ -161,6 +164,10 @@ data class Products(
                 .joinToString("");
             return randomString
         }
+    }
+
+    fun toMap(): Map<Int, Any> {
+        return mapOf()
     }
 
     data class BarCode(val codeBareSyn: String)

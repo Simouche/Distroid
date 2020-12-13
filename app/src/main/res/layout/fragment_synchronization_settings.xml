@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -42,18 +41,33 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/database_path_setting"
-                android:layout_width="@dimen/_160sdp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/database"
                 android:inputType="text"
                 android:text="@={viewModel.dbPath}" />
 
-            <com.google.android.material.button.MaterialButton
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:onClick="@{()->viewModel.testConnection()}"
-                android:text="@string/test" />
+                android:layout_gravity="end">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/test_connection_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/test"
+                    android:visibility="visible" />
+
+                <ProgressBar
+                    android:id="@+id/loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+
+            </FrameLayout>
+
 
             <View
                 android:layout_width="match_parent"

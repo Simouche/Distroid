@@ -88,13 +88,13 @@ class ProductsViewModel @ViewModelInject constructor(
         return data
     }
 
-    private fun saveProduct(vararg products: Products): LiveData<Resource<Int>> {
-        val data = MutableLiveData<Resource<Int>>()
+    private fun saveProduct(vararg products: Products): LiveData<Resource<List<Long>>> {
+        val data = MutableLiveData<Resource<List<Long>>>()
         enqueue(productsRepository.addProducts(*products), data)
         return data
     }
 
-    fun saveProduct(): LiveData<Resource<Int>> {
+    fun saveProduct(): LiveData<Resource<List<Long>>> {
         val fields = productsForm.fields
         val product = Products(
             0,

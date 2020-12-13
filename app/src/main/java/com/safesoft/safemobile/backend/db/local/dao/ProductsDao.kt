@@ -64,10 +64,10 @@ interface ProductsDao {
     fun getAllBrands(query: String): Flowable<List<Brands>>
 
     @Insert
-    fun addProducts(vararg products: Products): Completable
+    fun addProducts(vararg products: Products): Single<List<Long>>
 
     @Insert
-    fun addProduct( product: Products): Single<Long>
+    fun addProduct(product: Products): Single<Long>
 
     @Update
     fun updateProducts(vararg products: Products): Completable

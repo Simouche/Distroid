@@ -7,7 +7,6 @@ import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
-import com.safesoft.safemobile.backend.db.local.entity.Barcodes
 import com.safesoft.safemobile.backend.repository.ProductsRepository
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -22,19 +21,33 @@ class ProductsWorker @WorkerInject constructor(
     val TAG = this::class.simpleName
 
     override fun createWork(): Single<Result> {
-        return productsRepository.getAllProductsFromServer()
+        return productsRepository
+            .loadProductsFromRemoteDB()
             .map {
-                it.products.map { product ->
-                    val rowId = productsRepository.addProduct(product).blockingGet()
-                    val barcodes = mutableListOf<Barcodes>()
-                    for (barcode in product.barcodes)
-                        barcodes.add(Barcodes(0, barcode.codeBareSyn, rowId))
-                    try {
-                        runBlocking { productsRepository.addBarCodes(*barcodes.toTypedArray()) }
-                    } catch (e: SQLiteConstraintException) {
-                        Log.d(TAG, "createWork: failed to insert this barcode:$barcodes")
+                productsRepository.addProducts(*it.toTypedArray()).subscribe({ ids ->
+                    it.map { product ->
+                        productsRepository.loadProductBarCodesFromRemoteDB(
+                            where = "CODE_BARRE = ?",
+                            whereArgs = mapOf(1 to product.barcode)
+                        ).subscribe({ barcodes ->
+                            try {
+                                runBlocking {
+                                    productsRepository.addBarCodes(*barcodes.map { barcode ->
+                                        barcode.copy(
+                                            product = product.id
+                                        )
+                                    }.toTypedArray())
+                                }
+                            } catch (e: SQLiteConstraintException) {
+                                Log.d(TAG, "createWork: failed to insert this barcode:$barcodes")
+                            }
+                        }, { err ->
+                            err.printStackTrace()
+                        })
                     }
-                }
+                }, { err ->
+                    err.printStackTrace()
+                })
                 Result.success()
             }
             .onErrorReturn {

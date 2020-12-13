@@ -7,17 +7,17 @@
 
     <color name="carrot">#e67e22</color>
     <color name="white">#FFFFFF</color>
-    <color name="ver_pistach">#00FF00</color>
-    <color name="vert">#19C414</color>
+    <color name="pistachio_green">#00FF00</color>
+    <color name="green">#19C414</color>
     <color name="emerald">#2ecc71</color>
     <color name="orange">#ff9216</color>
     <color name="sun">#f1c40f</color>
 
-    <color name="vert_clair">#2ecc71</color>
-    <color name="rouge">#e74c3c</color>
+    <color name="light_green">#2ecc71</color>
+    <color name="red">#e74c3c</color>
     <color name="blue">#3498db</color>
-    <color name="jaune">#f1c40f</color>
-    <color name="violet">#8e44ad</color>
+    <color name="yellow">#f1c40f</color>
+    <color name="purple">#8e44ad</color>
     <color name="gray">#bdc3c7</color>
     <color name="sandy_brown">#F4A460</color>
 
@@ -42,7 +42,7 @@
     <color name="viber_color_dark">#59267c</color>
 
 
-    <color name="primary_dark">#E12929</color>
+    <color name="red_darker">#E12929</color>
     <color name="lightcoral">#F08080</color>
     <color name="accent">#FFFFFF</color>
 
@@ -57,7 +57,7 @@
     <color name="aluminum">#999999</color>
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
-    <color name="primary">#E43F3F</color>
+    <color name="error">#E43F3F</color>
     <color name="transparent">#00000000</color>
 
 </resources>

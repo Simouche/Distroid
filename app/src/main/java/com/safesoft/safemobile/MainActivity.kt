@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -16,6 +17,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.safesoft.safemobile.viewmodel.AuthViewModel
+import com.safesoft.safemobile.viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val viewModel: AuthViewModel by viewModels()
+    private val settingsViewModel: SettingsViewModel by viewModels()
 
 
     private lateinit var drawerLayout: DrawerLayout
@@ -56,6 +59,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        print(settingsViewModel.trigger)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
@@ -75,6 +83,11 @@ class MainActivity : AppCompatActivity() {
                     .getLaunchIntentForPackage(baseContext.packageName)
                 i?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(i)
+
+            }
+            R.id.action_settings -> {
+                Navigation.findNavController(supportFragmentManager.primaryNavigationFragment!!.requireView())
+                    .navigate(R.id.action_nav_dashboard_to_action_settings)
             }
             android.R.id.home -> {
                 if (drawerLayout.isDrawerOpen(GravityCompat.START))

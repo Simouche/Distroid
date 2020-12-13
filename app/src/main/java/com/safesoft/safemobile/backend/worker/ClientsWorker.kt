@@ -24,8 +24,8 @@ class ClientsWorker @WorkerInject constructor(
     override fun createWork(): Single<Result> {
         return clientsRepository
             .deleteAllClients()
-            .andThen(clientsRepository.loadClientsFromServer())
-            .flatMapCompletable { clientsRepository.addClients(*it.clients.toTypedArray()) }
+            .andThen(clientsRepository.loadClientsFromRemote())
+            .flatMapCompletable { clientsRepository.addClients(*it.toTypedArray()) }
             .toSingleDefault(Result.success())
             .onErrorReturn {
                 Log.d(TAG, "createWork: error happened!")

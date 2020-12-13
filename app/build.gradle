@@ -131,9 +131,9 @@ dependencies {
     implementation 'com.scottyab:secure-preferences-lib:0.1.7'
     implementation 'com.nabinbhandari.android:permissions:3.8'
     implementation 'com.github.jkwiecien:EasyImage:3.0.4'
-    implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+    implementation 'com.pranavpandey.android:dynamic-toasts:3.2.0'
 
     def work_version = "2.4.0"
     // Kotlin + coroutines

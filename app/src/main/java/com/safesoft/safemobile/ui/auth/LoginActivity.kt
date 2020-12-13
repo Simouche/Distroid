@@ -31,7 +31,7 @@ class LoginActivity : BaseActivity() {
     override fun setUpObservers() {
         super.setUpObservers()
         binding.login.setOnClickListener {
-            viewModel.attemptLogin().observe(this, Observer<Resource<Users>>() {
+            viewModel.attemptLogin().observe(this, Observer {
                 when (it.state) {
                     loading -> {
                         Log.d("LoginActivity", "Loading: Attempting login")

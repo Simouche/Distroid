@@ -1,21 +1,29 @@
 package com.safesoft.safemobile.backend.db.remote.dao
 
+import android.util.Log
+import com.safesoft.safemobile.backend.db.local.entity.Providers
+import io.reactivex.Completable
+import io.reactivex.Single
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
 interface BaseDao<T> {
     var tableName: String?
-    var columns: List<String>
-    var connection: Connection
+    var selectQueryColumns: List<String>
+    var retrievalColumns: List<String>
+    var insertColumns: List<String>
+    var connection: Connection?
+
+    val TAG: String
 
     fun createInsertQuery(): String {
         val builder = StringBuffer()
         builder.append("INSERT INTO $tableName (")
-        builder.append(columns.joinToString(","))
+        builder.append(joinQueryColumns())
         builder.append(") VALUES(")
-        for (i in columns.indices)
-            if (i == columns.size - 1)
+        for (i in insertColumns.indices)
+            if (i == insertColumns.size - 1)
                 builder.append("?);")
             else
                 builder.append("?,")
@@ -25,12 +33,16 @@ interface BaseDao<T> {
     fun createUpdateQuery(where: String): String {
         val builder = StringBuffer()
         builder.append("UPDATE $tableName SET ")
-        for ((i, item) in columns.withIndex())
-            if (i == columns.size - 1)
+        for ((i, item) in insertColumns.withIndex())
+            if (i == insertColumns.size - 1)
                 builder.append("$item = ? ")
             else builder.append("$item = ?, ")
         builder.append("WHERE $where;")
         return builder.toString()
+    }
+
+    private fun joinQueryColumns(): String {
+        return selectQueryColumns.joinToString(", ")
     }
 
     fun createSelectQuery(specialSelect: String = "", where: String = ""): String {
@@ -39,32 +51,32 @@ interface BaseDao<T> {
         if (specialSelect.isNotEmpty())
             builder.append("$specialSelect ")
         else
-            builder.append("* ")
-        builder.append("FROM $tableName ")
+            builder.append(joinQueryColumns())
+        builder.append(" FROM $tableName ")
 
         if (where.isNotEmpty())
             builder.append("WHERE $where")
         builder.append(";")
+        Log.d(TAG, "created query: $builder")
         return builder.toString()
     }
 
     fun prepareStatement(query: String): PreparedStatement {
-        return connection.prepareStatement(query)
+        Log.d(TAG, "preparing statement: $query")
+        return connection!!.prepareStatement(query)
     }
 
-    @ExperimentalStdlibApi
+
     fun prepareStatements(query: String, count: Int): List<PreparedStatement> {
-        return buildList {
-            for (i in 0 until count) connection.prepareStatement(query)
-        }
+        val preparedStatements = mutableListOf<PreparedStatement>()
+        for (i in 0 until count) preparedStatements.add(connection!!.prepareStatement(query))
+        return preparedStatements
+
     }
 
-    fun bindParams(
-        preparedStatement: PreparedStatement,
-        values: Map<Int, Any>
-    ): PreparedStatement {
+    fun bindParams(preparedStatement: PreparedStatement, values: Map<Int, Any>): PreparedStatement {
         preparedStatement.clearParameters()
-        values.forEach {
+        values.forEach {it->
             when (it.value) {
                 is Int -> preparedStatement.setInt(it.key, (it.value as Int))
                 is String -> preparedStatement.setString(it.key, (it.value as String))
@@ -76,17 +88,17 @@ interface BaseDao<T> {
     }
 
     fun executeUpdate(vararg preparedStatements: PreparedStatement): Int {
-        connection.autoCommit = false
+        connection!!.autoCommit = false
         var result = 0
         preparedStatements.forEach {
             result = it.executeUpdate()
         }
-        connection.commit()
+        connection!!.commit()
         return result
     }
 
     fun executeInsert(vararg preparedStatements: PreparedStatement): Int {
-        connection.autoCommit = false
+        connection!!.autoCommit = false
         var result = 0
         preparedStatements.forEach {
             result = it.executeUpdate()
@@ -94,21 +106,42 @@ interface BaseDao<T> {
         return result
     }
 
-    fun executeQuery(
-        preparedStatement: PreparedStatement
-    ): ResultSet {
+    fun executeQuery(preparedStatement: PreparedStatement): ResultSet {
         return preparedStatement.executeQuery()
     }
 
     fun executeQuery(query: String): ResultSet {
-        return connection.createStatement().executeQuery(query)
+        Log.d(TAG, "executing query: $query")
+        return connection!!.createStatement().executeQuery(query)
     }
 
-    fun insert(vararg objects: T)
+    fun checkConnection()
 
-    fun update(vararg objects: T)
+    fun retrieve(resultSet: ResultSet): List<T>
 
-    fun select(): List<T>
+    fun insert(vararg items: T): Completable
+
+    fun update(vararg items: T): Completable
+
+    fun select(
+        specialSelect: String = "",
+        where: String = "",
+        whereArgs: Map<Int, Any> = mapOf()
+    ): Single<List<T>> {
+        checkConnection()
+        return Single.fromCallable {
+            val query: String = createSelectQuery(specialSelect = specialSelect, where = where)
+            val resultSet: ResultSet = if (whereArgs.isEmpty()) {
+                executeQuery(query)
+            } else {
+                val preparedStatement = prepareStatement(query)
+                val boundStatement = bindParams(preparedStatement, whereArgs)
+                executeQuery(boundStatement)
+            }
+
+            retrieve(resultSet)
+        }
+    }
 
 
 }

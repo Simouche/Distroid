@@ -190,4 +190,6 @@
     <string name="warehouse_code">Warehouse Code</string>
     <string name="test">Test</string>
     <string name="database">Database</string>
+    <string name="database_configured_success">Database Configured Successfully</string>
+    <string name="datanbase_configuration_error">Wrong Database Configuration</string>
 </resources>

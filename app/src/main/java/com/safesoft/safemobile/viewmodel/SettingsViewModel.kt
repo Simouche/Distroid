@@ -1,71 +1,130 @@
 package com.safesoft.safemobile.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
+import com.safesoft.safemobile.backend.db.remote.RemoteDBRepo
 import com.safesoft.safemobile.backend.db.remote.RemoteDBRepository
+import com.safesoft.safemobile.backend.db.remote.dao.RemoteProviderDao
 import com.safesoft.safemobile.backend.repository.PreferencesRepository
+import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.backend.worker.ClearTablesWorker
 import com.safesoft.safemobile.backend.worker.ClientsWorker
 import com.safesoft.safemobile.backend.worker.product.ProductsWorker
 import com.safesoft.safemobile.backend.worker.ProvidersWorker
 import com.safesoft.safemobile.backend.worker.PurchaseWorker
+import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
+import kotlin.coroutines.coroutineContext
 
 class SettingsViewModel @ViewModelInject constructor(
     application: Application,
     private val preferencesRepository: PreferencesRepository,
-    private val remoteDBRepository: RemoteDBRepository
+    private val remoteDBRepository: RemoteDBRepository,
+    private val remoteProviderDao: RemoteProviderDao,
 ) : BaseAndroidViewModel(application) {
+
+    val trigger = 0
 
     private val workManagerInstance: WorkManager = WorkManager.getInstance(getApplication())
 
     private val ids = mutableMapOf<String, UUID>()
 
     val ipAddress =
-        MutableLiveData<String>().apply { value = preferencesRepository.getLocalServerIp() }
+        MutableLiveData<String>().apply {
+            viewModelScope.launch(Dispatchers.IO) {
+                postValue(preferencesRepository.getLocalServerIp())
+            }
+        }
 
     val dbPath =
-        MutableLiveData<String>().apply { value = preferencesRepository.getDBPath() }
+        MutableLiveData<String>().apply {
+            viewModelScope.launch(Dispatchers.IO) {
+                postValue(preferencesRepository.getDBPath())
+            }
+        }
 
     val warehouseCode =
-        MutableLiveData<String>().apply { value = preferencesRepository.getWarehouseCode() }
+        MutableLiveData<String>().apply {
+            viewModelScope.launch(Dispatchers.IO) {
+                postValue(preferencesRepository.getWarehouseCode())
+            }
+        }
 
     val isSyncing = MutableLiveData<Boolean>().apply { value = false }
 
     val autoSync: MutableLiveData<Boolean> =
-        MutableLiveData<Boolean>().apply { value = preferencesRepository.getAutomaticSync() }
+        MutableLiveData<Boolean>().apply {
+            viewModelScope.launch(Dispatchers.IO) {
+                postValue(preferencesRepository.getAutomaticSync())
+            }
+        }
 
     val syncDuration: MutableLiveData<Int> =
-        MutableLiveData<Int>().apply { value = preferencesRepository.getAutomaticSyncDuration() }
+        MutableLiveData<Int>().apply {
+            viewModelScope.launch(Dispatchers.IO) {
+                postValue(preferencesRepository.getAutomaticSyncDuration())
+            }
+        }
 
     val clientsSync: MutableLiveData<Boolean> =
-        MutableLiveData<Boolean>().apply { value = preferencesRepository.getSyncClientsModule() }
+        MutableLiveData<Boolean>().apply {
+            viewModelScope.launch(Dispatchers.IO) {
+                postValue(preferencesRepository.getSyncClientsModule())
+            }
+        }
 
     val providersSync: MutableLiveData<Boolean> =
-        MutableLiveData<Boolean>().apply { value = preferencesRepository.getSyncProvidersModule() }
+        MutableLiveData<Boolean>().apply {
+            viewModelScope.launch(Dispatchers.IO) {
+                postValue(preferencesRepository.getSyncProvidersModule())
+            }
+        }
 
     val productsSync: MutableLiveData<Boolean> =
-        MutableLiveData<Boolean>().apply { value = preferencesRepository.getSyncProductsModule() }
+        MutableLiveData<Boolean>().apply {
+            viewModelScope.launch(Dispatchers.IO) {
+                postValue(preferencesRepository.getSyncProductsModule())
+            }
+        }
 
     val salesSync: MutableLiveData<Boolean> =
-        MutableLiveData<Boolean>().apply { value = preferencesRepository.getSyncSalesModule() }
+        MutableLiveData<Boolean>().apply {
+            viewModelScope.launch(Dispatchers.IO) {
+                postValue(preferencesRepository.getSyncSalesModule())
+            }
+        }
 
     val purchasesSync: MutableLiveData<Boolean> =
-        MutableLiveData<Boolean>().apply { value = preferencesRepository.getSyncPurchasesModule() }
+        MutableLiveData<Boolean>().apply {
+            viewModelScope.launch(Dispatchers.IO) {
+                postValue(preferencesRepository.getSyncPurchasesModule())
+            }
+        }
 
     val inventoriesSync: MutableLiveData<Boolean> =
         MutableLiveData<Boolean>().apply {
-            value = preferencesRepository.getSyncInventoriesModule()
+            viewModelScope.launch(Dispatchers.IO) {
+                postValue(preferencesRepository.getSyncInventoriesModule())
+            }
         }
 
     val trackingSync: MutableLiveData<Boolean> =
-        MutableLiveData<Boolean>().apply { value = preferencesRepository.getSyncTrackingModule() }
+        MutableLiveData<Boolean>().apply {
+            viewModelScope.launch(Dispatchers.IO) {
+                postValue(preferencesRepository.getSyncTrackingModule())
+            }
+        }
 
 
     fun syncNowFab() {
@@ -110,7 +169,16 @@ class SettingsViewModel @ViewModelInject constructor(
 
         if (viewModel.clientsSync.value != false)
             requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())*/
-        workManagerInstance.beginWith(requestsArray).enqueue()
+
+        var workContinuation: WorkContinuation? = null
+
+        for ((i, work) in requestsArray.withIndex())
+            workContinuation = if (i == 0)
+                workManagerInstance.beginWith(work)
+            else
+                workContinuation?.then(work)
+
+        workContinuation?.enqueue()
     }
 
     fun updateServer() {
@@ -138,13 +206,11 @@ class SettingsViewModel @ViewModelInject constructor(
 //                    })
     }
 
-    fun testConnection(): Boolean {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                remoteDBRepository.connect()
-            }
-        }
-        return true
+
+    fun testConnection(): LiveData<Resource<Boolean>> {
+        val result = MutableLiveData<Resource<Boolean>>()
+        enqueue(remoteDBRepository.checkConnection(), result)
+        return result
     }
 
 

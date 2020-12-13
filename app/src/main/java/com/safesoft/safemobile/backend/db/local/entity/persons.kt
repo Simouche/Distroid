@@ -123,6 +123,8 @@ data class Clients(
         name = "SOLD",
         defaultValue = "0"
     ) val sold: Double? = null,
+    @ColumnInfo(name = "SALES", defaultValue = "0") val sales: Double? = null,
+    @ColumnInfo(name = "PAYMENT", defaultValue = "0") val payments: Double? = null,
     @SerializedName("note") @ColumnInfo(name = "NOTE") val note: String? = null,
     @ColumnInfo(name = "PROVIDER") val provider: Long? = null,
     @Embedded val fiscalData: FiscalData? = null,
@@ -138,6 +140,10 @@ data class Clients(
 
     fun getAllFaxes(): List<String>? {
         return faxes?.split(";")?.map(String::trim)
+    }
+
+    fun toMap(): Map<Int, Any> {
+        return mapOf()
     }
 
     companion object {

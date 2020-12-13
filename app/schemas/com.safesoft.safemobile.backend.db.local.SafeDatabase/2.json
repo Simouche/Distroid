@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "9d6d621b4a26d85a632680ae04a5967c",
+    "identityHash": "0061dacac9cd86b4bf22760fde352f87",
     "entities": [
       {
         "tableName": "users",
@@ -1197,7 +1197,7 @@
       },
       {
         "tableName": "clients",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CLIENT_ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `CODE` TEXT NOT NULL, `NAME` TEXT, `ACTIVITY` TEXT, `ADDRESS` TEXT, `COMMUNE` TEXT, `CONTACT` TEXT, `PHONES` TEXT, `FAXES` TEXT, `RIB` TEXT, `WEBSITE` TEXT, `SOLD` REAL DEFAULT 0, `NOTE` TEXT, `PROVIDER` INTEGER, `IN_APP` INTEGER NOT NULL, `SYNCHED` INTEGER NOT NULL, `REGISTRE_COMMERCE` TEXT, `ARTCILE_FISCALE` TEXT, `IDENTIFIANT_FISCALE` TEXT, `IDENTIFIANT_STATISTIQUE` TEXT, `LONGITUDE` REAL, `LATITUDE` REAL, FOREIGN KEY(`PROVIDER`) REFERENCES `providers`(`PROVIDER_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CLIENT_ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `CODE` TEXT NOT NULL, `NAME` TEXT, `ACTIVITY` TEXT, `ADDRESS` TEXT, `COMMUNE` TEXT, `CONTACT` TEXT, `PHONES` TEXT, `FAXES` TEXT, `RIB` TEXT, `WEBSITE` TEXT, `SOLD` REAL DEFAULT 0, `SALES` REAL DEFAULT 0, `PAYMENT` REAL DEFAULT 0, `NOTE` TEXT, `PROVIDER` INTEGER, `IN_APP` INTEGER NOT NULL, `SYNCHED` INTEGER NOT NULL, `REGISTRE_COMMERCE` TEXT, `ARTCILE_FISCALE` TEXT, `IDENTIFIANT_FISCALE` TEXT, `IDENTIFIANT_STATISTIQUE` TEXT, `LONGITUDE` REAL, `LATITUDE` REAL, FOREIGN KEY(`PROVIDER`) REFERENCES `providers`(`PROVIDER_ID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -1268,6 +1268,20 @@
           {
             "fieldPath": "sold",
             "columnName": "SOLD",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "sales",
+            "columnName": "SALES",
+            "affinity": "REAL",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "payments",
+            "columnName": "PAYMENT",
             "affinity": "REAL",
             "notNull": false,
             "defaultValue": "0"
@@ -1730,7 +1744,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9d6d621b4a26d85a632680ae04a5967c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0061dacac9cd86b4bf22760fde352f87')"
     ]
   }
 }

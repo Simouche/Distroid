@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
 
 abstract class BaseAndroidViewModel (application: Application) :
     AndroidViewModel(application) {
-    private val TAG = BaseViewModel::class.simpleName
+    protected val TAG = BaseViewModel::class.simpleName
 
     private val subscribeOn: Scheduler = Schedulers.io()
     private val observeOn: Scheduler = AndroidSchedulers.mainThread()

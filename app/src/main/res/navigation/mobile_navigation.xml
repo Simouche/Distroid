@@ -30,7 +30,7 @@
             app:destination="@id/nav_providers" />
         <action
             android:id="@+id/action_nav_dashboard_to_action_settings"
-            app:destination="@id/action_settings" />
+            app:destination="@id/nav_settings" />
         <action
             android:id="@+id/action_nav_dashboard_to_nav_clients2"
             app:destination="@id/nav_clients" />
@@ -78,7 +78,7 @@
         android:id="@+id/nav_inventory"
         android:name="com.safesoft.safemobile.ui.inventory.InventoryFragment"
         android:label="@string/inventory"
-        tools:layout="@layout/fragment_inventory" >
+        tools:layout="@layout/fragment_inventory">
         <action
             android:id="@+id/action_nav_inventory_to_nav_create_product"
             app:destination="@id/nav_create_product" />

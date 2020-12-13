@@ -21,11 +21,12 @@ class ProvidersWorker @WorkerInject constructor(
 
     val TAG: String = this::class.simpleName!!
 
+
     override fun createWork(): Single<Result> {
         return providersRepository
             .deleteProviders()
-            .andThen(providersRepository.loadProvidersFromServer())
-            .flatMapCompletable { providersRepository.addProviders(*it.providers.toTypedArray()) }
+            .andThen(providersRepository.loadProvidersFromRemoteDB())
+            .flatMapCompletable { providersRepository.addProviders(*it.toTypedArray()) }
             .toSingleDefault(Result.success())
             .onErrorReturn {
                 Log.d(TAG, "createWork: error happened!")

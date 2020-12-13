@@ -8,6 +8,7 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,14 +22,18 @@ import androidx.fragment.app.viewModels
 import com.safesoft.safemobile.MainActivity
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.databinding.FragmentSynchronizationSettingsBinding
+import com.safesoft.safemobile.ui.generics.BaseAnimations
 import com.safesoft.safemobile.ui.generics.BaseFragment
 import com.safesoft.safemobile.viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 
 @AndroidEntryPoint
-class SynchronizationSettings : BaseFragment() {
+class SynchronizationSettings : BaseFragment(), BaseAnimations {
 
     private lateinit var binding: FragmentSynchronizationSettingsBinding
 
@@ -54,9 +59,11 @@ class SynchronizationSettings : BaseFragment() {
         super.setUpViews()
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.syncPeriod.setSelection(viewModel.syncDuration.value!!)
+//        binding.syncPeriod.setSelection(viewModel.syncDuration.value!!)
     }
 
+
+    @ExperimentalStdlibApi
     override fun setUpObservers() {
         super.setUpObservers()
         viewModel.autoSync.observe(viewLifecycleOwner, viewModel::setAutomaticSync)
@@ -69,6 +76,7 @@ class SynchronizationSettings : BaseFragment() {
         viewModel.trackingSync.observe(viewLifecycleOwner, viewModel::setSyncTrackingModule)
         viewModel.ipAddress.observe(viewLifecycleOwner, viewModel::setServerIp)
         viewModel.dbPath.observe(viewLifecycleOwner, viewModel::setDBPath)
+        viewModel.syncDuration.observe(viewLifecycleOwner, binding.syncPeriod::setSelection)
 
         binding.syncPeriod.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -84,7 +92,35 @@ class SynchronizationSettings : BaseFragment() {
                 Log.i(TAG, "onNothingSelected: No Duration Selected!")
             }
         }
+
+        binding.testConnectionButton.setOnClickListener {
+            viewModel.testConnection().observe(viewLifecycleOwner, {
+                when (it.state) {
+                    loading -> {
+                        binding.testConnectionButton.visibility = View.GONE
+                        binding.loading.visibility = View.VISIBLE
+                    }
+                    success -> {
+                        binding.testConnectionButton.visibility = View.VISIBLE
+                        binding.loading.visibility = View.GONE
+                        success(R.string.database_configured_success)
+                    }
+                    error -> {
+                        binding.testConnectionButton.visibility = View.VISIBLE
+                        binding.loading.visibility = View.GONE
+                        val views = arrayOf(binding.ipAddressSetting, binding.databasePathSetting)
+                        editTextErrorAnimation(
+                            duration = 1000,
+                            views = views
+                        )
+
+                        error(R.string.datanbase_configuration_error)
+                    }
+                }
+            })
+        }
     }
+
 
     private fun reinitialize() {
 

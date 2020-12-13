@@ -64,26 +64,26 @@ class ClientsViewModel @ViewModelInject constructor(
         val fields = clientForm.fields
         val client = Clients(
             0,
-            fields.code.value!!,
-            fields.name.value,
-            fields.activity.value,
-            fields.address.value,
-            fields.commune.value,
-            fields.contact.value,
-            fields.phones.value,
-            fields.faxes.value,
-            fields.rib.value,
-            fields.webSite.value,
-            fields.initialSold.value,
-            fields.note.value,
-            fields.provider.value,
-            FiscalData(
+            code = fields.code.value!!,
+            name = fields.name.value,
+            activity = fields.activity.value,
+            address = fields.address.value,
+            commune = fields.commune.value,
+            contact = fields.contact.value,
+            phones = fields.phones.value,
+            faxes = fields.faxes.value,
+            rib = fields.rib.value,
+            webSite = fields.webSite.value,
+            sold = fields.initialSold.value,
+            note = fields.note.value,
+            provider = fields.provider.value,
+            fiscalData = FiscalData(
                 fields.registreCommerce.value,
                 fields.articleFiscale.value,
                 fields.identifiantFiscale.value,
                 fields.identifiantStatistic.value
             ),
-            Location(
+            location = Location(
                 fields.longitude.value ?: 0.0,
                 fields.latitude.value ?: 0.0
             ),
