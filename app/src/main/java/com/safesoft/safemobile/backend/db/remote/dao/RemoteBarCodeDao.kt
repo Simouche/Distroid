@@ -38,7 +38,7 @@ class RemoteBarCodeDao @Inject constructor(private val connector: RemoteDBReposi
             retrievedData.add(
                 Barcodes(
                     id = 0L,
-                    code = resultSet.getString(retrievalColumns[0]),
+                    code = resultSet.getString(retrievalColumns[1]),
                     product = 0L
                 )
             )

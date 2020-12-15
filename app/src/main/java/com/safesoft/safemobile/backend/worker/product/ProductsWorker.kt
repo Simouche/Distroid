@@ -25,7 +25,7 @@ class ProductsWorker @WorkerInject constructor(
             .loadProductsFromRemoteDB()
             .map {
                 productsRepository.addProducts(*it.toTypedArray()).subscribe({ ids ->
-                    it.map { product ->
+                    it.mapIndexed { index, product ->
                         productsRepository.loadProductBarCodesFromRemoteDB(
                             where = "CODE_BARRE = ?",
                             whereArgs = mapOf(1 to product.barcode)
@@ -34,7 +34,7 @@ class ProductsWorker @WorkerInject constructor(
                                 runBlocking {
                                     productsRepository.addBarCodes(*barcodes.map { barcode ->
                                         barcode.copy(
-                                            product = product.id
+                                            product = ids[index]
                                         )
                                     }.toTypedArray())
                                 }

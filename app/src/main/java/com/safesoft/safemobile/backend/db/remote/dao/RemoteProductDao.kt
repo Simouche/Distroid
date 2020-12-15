@@ -3,6 +3,7 @@ package com.safesoft.safemobile.backend.db.remote.dao
 import com.safesoft.safemobile.backend.db.local.entity.Products
 import com.safesoft.safemobile.backend.db.local.entity.Providers
 import com.safesoft.safemobile.backend.db.remote.RemoteDBRepository
+import com.safesoft.safemobile.backend.repository.PreferencesRepository
 import io.reactivex.Completable
 import java.sql.Connection
 import java.sql.PreparedStatement
@@ -11,7 +12,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RemoteProductDao @Inject constructor(private val connector: RemoteDBRepository) :
+class RemoteProductDao @Inject constructor(
+    private val connector: RemoteDBRepository,
+    override var preferencesRepository: PreferencesRepository,
+) :
     BaseDao<Products> {
     override var tableName: String? = "PRODUIT"
 

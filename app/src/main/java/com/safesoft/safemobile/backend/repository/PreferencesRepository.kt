@@ -72,7 +72,7 @@ class PreferencesRepository @Inject constructor(private val sharedPreferences: S
         sharedPreferencesEditor.putString("local_db_path", value.replace("/", "\\")).commit()
 
 
-    fun getWarehouseCode() = sharedPreferences.getString("warehouse_code", "01")
+    fun getWarehouseCode() = sharedPreferences.getString("warehouse_code", "0")!!
 
     fun setWareHouseCode(value: String) = sharedPreferencesEditor.putString("warehouse_code", value)
 }
