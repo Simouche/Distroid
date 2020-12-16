@@ -74,5 +74,5 @@ class PreferencesRepository @Inject constructor(private val sharedPreferences: S
 
     fun getWarehouseCode() = sharedPreferences.getString("warehouse_code", "0")!!
 
-    fun setWareHouseCode(value: String) = sharedPreferencesEditor.putString("warehouse_code", value)
+    fun setWareHouseCode(value: String) = sharedPreferencesEditor.putString("warehouse_code", value).commit()
 }

@@ -58,14 +58,6 @@ interface BaseDao<T> {
         if (where.isNotEmpty())
             builder.append("WHERE $where ")
 
-        if (preferencesRepository.getWarehouseCode() != "0") {
-            if (builder.contains("WHERE"))
-                builder.append("AND ")
-            else
-                builder.append("WHERE ")
-            builder.append("CODE_DEPOT = ${preferencesRepository.getWarehouseCode()} ")
-        }
-
         builder.append(";")
         Log.d(TAG, "created query: $builder")
         return builder.toString()

@@ -2,6 +2,7 @@ package com.safesoft.safemobile.backend.db.local.dao
 
 import androidx.paging.DataSource
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.safesoft.safemobile.backend.db.local.entity.*
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -101,6 +102,10 @@ interface ProductsDao {
 
     @Delete
     suspend fun deleteBarCodeSuspend(vararg barCodes: Barcodes)
+
+
+    @Query("UPDATE products  SET QUANTITY = COALESCE(QUANTITY,0) + :newStock WHERE PRODUCT_ID IN (SELECT PRODUCT FROM barcodes WHERE barcodes.CODE = :barcode);")
+    fun setProductStock(newStock: Double, barcode: String): Completable
 
 
 }

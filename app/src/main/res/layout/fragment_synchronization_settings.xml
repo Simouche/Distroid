@@ -84,7 +84,6 @@
                 android:id="@+id/warehouse_code_setting"
                 android:layout_width="@dimen/_160sdp"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:hint="@string/warehouse_code"
                 android:inputType="text"
                 android:text="@={viewModel.warehouseCode}" />

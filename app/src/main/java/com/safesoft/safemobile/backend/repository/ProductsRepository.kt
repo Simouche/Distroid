@@ -1,5 +1,6 @@
 package com.safesoft.safemobile.backend.repository
 
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.safesoft.safemobile.backend.api.service.ProductService
 import com.safesoft.safemobile.backend.db.local.dao.ProductsDao
 import com.safesoft.safemobile.backend.db.local.entity.Barcodes
@@ -69,5 +70,10 @@ class ProductsRepository @Inject constructor(
         where = where,
         whereArgs = whereArgs
     )
+
+    fun loadStock() = remoteProductDao.getStock()
+
+    fun setProductStock(newStock: Double, barcode: String) =
+        productsDao.setProductStock(newStock, barcode)
 
 }

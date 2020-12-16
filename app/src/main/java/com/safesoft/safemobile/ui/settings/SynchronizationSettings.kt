@@ -76,6 +76,7 @@ class SynchronizationSettings : BaseFragment(), BaseAnimations {
         viewModel.trackingSync.observe(viewLifecycleOwner, viewModel::setSyncTrackingModule)
         viewModel.ipAddress.observe(viewLifecycleOwner, viewModel::setServerIp)
         viewModel.dbPath.observe(viewLifecycleOwner, viewModel::setDBPath)
+        viewModel.warehouseCode.observe(viewLifecycleOwner, viewModel::setWarehouseCode)
         viewModel.syncDuration.observe(viewLifecycleOwner, binding.syncPeriod::setSelection)
 
         binding.syncPeriod.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

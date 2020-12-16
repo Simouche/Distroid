@@ -1,10 +1,11 @@
 package com.safesoft.safemobile.backend.db.remote.dao
 
+import android.util.Log
 import com.safesoft.safemobile.backend.db.local.entity.Products
-import com.safesoft.safemobile.backend.db.local.entity.Providers
 import com.safesoft.safemobile.backend.db.remote.RemoteDBRepository
 import com.safesoft.safemobile.backend.repository.PreferencesRepository
 import io.reactivex.Completable
+import io.reactivex.Single
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -115,5 +116,28 @@ class RemoteProductDao @Inject constructor(
 
     override fun update(vararg items: Products): Completable {
         TODO("Not yet implemented")
+    }
+
+    fun getStock(): Single<List<Map<String, Any>>> {
+        return Single.fromCallable {
+            var query = "SELECT * FROM "
+
+            query += if (preferencesRepository.getWarehouseCode() != "0")
+                "DEPOT2 WHERE CODE_DEPOT = ${preferencesRepository.getWarehouseCode()};"
+            else
+                "PRODUIT;"
+
+            val results = executeQuery(query)
+            val listResults = mutableListOf<Map<String, Any>>()
+
+            while (results.next())
+                listResults.add(
+                    mapOf(
+                        "BARCODE" to results.getString("CODE_BARRE"),
+                        "STOCK" to results.getDouble("STOCK")
+                    )
+                )
+            listResults
+        }
     }
 }

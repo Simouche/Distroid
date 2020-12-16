@@ -1,31 +1,24 @@
 package com.safesoft.safemobile.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
-import com.safesoft.safemobile.backend.db.remote.RemoteDBRepo
 import com.safesoft.safemobile.backend.db.remote.RemoteDBRepository
 import com.safesoft.safemobile.backend.db.remote.dao.RemoteProviderDao
 import com.safesoft.safemobile.backend.repository.PreferencesRepository
 import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.backend.worker.ClearTablesWorker
 import com.safesoft.safemobile.backend.worker.ClientsWorker
-import com.safesoft.safemobile.backend.worker.product.ProductsWorker
 import com.safesoft.safemobile.backend.worker.ProvidersWorker
 import com.safesoft.safemobile.backend.worker.PurchaseWorker
-import io.reactivex.Completable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.safesoft.safemobile.backend.worker.product.ProductStockWorker
+import com.safesoft.safemobile.backend.worker.product.ProductsWorker
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.*
-import kotlin.coroutines.coroutineContext
 
 class SettingsViewModel @ViewModelInject constructor(
     application: Application,
@@ -149,10 +142,17 @@ class SettingsViewModel @ViewModelInject constructor(
         }
 
         if (productsSync.value != false) {
-            val request = OneTimeWorkRequestBuilder<ProductsWorker>().setConstraints(constraints)
-                .addTag("products_sync").build()
-            ids["product"] = request.id
-            requestsArray.add(request)
+            val getProductsRequest =
+                OneTimeWorkRequestBuilder<ProductsWorker>().setConstraints(constraints)
+                    .addTag("products_sync").build()
+            ids["product"] = getProductsRequest.id
+            requestsArray.add(getProductsRequest)
+
+            val getProductStockRequest =
+                OneTimeWorkRequestBuilder<ProductStockWorker>().setConstraints(constraints)
+                    .addTag("products_stock_sync").build()
+            ids["product_stock"] = getProductStockRequest.id
+            requestsArray.add(getProductStockRequest)
         }
 /*
         if (viewModel.clientsSync.value != false)
@@ -240,6 +240,8 @@ class SettingsViewModel @ViewModelInject constructor(
     fun setServerIp(value: String) = preferencesRepository.setLocalServerIp(value)
 
     fun setDBPath(value: String) = preferencesRepository.setDBPath(value)
+
+    fun setWarehouseCode(value: String) = preferencesRepository.setWareHouseCode(value)
 
 
 }
