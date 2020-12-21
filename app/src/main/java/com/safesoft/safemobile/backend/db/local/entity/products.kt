@@ -20,7 +20,17 @@ data class Barcodes(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "CODE") val code: String,
     @ColumnInfo(name = "PRODUCT") val product: Long
-)
+) {
+    @Ignore
+    lateinit var mainBarCode: String
+
+    fun toMap(): Map<Int, Any> {
+        return mapOf(
+            1 to mainBarCode,
+            2 to code
+        )
+    }
+}
 
 
 @Entity(
@@ -167,7 +177,16 @@ data class Products(
     }
 
     fun toMap(): Map<Int, Any> {
-        return mapOf()
+        return mapOf(
+            1 to this.barcode,
+            2 to this.reference,
+            3 to this.designation,
+            4 to (this.purchasePriceHT ?: 0.0),
+            5 to (this.tva ?: 0.0),
+            6 to this.sellPriceDetailHT,
+            7 to this.sellPriceHalfWholeHT,
+            8 to this.sellPriceWholeHT,
+        )
     }
 
     data class BarCode(val codeBareSyn: String)

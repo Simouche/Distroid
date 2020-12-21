@@ -19,7 +19,7 @@ interface ProductsDao {
     fun getAllProductsWithBarCodesSingle(): Single<List<ProductWithBarcodes>>
 
     @Transaction
-    @Query("SELECT * FROM products WHERE IN_APP = 1 And SYNCHED = 0")
+    @Query("SELECT * FROM products WHERE IN_APP = 1 AND SYNCHED = 0")
     fun getAllNewProductsWithBarCodes(): Single<List<ProductWithBarcodes>>
 
     @Transaction
@@ -103,9 +103,11 @@ interface ProductsDao {
     @Delete
     suspend fun deleteBarCodeSuspend(vararg barCodes: Barcodes)
 
-
     @Query("UPDATE products  SET QUANTITY = COALESCE(QUANTITY,0) + :newStock WHERE PRODUCT_ID IN (SELECT PRODUCT FROM barcodes WHERE barcodes.CODE = :barcode);")
     fun setProductStock(newStock: Double, barcode: String): Completable
+
+    @Query("UPDATE products SET SYNCHED = 1;")
+    fun markProductsAsSynched(): Completable
 
 
 }

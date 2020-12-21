@@ -73,6 +73,18 @@ data class PurchaseLines(
     @Ignore
     var selectedProduct: AllAboutAProduct? = null
 
+    fun toMap(): Map<Int, Any> {
+        return mapOf(
+            2 to (this.selectedProduct?.bardcodes?.get(0) ?: " "),
+            3 to (this.selectedProduct?.product?.designation ?: " "),
+            4 to (this.quantity ?: 0.0),
+            5 to this.totalBuyPriceHT,
+            6 to this.tva,
+            7 to "0",
+            8 to this.discount,
+        )
+    }
+
 }
 
 data class PurchaseWithLines(
@@ -93,7 +105,28 @@ data class AllAboutAPurchase(
         parentColumn = "PROVIDER",
         entityColumn = "PROVIDER_ID"
     ) val provider: Providers
-)
+) {
+
+
+    fun toMap(): Map<Int, Any> {
+        return mapOf(
+            2 to (this.purchase.date ?: " "),
+            3 to (this.purchase.date?.time ?: " "),
+            4 to (this.provider.code),
+            5 to (this.purchase.totalHT ?: 0.0),
+            6 to (this.purchase.tva ?: 0.0),
+            7 to (this.purchase.stamp ?: 0.0),
+            8 to (this.purchase.discount ?: 0.0),
+            9 to this.purchase.payment,
+            10 to this.purchase.reglement,
+            11 to (if (this.purchase.done) "F" else "O"),
+            12 to "",
+            13 to "0",
+            14 to (this.purchase.note ?: " ")
+
+        )
+    }
+}
 
 @Entity(
     tableName = "sales",

@@ -18,16 +18,17 @@ interface BaseDao<T> {
 
     val TAG: String
 
-    fun createInsertQuery(): String {
+    fun createInsertQuery(insertColumns: List<String>? = null): String {
         val builder = StringBuffer()
         builder.append("INSERT INTO $tableName (")
-        builder.append(joinQueryColumns())
-        builder.append(") VALUES(")
-        for (i in insertColumns.indices)
-            if (i == insertColumns.size - 1)
+        builder.append(joinInsertColumns(insertColumns))
+        builder.append(") VALUES (")
+        for (i in (insertColumns ?: this.insertColumns).indices)
+            if (i == (insertColumns ?: this.insertColumns).size - 1)
                 builder.append("?);")
             else
                 builder.append("?,")
+        Log.d(TAG, "createInsertQuery: $builder")
         return builder.toString()
     }
 
@@ -44,6 +45,10 @@ interface BaseDao<T> {
 
     private fun joinQueryColumns(): String {
         return selectQueryColumns.joinToString(", ")
+    }
+
+    private fun joinInsertColumns(insertColumns: List<String>? = null): String {
+        return (insertColumns ?: this.insertColumns).joinToString(", ")
     }
 
     fun createSelectQuery(specialSelect: String = "", where: String = ""): String {
@@ -66,18 +71,22 @@ interface BaseDao<T> {
 
     fun prepareStatement(query: String): PreparedStatement {
         Log.d(TAG, "preparing statement: $query")
+        checkConnection()
         return connection!!.prepareStatement(query)
     }
 
 
     fun prepareStatements(query: String, count: Int): List<PreparedStatement> {
         val preparedStatements = mutableListOf<PreparedStatement>()
+        checkConnection()
         for (i in 0 until count) preparedStatements.add(connection!!.prepareStatement(query))
+        Log.d(TAG, "prepareStatements: prepared ${preparedStatements.size} statements")
         return preparedStatements
 
     }
 
     fun bindParams(preparedStatement: PreparedStatement, values: Map<Int, Any>): PreparedStatement {
+        Log.d(TAG, "bindParams: preparing to bind a prepared statement")
         preparedStatement.clearParameters()
         values.forEach {
             when (it.value) {
@@ -88,10 +97,12 @@ interface BaseDao<T> {
                 // TODO: 08/12/2020 completed the rest of the case
             }
         }
+        Log.d(TAG, "bindParams: bound a statement.")
         return preparedStatement
     }
 
     fun executeUpdate(vararg preparedStatements: PreparedStatement): Int {
+        checkConnection()
         connection!!.autoCommit = false
         var result = 0
         preparedStatements.forEach {
@@ -102,11 +113,23 @@ interface BaseDao<T> {
     }
 
     fun executeInsert(vararg preparedStatements: PreparedStatement): Int {
+        checkConnection()
+        Log.d(TAG, "executeInsert: starting execution")
         connection!!.autoCommit = false
+        Log.d(TAG, "executeInsert: database autocommit is ${connection!!.autoCommit}")
         var result = 0
         preparedStatements.forEach {
-            result = it.executeUpdate()
+            try {
+                val rows = it.executeUpdate()
+                result += rows
+                Log.d(TAG, "executeInsert: inserted $rows rows")
+            } catch (e: Exception) {
+                e.printStackTrace()
+                throw e
+            }
         }
+        connection!!.commit()
+        Log.d(TAG, "executeInsert: exiting after $result insertions")
         return result
     }
 
@@ -147,5 +170,12 @@ interface BaseDao<T> {
         }
     }
 
+
+    fun generateCode(table: String): String {
+        val resultSet = executeQuery("SELECT GEN_ID($table,1) FROM RDB\$DATABASE")
+        while (resultSet.next())
+            return resultSet.getString("GEN_ID")
+        return ""
+    }
 
 }

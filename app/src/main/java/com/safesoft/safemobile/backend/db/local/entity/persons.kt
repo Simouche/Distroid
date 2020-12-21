@@ -63,7 +63,13 @@ data class Providers(
     override fun toString(): String = "$code $name"
 
     fun toMap(): Map<Int, Any> {
-        return mapOf()
+        return mapOf(
+            1 to this.code,
+            2 to (this.name ?: " "),
+            3 to (this.getAllPhones()?.get(0) ?: " "),
+            4 to (this.address ?: " "),
+            5 to (this.commune ?: " "),
+        )
     }
 
     companion object {
@@ -143,7 +149,13 @@ data class Clients(
     }
 
     fun toMap(): Map<Int, Any> {
-        return mapOf()
+        return mapOf(
+            1 to this.code,
+            2 to (this.name ?: " "),
+            3 to (this.getAllPhones()?.get(0) ?: " "),
+            4 to (this.address ?: " "),
+            5 to (this.commune ?: " "),
+        )
     }
 
     companion object {

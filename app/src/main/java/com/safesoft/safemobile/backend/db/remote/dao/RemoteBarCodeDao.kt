@@ -12,10 +12,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RemoteBarCodeDao @Inject constructor(private val connector: RemoteDBRepository,
-                                           override var preferencesRepository: PreferencesRepository
-) :
-    BaseDao<Barcodes> {
+class RemoteBarCodeDao @Inject constructor(
+    private val connector: RemoteDBRepository,
+    override var preferencesRepository: PreferencesRepository
+) : BaseDao<Barcodes> {
 
 
     override var tableName: String? = "CODEBARRE"
@@ -53,8 +53,8 @@ class RemoteBarCodeDao @Inject constructor(private val connector: RemoteDBReposi
             val query: String = createInsertQuery()
             val statements: List<PreparedStatement> = prepareStatements(query, items.size)
             val boundStatements = mutableListOf<PreparedStatement>()
-            for ((index, provider) in items.withIndex())
-                boundStatements.add(bindParams(statements[index], mapOf()))
+            for ((index, barcode) in items.withIndex())
+                boundStatements.add(bindParams(statements[index], barcode.toMap()))
             val rows: Int = executeInsert(*boundStatements.toTypedArray())
             rows
         }

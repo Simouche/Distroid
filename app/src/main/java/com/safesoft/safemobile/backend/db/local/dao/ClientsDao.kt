@@ -21,6 +21,12 @@ interface ClientsDao {
     @Query("SELECT * FROM clients WHERE CODE LIKE '%'||:query||'%' OR NAME LIKE '%'||:query||'%' OR PHONES LIKE '%'||:query||'%'")
     fun searchClientFlow(query: String): Flowable<List<Clients>>
 
+    @Query("SELECT * FROM clients WHERE IN_APP = 1 And SYNCHED = 0")
+    fun getAllNewClient(): Single<List<Clients>>
+
+    @Query("UPDATE clients SET SYNCHED = 1")
+    fun markClientsAsSynched(): Completable
+
     @Insert
     fun addClients(vararg clients: Clients): Completable
 

@@ -7,11 +7,18 @@ import com.safesoft.safemobile.backend.db.local.entity.ProviderWithPurchases
 import com.safesoft.safemobile.backend.db.local.entity.Providers
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 interface ProvidersDao {
     @Query("SELECT * FROM providers")
     fun getAllProviders(): DataSource.Factory<Int, Providers>
+
+    @Query("SELECT * FROM providers WHERE IN_APP = 1 And SYNCHED = 0")
+    fun getAllNewProviders(): Single<List<Providers>>
+
+    @Query("UPDATE providers SET SYNCHED = 1")
+    fun markProvidersAsSync(): Completable
 
     @Query("SELECT * FROM providers where PROVIDER_ID=:id")
     fun getProviderById(id: Long): Flowable<Providers>

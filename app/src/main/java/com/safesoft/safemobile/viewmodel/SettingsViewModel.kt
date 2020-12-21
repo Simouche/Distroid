@@ -11,11 +11,14 @@ import com.safesoft.safemobile.backend.db.remote.dao.RemoteProviderDao
 import com.safesoft.safemobile.backend.repository.PreferencesRepository
 import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.backend.worker.ClearTablesWorker
-import com.safesoft.safemobile.backend.worker.ClientsWorker
-import com.safesoft.safemobile.backend.worker.ProvidersWorker
+import com.safesoft.safemobile.backend.worker.client.ClientsWorker
+import com.safesoft.safemobile.backend.worker.provider.ProvidersWorker
 import com.safesoft.safemobile.backend.worker.PurchaseWorker
+import com.safesoft.safemobile.backend.worker.client.UpdateClientsWorker
 import com.safesoft.safemobile.backend.worker.product.ProductStockWorker
 import com.safesoft.safemobile.backend.worker.product.ProductsWorker
+import com.safesoft.safemobile.backend.worker.product.UpdateProductsWorker
+import com.safesoft.safemobile.backend.worker.provider.UpdateProvidersWorker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -182,10 +185,45 @@ class SettingsViewModel @ViewModelInject constructor(
     }
 
     fun updateServer() {
-        workManagerInstance.enqueue(
-            OneTimeWorkRequestBuilder<PurchaseWorker>()
-                .addTag("purchases_update").build()
-        )
+        val requestsArray = mutableListOf<OneTimeWorkRequest>()
+        val constraints: Constraints = Constraints
+            .Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        if (clientsSync.value != false) {
+            val request =
+                OneTimeWorkRequestBuilder<UpdateClientsWorker>().setConstraints(constraints)
+                    .addTag("clients_update").build()
+            ids["clients_update"] = request.id
+            requestsArray.add(request)
+        }
+
+        if (providersSync.value != false) {
+            val request =
+                OneTimeWorkRequestBuilder<UpdateProvidersWorker>().setConstraints(constraints)
+                    .addTag("providers_update").build()
+            ids["providers_update"] = request.id
+            requestsArray.add(request)
+        }
+
+        if (productsSync.value != false) {
+            val getProductsRequest =
+                OneTimeWorkRequestBuilder<UpdateProductsWorker>().setConstraints(constraints)
+                    .addTag("products_update").build()
+            ids["product_update"] = getProductsRequest.id
+            requestsArray.add(getProductsRequest)
+        }
+
+        var workContinuation: WorkContinuation? = null
+
+        for ((i, work) in requestsArray.withIndex())
+            workContinuation = if (i == 0)
+                workManagerInstance.beginWith(work)
+            else
+                workContinuation?.then(work)
+
+        workContinuation?.enqueue()
     }
 
     fun reinitialize() {

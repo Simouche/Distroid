@@ -32,4 +32,11 @@ class ClientsRepository @Inject constructor(
 
     fun loadClientsFromRemote() = remoteClientDao.select()
 
+    fun getAllNewClients() = clientsDao.getAllNewClient()
+
+    fun markClientsAsSync() = clientsDao.markClientsAsSynched()
+
+    fun insertClientsInRemoteDB(clients: List<Clients>) =
+        remoteClientDao.insert(*clients.toTypedArray())
+
 }

@@ -6,6 +6,7 @@ import com.safesoft.safemobile.backend.db.remote.RemoteDBRepository
 import com.safesoft.safemobile.backend.repository.PreferencesRepository
 import io.reactivex.Completable
 import io.reactivex.Single
+import java.lang.Exception
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -16,8 +17,7 @@ import javax.inject.Singleton
 class RemoteProductDao @Inject constructor(
     private val connector: RemoteDBRepository,
     override var preferencesRepository: PreferencesRepository,
-) :
-    BaseDao<Products> {
+) : BaseDao<Products> {
     override var tableName: String? = "PRODUIT"
 
     override var selectQueryColumns: List<String> = listOf(
@@ -65,8 +65,6 @@ class RemoteProductDao @Inject constructor(
         "PV1_HT",
         "PV2_HT",
         "PV3_HT",
-        "CODE_FRS",
-        "MARQUE",
     )
 
     override var connection: Connection? = connector.connection
@@ -104,12 +102,18 @@ class RemoteProductDao @Inject constructor(
 
     override fun insert(vararg items: Products): Completable {
         return Completable.fromCallable {
+            Log.d(TAG, "inserting: ${items.size} products")
             val query: String = createInsertQuery()
             val statements: List<PreparedStatement> = prepareStatements(query, items.size)
             val boundStatements = mutableListOf<PreparedStatement>()
-            for ((index, product) in items.withIndex())
-                boundStatements.add(bindParams(statements[index], product.toMap()))
+            Log.d(TAG, "insert: are we here?")
+            for ((index, product) in items.withIndex()) {
+                    boundStatements.add(bindParams(statements[index], product.toMap()))
+                Log.d(TAG, "insert: iteration $index")
+            }
+            Log.d(TAG, "insert: we have ${boundStatements.size} bound statements")
             val rows: Int = executeInsert(*boundStatements.toTypedArray())
+            Log.d(TAG, "insert: inserted total of $rows")
             rows
         }
     }

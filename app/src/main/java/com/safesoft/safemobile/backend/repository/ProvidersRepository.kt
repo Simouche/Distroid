@@ -3,7 +3,6 @@ package com.safesoft.safemobile.backend.repository
 import com.safesoft.safemobile.backend.api.service.ProviderService
 import com.safesoft.safemobile.backend.db.local.dao.ProvidersDao
 import com.safesoft.safemobile.backend.db.local.entity.Providers
-import com.safesoft.safemobile.backend.db.remote.RemoteDBRepository
 import com.safesoft.safemobile.backend.db.remote.dao.RemoteProviderDao
 import javax.inject.Inject
 
@@ -35,6 +34,13 @@ class ProvidersRepository @Inject constructor(
 
     fun loadProvidersFromServer() = providerService.getAllProviders()
 
-   fun loadProvidersFromRemoteDB() = remoteProviderDao.select()
+    fun loadProvidersFromRemoteDB() = remoteProviderDao.select()
+
+    fun getAllNewProviders() = providersDao.getAllNewProviders()
+
+    fun markProvidersAsSync() = providersDao.markProvidersAsSync()
+
+    fun insertProvidersIntoRemoteDB(providers: List<Providers>) =
+        remoteProviderDao.insert(*providers.toTypedArray())
 
 }

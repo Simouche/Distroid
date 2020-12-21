@@ -1,4 +1,4 @@
-package com.safesoft.safemobile.backend.worker
+package com.safesoft.safemobile.backend.worker.provider
 
 import android.content.Context
 import android.util.Log
@@ -11,7 +11,7 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class ProvidersWorker @WorkerInject constructor(
+class UpdateProvidersWorker @WorkerInject constructor(
     @Assisted appContext: Context,
     @Assisted workersParams: WorkerParameters,
     private val providersRepository: ProvidersRepository
@@ -24,16 +24,21 @@ class ProvidersWorker @WorkerInject constructor(
 
     override fun createWork(): Single<Result> {
         return providersRepository
-            .deleteProviders()
-            .andThen(providersRepository.loadProvidersFromRemoteDB())
-            .flatMapCompletable { providersRepository.addProviders(*it.toTypedArray()) }
-            .toSingleDefault(Result.success())
-            .onErrorReturn {
+            .getAllNewProviders()
+            .flatMap {
+                if (it.isEmpty()) {
+                    Log.d(TAG, "createWork: no providers to sync.")
+                    return@flatMap Single.fromCallable { Result.success() }
+                }
+                providersRepository.insertProvidersIntoRemoteDB(it)
+                    .toSingleDefault(Result.success())
+            }.doOnSuccess {
+                providersRepository.markProvidersAsSync().blockingGet()
+            }.onErrorReturn {
                 Log.d(TAG, "createWork: error happened!")
                 it.printStackTrace()
                 return@onErrorReturn Result.retry()
-            }
-            .onErrorReturnItem(Result.retry())
+            }.onErrorReturnItem(Result.retry())
             .observeOn(io)
     }
 

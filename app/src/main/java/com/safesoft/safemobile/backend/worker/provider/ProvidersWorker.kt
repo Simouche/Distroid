@@ -1,4 +1,4 @@
-package com.safesoft.safemobile.backend.worker
+package com.safesoft.safemobile.backend.worker.provider
 
 import android.content.Context
 import android.util.Log
@@ -6,26 +6,27 @@ import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
-import com.safesoft.safemobile.backend.repository.ClientsRepository
+import com.safesoft.safemobile.backend.repository.ProvidersRepository
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class ClientsWorker @WorkerInject constructor(
+class ProvidersWorker @WorkerInject constructor(
     @Assisted appContext: Context,
     @Assisted workersParams: WorkerParameters,
-    private val clientsRepository: ClientsRepository
+    private val providersRepository: ProvidersRepository
 ) : RxWorker(appContext, workersParams) {
 
     private val io: Scheduler = Schedulers.io()
 
     val TAG: String = this::class.simpleName!!
 
+
     override fun createWork(): Single<Result> {
-        return clientsRepository
-            .deleteAllClients()
-            .andThen(clientsRepository.loadClientsFromRemote())
-            .flatMapCompletable { clientsRepository.addClients(*it.toTypedArray()) }
+        return providersRepository
+            .deleteProviders()
+            .andThen(providersRepository.loadProvidersFromRemoteDB())
+            .flatMapCompletable { providersRepository.addProviders(*it.toTypedArray()) }
             .toSingleDefault(Result.success())
             .onErrorReturn {
                 Log.d(TAG, "createWork: error happened!")

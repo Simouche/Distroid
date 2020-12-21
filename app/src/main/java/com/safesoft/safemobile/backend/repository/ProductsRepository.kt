@@ -59,6 +59,12 @@ class ProductsRepository @Inject constructor(
     fun updateProducts(products: List<ProductWithBarcodes>) =
         productsService.updateProducts(products)
 
+    fun insertProductsInRemoteDB(products: List<Products>) =
+        remoteProductDao.insert(*products.toTypedArray())
+
+    fun insertProductBarCodesInRemoteDB(barcodes: List<Barcodes>) =
+        remoteBarCodeDao.insert(*barcodes.toTypedArray())
+
     fun loadProductsFromRemoteDB() = remoteProductDao.select()
 
     fun loadProductBarCodesFromRemoteDB(
@@ -75,5 +81,7 @@ class ProductsRepository @Inject constructor(
 
     fun setProductStock(newStock: Double, barcode: String) =
         productsDao.setProductStock(newStock, barcode)
+
+    fun  markProductsAsSynched() = productsDao.markProductsAsSynched()
 
 }

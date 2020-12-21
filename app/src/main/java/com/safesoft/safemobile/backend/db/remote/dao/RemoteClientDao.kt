@@ -14,8 +14,7 @@ import javax.inject.Singleton
 @Singleton
 class RemoteClientDao @Inject constructor(private val connector: RemoteDBRepository,
                                           override var preferencesRepository: PreferencesRepository
-) :
-    BaseDao<Clients> {
+) : BaseDao<Clients> {
     override var tableName: String? = "CLIENTS"
 
     override var selectQueryColumns: List<String> = listOf(
