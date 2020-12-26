@@ -20,6 +20,10 @@ class ProductsRepository @Inject constructor(
 
     fun getAllProductsWithBarcodes() = productsDao.getAllProductsWithBarcodes()
 
+    fun getProductMainBarcode(product: Long) = productsDao.getProductMainBarcode(product)
+
+    fun getAllAboutAProductById(product: Long) = productsDao.getAllAboutAProductById(product)
+
     fun getAllProductsWithBarCodesSingle() = productsDao.getAllProductsWithBarCodesSingle()
 
     fun getAllNewProductsWithBarCodes() = productsDao.getAllNewProductsWithBarCodes()
@@ -82,6 +86,6 @@ class ProductsRepository @Inject constructor(
     fun setProductStock(newStock: Double, barcode: String) =
         productsDao.setProductStock(newStock, barcode)
 
-    fun  markProductsAsSynched() = productsDao.markProductsAsSynched()
+    fun markProductsAsSynched() = productsDao.markProductsAsSynched()
 
 }

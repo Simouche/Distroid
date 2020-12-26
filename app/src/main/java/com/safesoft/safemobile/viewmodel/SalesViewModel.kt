@@ -54,8 +54,9 @@ class SalesViewModel @ViewModelInject constructor(
             "E",
             0.0,
             "",
-            false,
-            0.0
+            done = false,
+            sync = false,
+            payment = 0.0
         )
     };
 
@@ -71,7 +72,7 @@ class SalesViewModel @ViewModelInject constructor(
         val line = SaleLines(
             id = 0,
             product = product?.product?.id ?: 0,
-            quantity,
+            quantity = quantity,
             totalSellPriceHT = product?.product?.calculateSellPriceDOnHT(quantity) ?: 0.0,
             totalSellPriceTTC = calculateNewPrice(
                 (product?.product?.calculateSellPriceDOnHT(quantity) ?: 0.0),

@@ -32,7 +32,7 @@
     <dimen name="form_items_header_font_size">@dimen/_13ssp</dimen>
     <dimen name="form_items_header_margin_start">@dimen/_15sdp</dimen>
     <dimen name="inventory_form_items_header_margin_start">@dimen/_12sdp</dimen>
-    <dimen name="form_items_item_font_size">@dimen/_10ssp</dimen>
+    <dimen name="form_items_item_font_size">@dimen/_14ssp</dimen>
 
     <!--    Lists dimensions-->
     <dimen name="recycler_layout_height_percent">.927</dimen>

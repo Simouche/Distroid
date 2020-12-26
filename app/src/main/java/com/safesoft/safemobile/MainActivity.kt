@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+
     }
 
     override fun onStart() {
@@ -86,8 +87,10 @@ class MainActivity : AppCompatActivity() {
 
             }
             R.id.action_settings -> {
-                Navigation.findNavController(supportFragmentManager.primaryNavigationFragment!!.requireView())
-                    .navigate(R.id.action_nav_dashboard_to_action_settings)
+                val navigator =
+                    Navigation.findNavController(supportFragmentManager.primaryNavigationFragment!!.requireView())
+                if (navigator.currentDestination?.id != R.id.nav_settings)
+                    navigator.navigate(R.id.action_global_nav_settings)
             }
             android.R.id.home -> {
                 if (drawerLayout.isDrawerOpen(GravityCompat.START))

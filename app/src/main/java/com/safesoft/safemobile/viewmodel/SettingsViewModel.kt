@@ -11,13 +11,14 @@ import com.safesoft.safemobile.backend.db.remote.dao.RemoteProviderDao
 import com.safesoft.safemobile.backend.repository.PreferencesRepository
 import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.backend.worker.ClearTablesWorker
-import com.safesoft.safemobile.backend.worker.client.ClientsWorker
-import com.safesoft.safemobile.backend.worker.provider.ProvidersWorker
 import com.safesoft.safemobile.backend.worker.PurchaseWorker
+import com.safesoft.safemobile.backend.worker.SalesWorker
+import com.safesoft.safemobile.backend.worker.client.ClientsWorker
 import com.safesoft.safemobile.backend.worker.client.UpdateClientsWorker
 import com.safesoft.safemobile.backend.worker.product.ProductStockWorker
 import com.safesoft.safemobile.backend.worker.product.ProductsWorker
 import com.safesoft.safemobile.backend.worker.product.UpdateProductsWorker
+import com.safesoft.safemobile.backend.worker.provider.ProvidersWorker
 import com.safesoft.safemobile.backend.worker.provider.UpdateProvidersWorker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,7 +54,7 @@ class SettingsViewModel @ViewModelInject constructor(
     val warehouseCode =
         MutableLiveData<String>().apply {
             viewModelScope.launch(Dispatchers.IO) {
-                postValue(preferencesRepository.getWarehouseCode())
+                postValue(preferencesRepository.getWarehouseCode() ?: "")
             }
         }
 
@@ -123,7 +124,7 @@ class SettingsViewModel @ViewModelInject constructor(
         }
 
 
-    fun syncNowFab() {
+    fun downloadUpdatesFromRemoteDB() {
         val requestsArray = mutableListOf<OneTimeWorkRequest>()
         val constraints: Constraints = Constraints
             .Builder()
@@ -157,21 +158,6 @@ class SettingsViewModel @ViewModelInject constructor(
             ids["product_stock"] = getProductStockRequest.id
             requestsArray.add(getProductStockRequest)
         }
-/*
-        if (viewModel.clientsSync.value != false)
-            requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())
-
-        if (viewModel.clientsSync.value != false)
-            requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())
-
-        if (viewModel.clientsSync.value != false)
-            requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())
-
-        if (viewModel.clientsSync.value != false)
-            requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())
-
-        if (viewModel.clientsSync.value != false)
-            requestsArray.add(OneTimeWorkRequestBuilder<ClientsWorker>().build())*/
 
         var workContinuation: WorkContinuation? = null
 
@@ -184,7 +170,7 @@ class SettingsViewModel @ViewModelInject constructor(
         workContinuation?.enqueue()
     }
 
-    fun updateServer() {
+    fun sendUpdatesToRemoteDB() {
         val requestsArray = mutableListOf<OneTimeWorkRequest>()
         val constraints: Constraints = Constraints
             .Builder()
@@ -213,6 +199,22 @@ class SettingsViewModel @ViewModelInject constructor(
                     .addTag("products_update").build()
             ids["product_update"] = getProductsRequest.id
             requestsArray.add(getProductsRequest)
+        }
+
+        if (purchasesSync.value != false) {
+            val updatePurchasesRequest =
+                OneTimeWorkRequestBuilder<PurchaseWorker>().setConstraints(constraints)
+                    .addTag("purchase_update").build()
+            ids["purchase_update"] = updatePurchasesRequest.id
+            requestsArray.add(updatePurchasesRequest)
+        }
+
+        if (salesSync.value != false) {
+            val updateSalesRequest =
+                OneTimeWorkRequestBuilder<SalesWorker>().setConstraints(constraints)
+                    .addTag("sales_update").build()
+            ids["sales_update"] = updateSalesRequest.id
+            requestsArray.add(updateSalesRequest)
         }
 
         var workContinuation: WorkContinuation? = null

@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.backend.worker
 
 import android.content.Context
+import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
 import androidx.work.RxWorker
@@ -8,12 +9,14 @@ import androidx.work.WorkerParameters
 import com.safesoft.safemobile.backend.api.wrapper.UpdatePurchaseWrapper
 import com.safesoft.safemobile.backend.db.local.entity.AllAboutAPurchase
 import com.safesoft.safemobile.backend.db.local.entity.ProductWithBarcodes
+import com.safesoft.safemobile.backend.db.local.entity.PurchaseLines
 import com.safesoft.safemobile.backend.repository.ProductsRepository
 import com.safesoft.safemobile.backend.repository.PurchasesRepository
 import com.safesoft.safemobile.backend.utils.formatted
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.Flow
 
 
 class PurchaseWorker @WorkerInject constructor(
@@ -27,20 +30,35 @@ class PurchaseWorker @WorkerInject constructor(
 
     override fun createWork(): Single<Result> {
         return purchasesRepository
-            .getAllPurchasesWithAllInfo()
-            .zipWith(productsRepository.getAllProductsWithBarCodesSingle(),
-                BiFunction<List<AllAboutAPurchase>, List<ProductWithBarcodes>, UpdatePurchaseWrapper> { var1, var2 ->
-                    val tweaked = var1.map { it2 ->
-                        it2.purchase.stringDate = it2.purchase.date?.formatted() ?: ""
-                        return@map it2
+            .getAllNewPurchasesWithAllInfo()
+            .map {
+                val newItems = mutableListOf<AllAboutAPurchase>()
+                for (purchase in it) {
+                    val newLinesList = mutableListOf<PurchaseLines>()
+                    for (line in purchase.purchaseLines) {
+                        line.selectedProduct =
+                            productsRepository.getAllAboutAProductById(line.product).blockingGet()
+                        newLinesList.add(line)
                     }
-                    return@BiFunction UpdatePurchaseWrapper(tweaked, var2)
-                })
-            .flatMap { purchasesRepository.updatePurchases(it) }
-            .map { Result.success() }
+                    newItems.add(purchase.copy(purchaseLines = newLinesList))
+                }
+                return@map newItems
+            }
+            .flatMap {
+                if (it.isEmpty()) {
+                    Log.d(TAG, "createWork: no purchases to sync")
+                    return@flatMap Single.fromCallable { Result.success() }
+                }
+                purchasesRepository.insertPurchasesInRemoteDB(*it.toTypedArray())
+                    .toSingleDefault(Result.success())
+            }
             .onErrorReturn {
                 it.printStackTrace()
-                Result.retry()
+                Result.success()
+            }
+            .doOnSuccess {
+//                purchasesRepository.markAllPurchasesAsSync().blockingGet()
+                Log.d(TAG, "createWork: worker finished successfully")
             }
             .observeOn(Schedulers.io())
     }

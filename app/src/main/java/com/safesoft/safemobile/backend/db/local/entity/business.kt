@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.backend.db.local.entity
 
 import androidx.room.*
+import com.safesoft.safemobile.backend.utils.formatted
 import java.util.*
 
 
@@ -30,6 +31,7 @@ data class Purchases(
     @ColumnInfo(name = "TOTAL_QUANTITY") val totalQuantity: Double?,
     @ColumnInfo(name = "NOTE") val note: String?,
     @ColumnInfo(name = "DONE", defaultValue = "0") val done: Boolean,
+    @ColumnInfo(name = "SYNC", defaultValue = "0") val sync: Boolean,
     @ColumnInfo(name = "PAYMENT", defaultValue = "0") val payment: Double = 0.0
 ) {
     @Ignore
@@ -73,15 +75,14 @@ data class PurchaseLines(
     @Ignore
     var selectedProduct: AllAboutAProduct? = null
 
-    fun toMap(): Map<Int, Any> {
+    fun toMap(): Map<Int, Any?> {
         return mapOf(
-            2 to (this.selectedProduct?.bardcodes?.get(0) ?: " "),
-            3 to (this.selectedProduct?.product?.designation ?: " "),
-            4 to (this.quantity ?: 0.0),
-            5 to this.totalBuyPriceHT,
-            6 to this.tva,
-            7 to "0",
-            8 to this.discount,
+            2 to this.selectedProduct?.bardcodes?.get(0)?.code,
+            3 to this.selectedProduct?.product?.designation,
+            4 to this.quantity,
+            6 to this.discount,
+            7 to this.selectedProduct?.product?.purchasePriceHT,
+            8 to this.selectedProduct?.product?.tva,
         )
     }
 
@@ -108,22 +109,17 @@ data class AllAboutAPurchase(
 ) {
 
 
-    fun toMap(): Map<Int, Any> {
+    fun toMap(): Map<Int, Any?> {
         return mapOf(
-            2 to (this.purchase.date ?: " "),
-            3 to (this.purchase.date?.time ?: " "),
-            4 to (this.provider.code),
-            5 to (this.purchase.totalHT ?: 0.0),
-            6 to (this.purchase.tva ?: 0.0),
-            7 to (this.purchase.stamp ?: 0.0),
-            8 to (this.purchase.discount ?: 0.0),
-            9 to this.purchase.payment,
-            10 to this.purchase.reglement,
-            11 to (if (this.purchase.done) "F" else "O"),
-            12 to "",
-            13 to "0",
-            14 to (this.purchase.note ?: " ")
-
+            2 to this.purchase.date,
+            3 to this.purchase.date?.formatted()?.split(" ")?.get(1),
+            4 to this.provider.code,
+            5 to this.purchase.stamp,
+            6 to this.purchase.discount,
+            7 to this.purchase.payment,
+            8 to if (this.purchase.reglement == "C") "ESPECE" else "A TERME",
+            9 to (if (this.purchase.done) "F" else "O"),
+            12 to this.purchase.note
         )
     }
 }
@@ -154,6 +150,7 @@ data class Sales(
     @ColumnInfo(name = "TOTAL_QUANTITY") val totalQuantity: Double?,
     @ColumnInfo(name = "NOTE") val note: String?,
     @ColumnInfo(name = "DONE", defaultValue = "0") val done: Boolean,
+    @ColumnInfo(name = "SYNC", defaultValue = "0") val sync: Boolean,
     @ColumnInfo(name = "PAYMENT", defaultValue = "0") val payment: Double = 0.0
 )
 
@@ -191,19 +188,45 @@ data class SaleLines(
 ) {
     @Ignore
     var selectedProduct: AllAboutAProduct? = null
+
+    fun toMap(): Map<Int, Any?> {
+        return mapOf(
+            2 to this.selectedProduct?.bardcodes?.get(0)?.code,
+            3 to this.selectedProduct?.product?.designation,
+            4 to this.quantity,
+            6 to this.discount,
+            7 to this.selectedProduct?.product?.sellPriceDetailHT,
+            8 to this.selectedProduct?.product?.tva,
+        )
+    }
+
 }
 
 data class AllAboutASale(
     @Embedded val sale: Sales,
     @Relation(
-        parentColumn = "SALE_ID",
+        parentColumn = "id",
         entityColumn = "SALE"
     ) val saleLines: List<SaleLines>,
     @Relation(
-        parentColumn = "SALE",
-        entityColumn = "SALE_ID"
+        parentColumn = "CLIENT",
+        entityColumn = "CLIENT_ID"
     ) val client: Clients
-)
+) {
+    fun toMap(): Map<Int, Any?> {
+        return mapOf(
+            2 to this.sale.date,
+            3 to this.sale.date?.formatted()?.split(" ")?.get(1),
+            4 to this.client.code,
+            5 to this.sale.stamp,
+            6 to this.sale.discount,
+            7 to this.sale.payment,
+            8 to if (this.sale.reglement == "C") "ESPECE" else "A TERME",
+            9 to (if (this.sale.done) "F" else "O"),
+            12 to this.sale.note
+        )
+    }
+}
 
 
 @Entity(

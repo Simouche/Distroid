@@ -215,7 +215,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_sync"
-                    android:onClick="@{()->viewModel.syncNowFab()}"
+                    android:onClick="@{()->viewModel.downloadUpdatesFromRemoteDB()}"
                     android:text="@string/sync_now" />
 
                 <com.google.android.material.button.MaterialButton
@@ -223,7 +223,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_sync"
-                    android:onClick="@{()->viewModel.updateServer()}"
+                    android:onClick="@{()->viewModel.sendUpdatesToRemoteDB()}"
                     android:text="@string/send_to_server" />
 
             </com.google.android.material.circularreveal.CircularRevealLinearLayout>

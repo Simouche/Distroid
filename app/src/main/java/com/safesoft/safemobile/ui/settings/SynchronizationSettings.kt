@@ -33,7 +33,8 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class SynchronizationSettings : BaseFragment(), BaseAnimations {
+class
+SynchronizationSettings : BaseFragment(), BaseAnimations {
 
     private lateinit var binding: FragmentSynchronizationSettingsBinding
 

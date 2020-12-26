@@ -1,14 +1,17 @@
 package com.safesoft.safemobile
 
 import android.app.Application
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
-import com.safesoft.safemobile.backend.db.remote.RemoteDBRepo
+import com.safesoft.safemobile.backend.utils.formatted
+import com.safesoft.safemobile.backend.utils.formattedForLog
 import com.safesoft.safemobile.backend.worker.SyncWorker
 import dagger.hilt.android.HiltAndroidApp
 import io.reactivex.plugins.RxJavaPlugins
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -39,7 +42,23 @@ class SafeApplication : Application(), Configuration.Provider {
         WorkManager.getInstance(this).cancelAllWork()
         initializeToast()
         initializeErrorHandler()
+
+        initializeLogger()
     }
+
+    private fun initializeLogger() {
+        Log.w("before", "Logcat save")
+        try {
+            val fileName = "Logging ${Date().formattedForLog()}.txt".replace(" ", "_")
+            Log.d("Application", "initializeLogger: $fileName")
+            var process = Runtime.getRuntime().exec("logcat -e")
+            process =
+                Runtime.getRuntime().exec("logcat -f /storage/emulated/0/$fileName")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 
     override fun getWorkManagerConfiguration(): Configuration =
         Configuration.Builder()

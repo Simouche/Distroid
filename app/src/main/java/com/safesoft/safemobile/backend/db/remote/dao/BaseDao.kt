@@ -7,6 +7,7 @@ import io.reactivex.Single
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
+import java.util.*
 
 interface BaseDao<T> {
     var tableName: String?
@@ -16,11 +17,13 @@ interface BaseDao<T> {
     var connection: Connection?
     var preferencesRepository: PreferencesRepository
 
+    fun user(): String = "TERMINAL MOBILE"
+
     val TAG: String
 
-    fun createInsertQuery(insertColumns: List<String>? = null): String {
+    fun createInsertQuery(tableName: String? = null, insertColumns: List<String>? = null): String {
         val builder = StringBuffer()
-        builder.append("INSERT INTO $tableName (")
+        builder.append("INSERT INTO ${tableName ?: this.tableName} (")
         builder.append(joinInsertColumns(insertColumns))
         builder.append(") VALUES (")
         for (i in (insertColumns ?: this.insertColumns).indices)
@@ -85,7 +88,10 @@ interface BaseDao<T> {
 
     }
 
-    fun bindParams(preparedStatement: PreparedStatement, values: Map<Int, Any>): PreparedStatement {
+    fun bindParams(
+        preparedStatement: PreparedStatement,
+        values: Map<Int, Any?>
+    ): PreparedStatement {
         Log.d(TAG, "bindParams: preparing to bind a prepared statement")
         preparedStatement.clearParameters()
         values.forEach {
@@ -94,8 +100,11 @@ interface BaseDao<T> {
                 is String -> preparedStatement.setString(it.key, (it.value as String))
                 is Double -> preparedStatement.setDouble(it.key, (it.value as Double))
                 is Boolean -> preparedStatement.setBoolean(it.key, (it.value as Boolean))
-                // TODO: 08/12/2020 completed the rest of the case
+                is Date -> preparedStatement.setDate(it.key, java.sql.Date((it.value as Date).time))
+                null -> preparedStatement.setObject(it.key, null)
+                // TODO: 08/12/2020 complete the rest of the case
             }
+            Log.d(TAG, "bindParams: the entry ${it.key}:${it.value} is bound ")
         }
         Log.d(TAG, "bindParams: bound a statement.")
         return preparedStatement
@@ -116,7 +125,6 @@ interface BaseDao<T> {
         checkConnection()
         Log.d(TAG, "executeInsert: starting execution")
         connection!!.autoCommit = false
-        Log.d(TAG, "executeInsert: database autocommit is ${connection!!.autoCommit}")
         var result = 0
         preparedStatements.forEach {
             try {
@@ -173,9 +181,13 @@ interface BaseDao<T> {
 
     fun generateCode(table: String): String {
         val resultSet = executeQuery("SELECT GEN_ID($table,1) FROM RDB\$DATABASE")
+        var code: String = ""
         while (resultSet.next())
-            return resultSet.getString("GEN_ID")
-        return ""
+            code = resultSet.getString("GEN_ID")
+        val length = code.length
+        for (i in 0 until (6 - length))
+            code = "0$code"
+        return code
     }
 
 }

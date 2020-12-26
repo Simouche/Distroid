@@ -46,7 +46,7 @@
             app:destination="@id/nav_create_product" />
         <action
             android:id="@+id/action_nav_purchases_to_nac_create_provider"
-            app:destination="@id/nac_create_provider" />
+            app:destination="@id/nav_create_provider" />
     </fragment>
 
     <fragment
@@ -115,9 +115,12 @@
         tools:layout="@layout/fragment_create_client" />
 
     <fragment
-        android:id="@+id/nac_create_provider"
+        android:id="@+id/nav_create_provider"
         android:name="com.safesoft.safemobile.ui.providers.CreateProviderFragment"
         android:label="@string/provider"
         tools:layout="@layout/fragment_create_provider" />
+
+
+    <action android:id="@+id/action_global_nav_settings" app:destination="@id/nav_settings" />
 
 </navigation>

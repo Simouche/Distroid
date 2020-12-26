@@ -108,7 +108,7 @@ class RemoteProductDao @Inject constructor(
             val boundStatements = mutableListOf<PreparedStatement>()
             Log.d(TAG, "insert: are we here?")
             for ((index, product) in items.withIndex()) {
-                    boundStatements.add(bindParams(statements[index], product.toMap()))
+                boundStatements.add(bindParams(statements[index], product.toMap()))
                 Log.d(TAG, "insert: iteration $index")
             }
             Log.d(TAG, "insert: we have ${boundStatements.size} bound statements")
@@ -126,7 +126,7 @@ class RemoteProductDao @Inject constructor(
         return Single.fromCallable {
             var query = "SELECT * FROM "
 
-            query += if (preferencesRepository.getWarehouseCode() != "0")
+            query += if (preferencesRepository.getWarehouseCode() != "")
                 "DEPOT2 WHERE CODE_DEPOT = ${preferencesRepository.getWarehouseCode()};"
             else
                 "PRODUIT;"

@@ -19,9 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
-            android:textColor="@color/black"
             android:gravity="center"
             android:text="@string/total_amount"
+            android:textColor="@color/black"
             android:textSize="@dimen/_20ssp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -34,7 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="@string/payment" />
+                android:hint="@string/payment"
+                android:inputType="numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

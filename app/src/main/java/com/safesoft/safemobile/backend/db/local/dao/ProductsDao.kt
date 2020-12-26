@@ -14,6 +14,13 @@ interface ProductsDao {
     @Query("SELECT * FROM products")
     fun getAllProductsWithBarcodes(): DataSource.Factory<Int, ProductWithBarcodes>
 
+    @Query("SELECT * FROM barcodes WHERE product = :product ORDER BY id ASC LIMIT 1")
+    fun getProductMainBarcode(product: Long): Single<Barcodes>
+
+    @Transaction
+    @Query("SELECT * FROM products WHERE PRODUCT_ID = :product")
+    fun getAllAboutAProductById(product: Long): Single<AllAboutAProduct>
+
     @Transaction
     @Query("SELECT * FROM products")
     fun getAllProductsWithBarCodesSingle(): Single<List<ProductWithBarcodes>>

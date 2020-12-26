@@ -9,6 +9,7 @@ import com.safesoft.safemobile.backend.db.local.entity.AllAboutAPurchase
 import com.safesoft.safemobile.backend.db.local.entity.PurchaseLines
 import com.safesoft.safemobile.backend.db.local.entity.PurchaseWithLines
 import com.safesoft.safemobile.backend.db.local.entity.Purchases
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 
@@ -26,8 +27,11 @@ interface PurchasesDao {
     fun getAllPurchasesWithLines(): Flowable<List<PurchaseWithLines>>
 
     @Transaction
-    @Query("SELECT * FROM Purchases")
-    fun getAllPurchasesWithAllInfo(): Single<List<AllAboutAPurchase>>
+    @Query("SELECT * FROM Purchases WHERE SYNC = 0 AND DONE = 1")
+    fun getAllNewPurchasesWithAllInfo(): Single<List<AllAboutAPurchase>>
+
+    @Query("UPDATE purchases SET SYNC=1 WHERE DONE = 1")
+    fun markAllPurchasesAsSync(): Completable
 
     @Insert
     fun insertNewPurchase(purchase: Purchases): Single<Long>

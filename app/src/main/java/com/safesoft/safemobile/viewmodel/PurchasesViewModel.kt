@@ -19,7 +19,7 @@ class PurchasesViewModel @ViewModelInject constructor(
     private val purchasesRepository: PurchasesRepository,
     private val config: PagedList.Config,
     val purchaseForm: PurchaseForm
-) : BaseViewModel(), ProductCalculator,BaseFormOwner {
+) : BaseViewModel(), ProductCalculator, BaseFormOwner {
 
     var paymentType: String = "C"
         set(value) {
@@ -48,8 +48,9 @@ class PurchasesViewModel @ViewModelInject constructor(
             "C",
             0.0,
             "",
-            false,
-            0.0
+            done = false,
+            sync = false,
+            payment = 0.0
         )
     }
 
@@ -160,7 +161,7 @@ class PurchasesViewModel @ViewModelInject constructor(
         fields.tva.value = 0.0
         fields.stamp.value = 0.0
         fields.reglement.value = ""
-        fields.totalQuantity.value =0.0
+        fields.totalQuantity.value = 0.0
         fields.note.value = ""
         fields.payment.value = 0.0
     }

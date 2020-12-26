@@ -57,7 +57,13 @@ fun String.justADot(): Boolean {
 }
 
 fun Date.formatted(): String {
-    val pattern = "dd/MM/yyyy HH:mm"
+    val pattern = "MM/dd/yyyy HH:mm"
     val dateFormat = SimpleDateFormat(pattern)
     return dateFormat.format(this)
+}
+
+fun Date.formattedForLog(): String {
+    val pattern = "dd-MM-yyyy HH:mm"
+    val dateFormat = SimpleDateFormat(pattern)
+    return dateFormat.format(this).replace(":", "_")
 }

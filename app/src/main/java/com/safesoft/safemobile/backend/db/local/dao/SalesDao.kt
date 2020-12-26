@@ -4,8 +4,11 @@ import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
+import com.safesoft.safemobile.backend.db.local.entity.AllAboutASale
 import com.safesoft.safemobile.backend.db.local.entity.SaleLines
 import com.safesoft.safemobile.backend.db.local.entity.Sales
+import io.reactivex.Completable
 import io.reactivex.Single
 
 @Dao
@@ -27,5 +30,10 @@ interface SalesDao {
     @Insert
     fun insertSaleLines(vararg lines: SaleLines): Single<List<Long>>
 
+    @Transaction
+    @Query("SELECT * FROM sales WHERE SYNC = 0 AND DONE = 1")
+    fun getAllNewSalesWithAllInfo(): Single<List<AllAboutASale>>
 
+    @Query("UPDATE sales SET SYNC=1 WHERE DONE = 1")
+    fun markAllSalesAsSync(): Completable
 }
