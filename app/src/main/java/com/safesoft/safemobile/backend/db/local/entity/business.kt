@@ -136,7 +136,7 @@ data class AllAboutAPurchase(
 )
 data class Sales(
     @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo(name = "SALE_NUMBER") val purchaseNumber: String?,
+    @ColumnInfo(name = "SALE_NUMBER") val saleNumber: String?,
     @ColumnInfo(name = "INVOICE_NUMBER") val invoiceNumber: String?,
     @ColumnInfo(name = "DATE") val date: Date?,
     @ColumnInfo(name = "CLIENT") val client: Long?,

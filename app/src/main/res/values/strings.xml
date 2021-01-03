@@ -199,4 +199,5 @@
     <string name="database">Database</string>
     <string name="database_configured_success">Database Configured Successfully</string>
     <string name="datanbase_configuration_error">Wrong Database Configuration</string>
+    <string name="scanner">Scanner</string>
 </resources>

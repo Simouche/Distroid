@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.textfield.TextInputEditText
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.db.local.entity.Providers
+import com.safesoft.safemobile.backend.utils.doubleValue
 import com.safesoft.safemobile.databinding.DialogFiscalInformationsClientBinding
 import com.safesoft.safemobile.databinding.DialogNoteClientBinding
 import com.safesoft.safemobile.databinding.FragmentCreateClientBinding
@@ -187,7 +188,7 @@ class CreateClientFragment() : BaseFragment(), BaseFormOwner {
         viewModel.clientForm.fields.phones.value = checkMultiPhones()
         viewModel.clientForm.fields.faxes.value = checkMultiFaxes()
         viewModel.clientForm.fields.initialSold.value =
-            (binding.createClientInitialSold.text.toString() ?: "0.0").toDouble()
+            (binding.createClientInitialSold.text.toString()).doubleValue()
         viewModel.saveClient().observe(viewLifecycleOwner, Observer {
             when (it.state) {
                 loading -> switchVisibility()

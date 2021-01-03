@@ -81,4 +81,16 @@ class PreferencesRepository @Inject constructor(private val sharedPreferences: S
 
     fun setTarifactionModel(value: String) =
         sharedPreferencesEditor.putString("tarifaction_mode", value).commit()
+
+    fun getUseFlash(): Boolean = sharedPreferences.getBoolean("use_flash", false)
+
+    fun setUseFlash(value: Boolean) = sharedPreferencesEditor.putBoolean("use_flash", value)
+
+    fun getAutoFocus(): Boolean = sharedPreferences.getBoolean("use_auto_focus", true)
+
+    fun setAutoFocus(value: Boolean) = sharedPreferencesEditor.putBoolean("use_auto_focus", value)
+
+    fun getDBUsername() = sharedPreferences.getString("db_username", "SYSDBA")
+
+    fun getDBPassword() = sharedPreferences.getString("db_password", "masterkey")
 }

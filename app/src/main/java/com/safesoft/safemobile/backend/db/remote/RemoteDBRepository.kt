@@ -12,6 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 class RemoteDBRepository @Inject constructor(private val preferencesRepository: PreferencesRepository) {
+    private val driverClassName = "org.firebirdsql.jdbc.FBDriver"
 
     init {
         val checker = checkConnection().subscribeOn(Schedulers.io())
@@ -28,14 +29,14 @@ class RemoteDBRepository @Inject constructor(private val preferencesRepository: 
     var connection: Connection? = null
 
     private fun connect() {
-            System.setProperty("FBAdbLog", "true")
-            DriverManager.setLoginTimeout(5)
-            Class.forName("org.firebirdsql.jdbc.FBDriver")
-            val configs = loadConfigs()
-            val url =
-                "jdbc:firebirdsql://${configs["server"]}/${configs["path"]}?encoding=ISO8859_1"
-            Log.d(TAG, "Connection URL: $url")
-            connection = DriverManager.getConnection(url, "SYSDBA", "masterkey")
+        System.setProperty("FBAdbLog", "true")
+        DriverManager.setLoginTimeout(5)
+        Class.forName(driverClassName)
+        val configs = loadConfigs()
+        val url =
+            "jdbc:firebirdsql://${configs["server"]}/${configs["path"]}?encoding=ISO8859_1"
+        Log.d(TAG, "Connection URL: $url")
+        connection = DriverManager.getConnection(url, configs["username"], configs["password"])
     }
 
     fun checkConnection(): Completable {
@@ -47,7 +48,14 @@ class RemoteDBRepository @Inject constructor(private val preferencesRepository: 
     private fun loadConfigs(): Map<String, String> {
         val server: String = preferencesRepository.getLocalServerIp()!!
         val path: String = preferencesRepository.getDBPath()
-        return mapOf("path" to path, "server" to server)
+        val dbUser = preferencesRepository.getDBUsername()!!
+        val dbPassword = preferencesRepository.getDBPassword()!!
+        return mapOf(
+            "path" to path,
+            "server" to server,
+            "username" to dbUser,
+            "password" to dbPassword,
+        )
     }
 
 

@@ -16,6 +16,7 @@ import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.db.local.entity.AllAboutAProduct
 import com.safesoft.safemobile.databinding.FragmentCreateInventoryBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
+import com.safesoft.safemobile.ui.generics.BaseScannerFragment
 import com.safesoft.safemobile.ui.generics.adapter.GenericSpinnerAdapter
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener
 import com.safesoft.safemobile.ui.generics.onTextChanged
@@ -26,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CreateInventoryFragment : BaseFragment() {
+class CreateInventoryFragment : BaseScannerFragment() {
     private lateinit var binding: FragmentCreateInventoryBinding
 
 
@@ -92,6 +93,15 @@ class CreateInventoryFragment : BaseFragment() {
         }
         binding.inventorySelectProduct.setAdapter(adapter)
         binding.productIcon.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_inventory_to_nav_create_product))
+        binding.inventorySelectProduct.setOnLongClickListener {
+            launchScanner()
+            true
+        }
+    }
+
+    override fun handleScannerResult(text: String) {
+        super.handleScannerResult(text)
+        binding.inventorySelectProduct.setText(text)
     }
 
     private fun addLine(product: AllAboutAProduct?, quantity: Double) {

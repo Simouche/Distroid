@@ -3,6 +3,7 @@ package com.safesoft.safemobile.ui.purchases
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +13,13 @@ import androidx.lifecycle.Observer
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.databinding.FragmentPurchasesListBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
+import com.safesoft.safemobile.ui.generics.BaseScannerFragment
 import com.safesoft.safemobile.viewmodel.PurchasesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PurchasesListFragment : BaseFragment() {
+class PurchasesListFragment : BaseScannerFragment() {
 
     private val galleryViewModel: PurchasesViewModel by viewModels(this::requireParentFragment)
     private lateinit var binding: FragmentPurchasesListBinding
@@ -28,7 +30,7 @@ class PurchasesListFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_purchases_list, container, false)
         return binding.root
@@ -39,13 +41,23 @@ class PurchasesListFragment : BaseFragment() {
         binding.lifecycleOwner = this
         binding.purchasesList.adapter = recyclerAdapter
         binding.purchasesSearchField.requestFocus()
+        binding.purchasesSearchField.setOnLongClickListener {
+            launchScanner()
+            true
+        }
+    }
+
+    override fun handleScannerResult(text: String) {
+        super.handleScannerResult(text)
+        binding.purchasesSearchField.setText(text)
+        Log.d(TAG, "handleScannerResult: inserted $text into the field")
     }
 
     override fun setUpObservers() {
         super.setUpObservers()
         galleryViewModel.purchasesList.observe(
             viewLifecycleOwner,
-            Observer {
+            {
                 recyclerAdapter.submitList(it)
                 recyclerAdapter.notifyDataSetChanged()
             }
@@ -66,19 +78,18 @@ class PurchasesListFragment : BaseFragment() {
                     if (!galleryViewModel.purchasesList.hasActiveObservers())
                         galleryViewModel.purchasesList.observe(
                             viewLifecycleOwner,
-                            Observer {
+                            {
                                 recyclerAdapter.submitList(it)
                                 recyclerAdapter.notifyDataSetChanged()
                             }
                         )
                 } else {
-                    if (galleryViewModel.purchasesList.hasActiveObservers()) galleryViewModel.purchasesList.removeObservers(
-                        viewLifecycleOwner
-                    )
+                    if (galleryViewModel.purchasesList.hasActiveObservers())
+                        galleryViewModel.purchasesList.removeObservers(viewLifecycleOwner)
 
                     galleryViewModel.search(query).observe(
                         viewLifecycleOwner,
-                        Observer {
+                        {
                             recyclerAdapter.submitList(it)
                             recyclerAdapter.notifyDataSetChanged()
                         }

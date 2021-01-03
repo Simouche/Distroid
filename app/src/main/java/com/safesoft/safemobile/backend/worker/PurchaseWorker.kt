@@ -57,7 +57,7 @@ class PurchaseWorker @WorkerInject constructor(
                 Result.success()
             }
             .doOnSuccess {
-//                purchasesRepository.markAllPurchasesAsSync().blockingGet()
+                purchasesRepository.markAllPurchasesAsSync().blockingGet()
                 Log.d(TAG, "createWork: worker finished successfully")
             }
             .observeOn(Schedulers.io())

@@ -187,9 +187,10 @@
     <string name="ip_address">Adresse IP</string>
     <string name="actions">Actions</string>
     <string name="send_to_server">Envoyer les mises à jour au serveur</string>
-    <string name="warehouse_code">Warehouse Code</string>
+    <string name="warehouse_code">Code de depôt</string>
     <string name="test">Test</string>
-    <string name="database">Database</string>
-    <string name="database_configured_success">Database Configured Successfully</string>
-    <string name="datanbase_configuration_error">Wrong Database Configuration</string>
+    <string name="database">Base de données</string>
+    <string name="database_configured_success">Base de données configurée avec succès</string>
+    <string name="datanbase_configuration_error">Mauvaise configuration de la base de données</string>
+    <string name="scanner">Scanner</string>
 </resources>

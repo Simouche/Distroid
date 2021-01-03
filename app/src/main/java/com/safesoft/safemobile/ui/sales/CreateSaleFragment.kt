@@ -25,6 +25,7 @@ import com.safesoft.safemobile.databinding.DialogDiscountInputSaleBinding
 import com.safesoft.safemobile.databinding.FragmentCreateSaleBinding
 import com.safesoft.safemobile.databinding.InvoiceConfirmationDialogBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
+import com.safesoft.safemobile.ui.generics.BaseScannerFragment
 import com.safesoft.safemobile.ui.generics.adapter.GenericSpinnerAdapter
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener
 import com.safesoft.safemobile.ui.generics.onTextChanged
@@ -36,10 +37,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CreateSaleFragment : BaseFragment() {
+class CreateSaleFragment : BaseScannerFragment() {
 
     private lateinit var binding: FragmentCreateSaleBinding
-
+    private var scanRequestedFrom = 0
 
     private val viewModel: SalesViewModel by viewModels(this::requireActivity)
     private val clientsViewModel: ClientsViewModel by viewModels(this::requireActivity)
@@ -81,6 +82,7 @@ class CreateSaleFragment : BaseFragment() {
     }
 
     private fun setUpClientSearch() {
+        binding.saleSelectClient.setText(viewModel.clientName)
         val initItems = mutableListOf<Clients>()
         val adapter = GenericSpinnerAdapter(requireContext(), R.layout.spinner_item, initItems)
         adapter.setNotifyOnChange(true)
@@ -103,6 +105,11 @@ class CreateSaleFragment : BaseFragment() {
         }
         binding.saleSelectClient.setAdapter(adapter)
         binding.clientIcon.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_sales_to_nav_create_client))
+        binding.saleSelectClient.setOnLongClickListener {
+            launchScanner()
+            scanRequestedFrom = 1
+            true
+        }
     }
 
     private fun setUpProductSearch() {
@@ -141,6 +148,20 @@ class CreateSaleFragment : BaseFragment() {
         }
         binding.saleSelectProduct.setAdapter(adapter)
         binding.productIcon.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_sales_to_nav_create_product))
+        binding.saleSelectProduct.setOnLongClickListener {
+            launchScanner()
+            scanRequestedFrom = 0
+            true
+        }
+    }
+
+    override fun handleScannerResult(text: String) {
+        super.handleScannerResult(text)
+        if (scanRequestedFrom == 0)
+            binding.saleSelectProduct.setText(text)
+        else
+            binding.saleSelectClient.setText(text)
+
     }
 
     private fun addLine(product: AllAboutAProduct?, quantity: Double) {

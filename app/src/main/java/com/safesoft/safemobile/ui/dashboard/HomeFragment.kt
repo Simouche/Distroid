@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.utils.ResourceState
 import com.safesoft.safemobile.databinding.FragmentHomeBinding
@@ -26,11 +27,15 @@ class HomeFragment : BaseFragment() {
     private val homeViewModel: HomeViewModel by viewModels()
     private val clientsViewModel: ClientsViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         return binding.root
     }

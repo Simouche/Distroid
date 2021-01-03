@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.ui.products
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -18,17 +19,20 @@ import com.safesoft.safemobile.backend.utils.doubleValue
 import com.safesoft.safemobile.databinding.DialogSelectProductBinding
 import com.safesoft.safemobile.databinding.FragmentProductsListBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
+import com.safesoft.safemobile.ui.generics.BaseScannerFragment
 import com.safesoft.safemobile.ui.generics.addDivider
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener
+import com.safesoft.safemobile.ui.scanner.ScannerActivity
 import com.safesoft.safemobile.viewmodel.ProductsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProductsListFragment : BaseFragment() {
+class ProductsListFragment : BaseScannerFragment() {
 
     private val productsViewModel: ProductsViewModel by viewModels(this::requireActivity)
     private lateinit var binding: FragmentProductsListBinding
+
 
     @Inject
     lateinit var recyclerAdapter: ProductsRecyclerAdapter
@@ -36,7 +40,7 @@ class ProductsListFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_products_list, container, false)
         return binding.root
@@ -52,6 +56,10 @@ class ProductsListFragment : BaseFragment() {
         recyclerAdapter.onNormalClickListener = OnItemClickListener { position, _ ->
             showProductDetailsDialog(requireContext(), recyclerAdapter.getItemAt(position))
         }
+        binding.productsSearchField.setOnLongClickListener {
+            launchScanner()
+            true
+        }
     }
 
     override fun setUpObservers() {
@@ -59,7 +67,7 @@ class ProductsListFragment : BaseFragment() {
         if (!productsViewModel.productsList.hasActiveObservers() && (!productsViewModel.searchQuery.hasActiveObservers()))
             productsViewModel.productsList.observe(
                 viewLifecycleOwner,
-                Observer {
+                {
                     Log.d(TAG, "setUpObservers: All Selected")
                     recyclerAdapter.submitList(it)
                     recyclerAdapter.notifyDataSetChanged()
@@ -67,13 +75,13 @@ class ProductsListFragment : BaseFragment() {
             )
 
         if (!productsViewModel.searchQuery.hasActiveObservers())
-            productsViewModel.searchQuery.observe(viewLifecycleOwner, Observer { query ->
+            productsViewModel.searchQuery.observe(viewLifecycleOwner, { query ->
                 if (query.isBlank()) {
                     Log.d(TAG, "setUpObservers: query is blank")
                     if (!productsViewModel.productsList.hasActiveObservers())
                         productsViewModel.productsList.observe(
                             viewLifecycleOwner,
-                            Observer {
+                            {
                                 recyclerAdapter.submitList(it)
                                 recyclerAdapter.notifyDataSetChanged()
                             }
@@ -85,7 +93,7 @@ class ProductsListFragment : BaseFragment() {
                     )
                     productsViewModel.search(query).observe(
                         viewLifecycleOwner,
-                        Observer { it ->
+                        {
                             Log.d(
                                 TAG,
                                 "setUpObservers: searching query of $query result is " + it.size
@@ -132,6 +140,11 @@ class ProductsListFragment : BaseFragment() {
                 dialog.dismiss()
             }
         }
+    }
+
+    override fun handleScannerResult(text: String) {
+        super.handleScannerResult(text)
+        binding.productsSearchField.setText(text)
     }
 
 }

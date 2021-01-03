@@ -25,7 +25,7 @@ import com.safesoft.safemobile.databinding.DialogDiscountInputBinding
 import com.safesoft.safemobile.databinding.FragmentCreatePurchaseBinding
 import com.safesoft.safemobile.databinding.InvoiceConfirmationDialogBinding
 import com.safesoft.safemobile.ui.generics.BaseFormOwner
-import com.safesoft.safemobile.ui.generics.BaseFragment
+import com.safesoft.safemobile.ui.generics.BaseScannerFragment
 import com.safesoft.safemobile.ui.generics.adapter.GenericSpinnerAdapter
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener
 import com.safesoft.safemobile.ui.generics.onTextChanged
@@ -38,10 +38,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CreatePurchaseFragment : BaseFragment(), ProductCalculator, BaseFormOwner {
+class CreatePurchaseFragment : BaseScannerFragment(), ProductCalculator, BaseFormOwner {
     private lateinit var binding: FragmentCreatePurchaseBinding
 
-
+    private var scanRequestedFrom = 0
     private val viewModel: PurchasesViewModel by viewModels(this::requireActivity)
     private val providersViewModel: ProvidersViewModel by viewModels(this::requireActivity)
     private val productsViewModel: ProductsViewModel by viewModels(this::requireActivity)
@@ -52,7 +52,7 @@ class CreatePurchaseFragment : BaseFragment(), ProductCalculator, BaseFormOwner 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_create_purchase, container, false)
         return binding.root
@@ -74,6 +74,17 @@ class CreatePurchaseFragment : BaseFragment(), ProductCalculator, BaseFormOwner 
         setUpProviderSearch()
     }
 
+    override fun handleScannerResult(text: String) {
+        super.handleScannerResult(text)
+        if (text.isEmpty()) return
+        if (scanRequestedFrom == 0)
+            binding.purchaseSelectProduct.setText(text)
+        else
+            binding.purchaseSelectProvider.setText(text)
+        isScanning = false
+        Log.d(TAG, "handleScannerResult: finished handling the scan result")
+    }
+
     override fun setUpObservers() {
         super.setUpObservers()
         binding.footer.stampSwitcher.setOnCheckedChangeListener { _, b ->
@@ -85,15 +96,17 @@ class CreatePurchaseFragment : BaseFragment(), ProductCalculator, BaseFormOwner 
     }
 
     private fun setUpProviderSearch() {
+        binding.purchaseSelectProvider.setText(viewModel.providerName)
         val initItems = mutableListOf<Providers>()
         val adapter = GenericSpinnerAdapter(requireContext(), R.layout.spinner_item, initItems)
         adapter.setNotifyOnChange(true)
         binding.purchaseSelectProvider.setOnItemClickListener { _, _, i, _ ->
-            Log.d(TAG, "setUpProviderSearch: ")
+            Log.d(TAG, "selected provider: ${adapter.getItem(i)}")
             viewModel.purchaseForm.fields.provider.value = adapter.getItem(i)?.id
             viewModel.provider = adapter.getItem(i)!!.id
         }
         binding.purchaseSelectProvider.onTextChanged { s ->
+            viewModel.providerName = s
             providersViewModel.searchFlow(s).observe(viewLifecycleOwner, Observer {
                 when (it.state) {
                     loading -> return@Observer
@@ -107,6 +120,11 @@ class CreatePurchaseFragment : BaseFragment(), ProductCalculator, BaseFormOwner 
         }
         binding.purchaseSelectProvider.setAdapter(adapter)
         binding.providerIcon.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_purchases_to_nac_create_provider))
+        binding.purchaseSelectProvider.setOnLongClickListener {
+            launchScanner()
+            scanRequestedFrom = 1
+            true
+        }
     }
 
     private fun setUpProductSearch() {
@@ -145,7 +163,11 @@ class CreatePurchaseFragment : BaseFragment(), ProductCalculator, BaseFormOwner 
         }
         binding.purchaseSelectProduct.setAdapter(adapter)
         binding.productIcon.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_purchases_to_nav_create_product))
-
+        binding.purchaseSelectProduct.setOnLongClickListener {
+            launchScanner()
+            scanRequestedFrom = 0
+            true
+        }
     }
 
     private fun addLine(product: AllAboutAProduct?, quantity: Double) {

@@ -5,21 +5,26 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.databinding.FragmentClientsListBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
+import com.safesoft.safemobile.ui.generics.BaseScannerFragment
 import com.safesoft.safemobile.ui.generics.addDivider
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener
 import com.safesoft.safemobile.ui.generics.listeners.OnItemLongClickListener
 import com.safesoft.safemobile.viewmodel.ClientsViewModel
+import com.safesoft.safemobile.viewmodel.SalesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ClientsListFragment : BaseFragment() {
+class ClientsListFragment : BaseScannerFragment() {
 
     private val clientsViewModel: ClientsViewModel by viewModels(this::requireActivity)
-    private lateinit var binding : FragmentClientsListBinding
+    private val salesViewModel: SalesViewModel by viewModels(this::requireActivity)
+
+    private lateinit var binding: FragmentClientsListBinding
 
     @Inject
     lateinit var recyclerAdapter: ClientsRecyclerAdapter
@@ -52,6 +57,15 @@ class ClientsListFragment : BaseFragment() {
         binding.clientsList.adapter = recyclerAdapter
         binding.clientsList.addDivider()
         registerForContextMenu(binding.clientsList)
+        binding.clientsSearchField.setOnLongClickListener {
+            launchScanner()
+            true
+        }
+    }
+
+    override fun handleScannerResult(text: String) {
+        super.handleScannerResult(text)
+        binding.clientsSearchField.setText(text)
     }
 
     override fun setUpObservers() {
@@ -105,7 +119,15 @@ class ClientsListFragment : BaseFragment() {
         when (item.itemId) {
             R.id.action_update -> toast(null, "Update clicked on $currentItemPosition")
             R.id.action_details -> toast(null, "details clicked on $currentItemPosition")
-            R.id.action_new_receipt -> toast(null, "new receipt clicked on $currentItemPosition")
+            R.id.action_new_receipt -> {
+                salesViewModel.client = recyclerAdapter.getItemAt(currentItemPosition)!!.id
+                salesViewModel.salesForm.fields.client.value =
+                    recyclerAdapter.getItemAt(currentItemPosition)!!.id
+                salesViewModel.clientName =
+                    recyclerAdapter.getItemAt(currentItemPosition).toString()
+                findNavController().navigate(R.id.action_nav_clients_to_nav_create_sale)
+
+            }
         }
         return true
     }

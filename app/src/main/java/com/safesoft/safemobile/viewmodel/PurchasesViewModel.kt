@@ -32,6 +32,8 @@ class PurchasesViewModel @ViewModelInject constructor(
             invoice.value = invoice.value!!.copy(provider = value)
         }
 
+    var providerName = ""
+
     val invoice = MutableLiveData<Purchases>().apply {
         value = Purchases(
             0,

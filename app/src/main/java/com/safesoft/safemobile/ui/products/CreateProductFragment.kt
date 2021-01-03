@@ -38,9 +38,7 @@ import kotlinx.android.synthetic.main.fragment_create_product.*
 
 
 @AndroidEntryPoint
-class CreateProductFragment : BaseFragment(), ProductCalculator, BaseFormOwner {
-
-    private val SCAN_BARCODE = 100
+class CreateProductFragment : BaseScannerFragment(), ProductCalculator, BaseFormOwner {
 
     private val viewModel: ProductsViewModel by viewModels(this::requireActivity)
 
@@ -74,9 +72,6 @@ class CreateProductFragment : BaseFragment(), ProductCalculator, BaseFormOwner {
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_create_product, container, false)
-
-        Log.d(TAG, "onCreateView: came here")
-
         return binding.root
     }
 
@@ -87,10 +82,7 @@ class CreateProductFragment : BaseFragment(), ProductCalculator, BaseFormOwner {
         binding.viewModel = viewModel
         binding.productBarcode.setOnTouchListener { _, me -> barcodeDoubleTapEvent.onTouchEvent(me) }
         binding.productBarcode.setOnLongClickListener {
-            startActivityForResult(
-                Intent(requireContext(), ScannerActivity::class.java),
-                SCAN_BARCODE
-            )
+            launchScanner()
             true
         }
         binding.createProductBrand.setOnTouchListener { _, me -> brandDoubleTapEvent.onTouchEvent(me) }
@@ -367,15 +359,7 @@ may reactivate this in case of the user wants to change the marge when changing 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == SCAN_BARCODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                if (!data?.getStringExtra("code").isNullOrEmpty()) {
-                    handleBarcodeScan(data?.getStringExtra("code")!!)
-                }
-            } else {
-                toast(R.string.nothing_scanned)
-            }
-        } else {
+        if (requestCode in 34961..34965)
             easyImage.handleActivityResult(
                 requestCode,
                 resultCode,
@@ -398,7 +382,6 @@ may reactivate this in case of the user wants to change the marge when changing 
                             imageFiles[0].file.absolutePath
                     }
                 })
-        }
     }
 
     override fun switchVisibility() {
@@ -418,10 +401,18 @@ may reactivate this in case of the user wants to change the marge when changing 
         binding.createProductImage.setImageResource(R.drawable.ic_product)
     }
 
+    override fun handleScannerResult(text: String) {
+        super.handleScannerResult(text)
+        handleBarcodeScan(text)
+    }
+
     private fun handleBarcodeScan(code: String) {
         if (binding.productBarcode.text.toString().isEmptyOrBlank()) {
             binding.productBarcode.setText(code)
-            viewModel.codesList.value?.set(0, code)
+            if (viewModel.codesList.value?.isEmpty() == true)
+                viewModel.codesList.value?.add(code)
+            else
+                viewModel.codesList.value?.set(0, code)
         } else {
             val childCount = binding.createProductBarcodes.childCount
             for (i in 1 until childCount) {
@@ -433,6 +424,7 @@ may reactivate this in case of the user wants to change the marge when changing 
                         viewModel.codesList.value?.add(code)
                     else
                         viewModel.codesList.value?.set(i - 1, code)
+                    return
                 }
             }
         }
@@ -468,7 +460,6 @@ may reactivate this in case of the user wants to change the marge when changing 
                     "saveChildrenState: added a barcode ${viewModel.codesList.value?.get(index - 1)}"
                 )
             }
-
         }
     }
 

@@ -18,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.db.local.entity.Clients
 import com.safesoft.safemobile.backend.utils.doubleValue
+import com.safesoft.safemobile.backend.utils.isEmptyOrBlank
 import com.safesoft.safemobile.databinding.DialogFiscalInformationsBinding
 import com.safesoft.safemobile.databinding.DialogNoteBinding
 import com.safesoft.safemobile.databinding.FragmentCreateProviderBinding
@@ -111,6 +112,7 @@ class CreateProviderFragment : BaseFragment(), BaseFormOwner {
 
             override fun afterTextChanged(p0: Editable?) {
                 val query = p0.toString()
+                if (query.isEmptyOrBlank())
                 clientsViewModel.searchFlow(query).observe(viewLifecycleOwner, Observer {
                     when (it.state) {
                         loading -> return@Observer

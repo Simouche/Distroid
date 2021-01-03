@@ -7,14 +7,14 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.1"
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.safesoft.safemobile"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3
-        versionName "1.02"
+        versionCode 7
+        versionName "1.07"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -143,16 +143,11 @@ dependencies {
     // optional - Test helpers
     androidTestImplementation "androidx.work:work-testing:$work_version"
 
+    implementation files('libs/Jaybird_2_2_12.aar')
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-
-//    implementation files('libs/jaybird-full-4.0.1.java8.jar')
-//    implementation files('libs/connector-api-1.5.jar')
-    implementation files('libs/Jaybird_2_2_12.aar')
-//    implementation files('libs/jna-5.5.0.jar')
-//    implementation files('libs/jaybird-full-4.0.1.java8.jar')
 
 }

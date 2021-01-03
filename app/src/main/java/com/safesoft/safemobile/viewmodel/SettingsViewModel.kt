@@ -28,7 +28,6 @@ class SettingsViewModel @ViewModelInject constructor(
     application: Application,
     private val preferencesRepository: PreferencesRepository,
     private val remoteDBRepository: RemoteDBRepository,
-    private val remoteProviderDao: RemoteProviderDao,
 ) : BaseAndroidViewModel(application) {
 
     val trigger = 0

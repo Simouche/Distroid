@@ -1,8 +1,11 @@
 package com.safesoft.safemobile.ui.generics
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import com.safesoft.safemobile.backend.utils.ResourceState
 
@@ -49,5 +52,9 @@ abstract class BaseActivity : AppCompatActivity() {
         setUp()
         setupViews()
         setUpObservers()
+    }
+
+    fun hasPermissions(context: Context, vararg permissions: String): Boolean = permissions.all {
+        ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
     }
 }

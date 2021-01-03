@@ -15,4 +15,5 @@
         android:hint="@string/barcode"
         android:inputType="text"
         android:selectAllOnFocus="true" />
+
 </com.google.android.material.textfield.TextInputLayout>

@@ -44,7 +44,8 @@ SynchronizationSettings : BaseFragment(), BaseAnimations {
     private val NOTIFICATION_CHANNEL = "PROGRESS"
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(

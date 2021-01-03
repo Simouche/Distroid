@@ -11,13 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.databinding.FragmentSalesListBinding
-import com.safesoft.safemobile.ui.generics.BaseFragment
+import com.safesoft.safemobile.ui.generics.BaseScannerFragment
 import com.safesoft.safemobile.viewmodel.SalesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SalesListFragment : BaseFragment() {
+class SalesListFragment : BaseScannerFragment() {
 
     private val viewModel: SalesViewModel by viewModels(this::requireActivity)
     private lateinit var binding: FragmentSalesListBinding
@@ -45,7 +45,7 @@ class SalesListFragment : BaseFragment() {
         super.setUpObservers()
         viewModel.salesList.observe(
             viewLifecycleOwner,
-            Observer {
+            {
                 recyclerAdapter.submitList(it)
                 recyclerAdapter.notifyDataSetChanged()
             }
@@ -87,6 +87,15 @@ class SalesListFragment : BaseFragment() {
             }
         })
 
+        binding.salesSearchField.setOnLongClickListener {
+            launchScanner()
+            true
+        }
+    }
+
+    override fun handleScannerResult(text: String) {
+        super.handleScannerResult(text)
+        binding.salesSearchField.setText(text)
     }
 
 }

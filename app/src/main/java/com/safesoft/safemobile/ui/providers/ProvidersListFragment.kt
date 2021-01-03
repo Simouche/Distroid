@@ -6,21 +6,27 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.databinding.FragmentProvidersListBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
+import com.safesoft.safemobile.ui.generics.BaseScannerFragment
 import com.safesoft.safemobile.ui.generics.addDivider
 import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener
 import com.safesoft.safemobile.ui.generics.listeners.OnItemLongClickListener
 import com.safesoft.safemobile.viewmodel.ProvidersViewModel
+import com.safesoft.safemobile.viewmodel.PurchasesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ProvidersListFragment : BaseFragment() {
+class ProvidersListFragment : BaseScannerFragment() {
 
     private val providersViewModel: ProvidersViewModel by viewModels(this::requireActivity)
+    private val purchasesViewModel: PurchasesViewModel by viewModels(this::requireActivity)
+
     private lateinit var binding: FragmentProvidersListBinding
 
     @Inject
@@ -30,7 +36,7 @@ class ProvidersListFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_providers_list, container, false)
         return binding.root
@@ -54,6 +60,15 @@ class ProvidersListFragment : BaseFragment() {
         binding.providersList.adapter = recyclerAdapter
         binding.providersList.addDivider()
         registerForContextMenu(binding.providersList)
+        binding.providersSearchField.setOnLongClickListener {
+            launchScanner()
+            true
+        }
+    }
+
+    override fun handleScannerResult(text: String) {
+        super.handleScannerResult(text)
+        binding.providersSearchField.setText(text)
     }
 
     override fun setUpObservers() {
@@ -107,7 +122,15 @@ class ProvidersListFragment : BaseFragment() {
         when (item.itemId) {
             R.id.action_update -> toast(null, "Update clicked on $currentItemPosition")
             R.id.action_details -> toast(null, "details clicked on $currentItemPosition")
-            R.id.action_new_receipt -> toast(null, "new receipt clicked on $currentItemPosition")
+            R.id.action_new_receipt -> {
+                purchasesViewModel.provider = recyclerAdapter.getItemAt(currentItemPosition)!!.id
+                purchasesViewModel.purchaseForm.fields.provider.value =
+                    recyclerAdapter.getItemAt(currentItemPosition)!!.id
+                purchasesViewModel.providerName =
+                    recyclerAdapter.getItemAt(currentItemPosition).toString()
+                findNavController().navigate(R.id.action_nav_providers_to_nav_create_purchase)
+
+            }
         }
         return true
     }

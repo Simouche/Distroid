@@ -2,6 +2,7 @@ package com.safesoft.safemobile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -27,6 +28,17 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: AuthViewModel by viewModels()
     private val settingsViewModel: SettingsViewModel by viewModels()
 
+    private val topLevelDestinations = setOf(
+        R.id.nav_dashboard,
+        R.id.nav_purchases,
+        R.id.nav_sales,
+        R.id.nav_products,
+        R.id.nav_inventory,
+        R.id.nav_clients,
+        R.id.nav_providers,
+        R.id.nav_settings
+    )
+
 
     private lateinit var drawerLayout: DrawerLayout
 
@@ -43,16 +55,7 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_dashboard,
-                R.id.nav_purchases,
-                R.id.nav_sales,
-                R.id.nav_products,
-                R.id.nav_inventory,
-                R.id.nav_clients,
-                R.id.nav_providers,
-                R.id.nav_settings
-            ), drawerLayout
+            topLevelDestinations, drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -87,12 +90,12 @@ class MainActivity : AppCompatActivity() {
 
             }
             R.id.action_settings -> {
-                val navigator =
-                    Navigation.findNavController(supportFragmentManager.primaryNavigationFragment!!.requireView())
-                if (navigator.currentDestination?.id != R.id.nav_settings)
-                    navigator.navigate(R.id.action_global_nav_settings)
+                if (getNavigationView().currentDestination?.id != R.id.nav_settings)
+                    getNavigationView().navigate(R.id.action_global_nav_settings)
             }
             android.R.id.home -> {
+                if (getNavigationView().currentDestination?.id !in topLevelDestinations)
+                    return getNavigationView().popBackStack()
                 if (drawerLayout.isDrawerOpen(GravityCompat.START))
                     drawerLayout.closeDrawer(GravityCompat.START)
                 else
@@ -101,6 +104,9 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+
+    private fun getNavigationView() =
+        Navigation.findNavController(supportFragmentManager.primaryNavigationFragment!!.requireView())
 
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
