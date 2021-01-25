@@ -22,6 +22,10 @@ interface ProductsDao {
     fun getAllAboutAProductById(product: Long): Single<AllAboutAProduct>
 
     @Transaction
+    @Query("SELECT * FROM products JOIN barcodes ON products.PRODUCT_ID = barcodes.PRODUCT WHERE barcodes.id = :barcode")
+    fun getAllAboutAProductByBarcode(barcode: Long): Single<AllAboutAProduct>
+
+    @Transaction
     @Query("SELECT * FROM products")
     fun getAllProductsWithBarCodesSingle(): Single<List<ProductWithBarcodes>>
 

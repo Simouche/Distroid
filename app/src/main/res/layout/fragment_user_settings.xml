@@ -1,14 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.settings.UserSettings">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.safesoft.safemobile.viewmodel.AuthViewModel" />
+
+        <variable
+            name="is_admin"
+            type="Boolean" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/create_user_username_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                app:boxBackgroundColor="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_user_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username"
+                    android:inputType="textNoSuggestions"
+                    android:selectAllOnFocus="true"
+                    android:text="@={viewModel.userForm.fields.username}"
+                    app:error="@{viewModel.userForm.usernameError}"
+                    app:onFocus="@{viewModel.onFocusUsername}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/create_user_first_name_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                app:boxBackgroundColor="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_user_username_layout"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_user_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/first_name"
+                    android:inputType="textNoSuggestions"
+                    android:selectAllOnFocus="true"
+                    android:text="@={viewModel.userForm.fields.firstName}"
+                    app:error="@{viewModel.userForm.firstNameError}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/create_user_last_name_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                app:boxBackgroundColor="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/create_user_first_name_layout"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_user_last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/last_name"
+                    android:inputType="textNoSuggestions"
+                    android:selectAllOnFocus="true"
+                    android:text="@={viewModel.userForm.fields.lastName}"
+                    app:error="@{viewModel.userForm.lastNameError}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/create_user_birthdate_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                app:boxBackgroundColor="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/create_user_last_name_layout"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_user_birthdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/birth_date"
+                    android:inputType="textNoSuggestions"
+                    android:selectAllOnFocus="true"
+                    android:text="@={viewModel.userForm.fields.birthDate}"
+                    app:error="@{viewModel.userForm.birthDateError}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/create_user_address_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                app:boxBackgroundColor="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/create_user_birthdate_layout"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_user_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/address"
+                    android:inputType="textMultiLine"
+                    android:selectAllOnFocus="true"
+                    android:text="@={viewModel.userForm.fields.address}"
+                    app:error="@{viewModel.userForm.addressError}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/create_user_phone_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                app:boxBackgroundColor="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/create_user_address_layout"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_user_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/phone"
+                    android:inputType="phone"
+                    android:selectAllOnFocus="true"
+                    android:text="@={viewModel.userForm.fields.phone}"
+                    app:error="@{viewModel.userForm.phoneError}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/create_user_email_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                app:boxBackgroundColor="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/create_user_phone_layout"
+                app:layout_constraintWidth_percent="@dimen/form_edit_text_width_percent_big">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_user_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:selectAllOnFocus="true"
+                    android:text="@={viewModel.userForm.fields.email}"
+                    app:error="@{viewModel.userForm.emailError}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/permissions_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:orientation="vertical"
+                android:visibility="@{is_admin?View.VISIBLE:View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_user_email_layout">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/create_user_is_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/edit_text_space_between"
+                    android:layout_marginEnd="@dimen/edit_text_margins"
+                    android:text="@string/is_admin"
+                    app:layout_constraintStart_toStartOf="@+id/create_user_email_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/create_user_email_layout" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/create_user_permissions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/edit_text_space_between"
+                    android:layout_marginEnd="@dimen/edit_text_margins"
+                    android:text="@string/permissions"
+                    app:layout_constraintStart_toStartOf="@id/create_user_is_admin"
+                    app:layout_constraintTop_toBottomOf="@+id/create_user_is_admin" />
+
+                <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/create_user_sales_perm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:text="@string/sales"
+                        app:layout_constraintStart_toStartOf="@+id/create_user_permissions"
+                        app:layout_constraintTop_toBottomOf="@+id/create_user_permissions" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/create_user_purchase_perm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:text="@string/purchases"
+                        app:layout_constraintStart_toEndOf="@+id/create_user_sales_perm"
+                        app:layout_constraintTop_toBottomOf="@+id/create_user_permissions" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/create_user_inventory_perm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:text="@string/inventory"
+                        app:layout_constraintStart_toEndOf="@+id/create_user_purchase_perm"
+                        app:layout_constraintTop_toBottomOf="@+id/create_user_permissions" />
+
+
+                </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_user_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/edit_text_margins"
+                android:layout_marginTop="@dimen/edit_text_space_between"
+                android:layout_marginEnd="@dimen/edit_text_margins"
+                android:text="@string/save"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/permissions_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

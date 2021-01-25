@@ -1,17 +1,18 @@
 package com.safesoft.safemobile.ui.generics
 
-import android.util.Log
+import android.app.AlertDialog
+import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.backend.utils.ResourceState
 import com.safesoft.safemobile.ui.generics.adapter.BaseFragmentAdapter
-import com.safesoft.safemobile.viewmodel.ScannerViewModel
+import com.shreyaspatil.MaterialDialog.MaterialDialog
+import dmax.dialog.SpotsDialog
+
 
 abstract class BaseFragment : Fragment() {
 
@@ -26,6 +27,20 @@ abstract class BaseFragment : Fragment() {
     protected lateinit var pagerAdapter: BaseFragmentAdapter
     protected lateinit var titles: Array<Int>
     protected lateinit var fragments: Array<Fragment>
+
+    private lateinit var progressDialog: AlertDialog
+    private lateinit var stateDialog: MaterialDialog
+    protected var isStateDialogShowing = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        progressDialog = SpotsDialog.Builder()
+            .setContext(requireContext())
+            .setMessage(R.string.loading)
+            .build()
+
+    }
 
     protected fun toast(@StringRes messageId: Int? = null, message: String? = null) {
         if (messageId != null)
@@ -81,5 +96,29 @@ abstract class BaseFragment : Fragment() {
         setUpObservers()
     }
 
+    protected fun showProgressDialog() = progressDialog.show()
 
+    protected fun hideProgressDialog() = progressDialog.hide()
+
+    protected fun showOkDialog() {}
+
+    protected fun showSynchronizationStartedDialog() {
+        if (!this::stateDialog.isInitialized)
+            stateDialog = MaterialDialog.Builder(requireActivity())
+                .setTitle(getString(R.string.synchronization))
+                .setMessage(getString(R.string.synchronization_in_progress))
+                .setCancelable(true)
+                .setPositiveButton(getString(R.string.ok), R.drawable.ok32) { dialog, _ ->
+                    dialog.dismiss()
+                    isStateDialogShowing = false
+                }
+                .setAnimation(R.raw.loading)
+                .build()
+                .apply {
+                    show()
+                    isStateDialogShowing = true
+                }
+        else if (!isStateDialogShowing)
+            stateDialog.show()
+    }
 }

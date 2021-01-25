@@ -2,13 +2,14 @@ package com.safesoft.safemobile
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -25,22 +26,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val viewModel: AuthViewModel by viewModels()
+    private val authViewModel: AuthViewModel by viewModels()
     private val settingsViewModel: SettingsViewModel by viewModels()
 
-    private val topLevelDestinations = setOf(
+    private val topLevelDestinations = mutableSetOf(
         R.id.nav_dashboard,
-        R.id.nav_purchases,
-        R.id.nav_sales,
         R.id.nav_products,
-        R.id.nav_inventory,
-        R.id.nav_clients,
-        R.id.nav_providers,
         R.id.nav_settings
     )
 
-
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +44,12 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+
         drawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+        navView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
+
+        prepareDestinations()
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -60,12 +59,30 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-
     }
 
     override fun onStart() {
         super.onStart()
         print(settingsViewModel.trigger)
+    }
+
+    private fun prepareDestinations() {
+        if (authViewModel.hasPurchaseModule() && authViewModel.isBuyer()) {
+            topLevelDestinations.addAll(arrayOf(R.id.nav_purchases, R.id.nav_providers))
+            navView.menu[1].isEnabled = true
+            navView.menu[6].isEnabled = true
+        }
+
+        if (authViewModel.hasSalesModule() && authViewModel.isSeller()) {
+            topLevelDestinations.addAll(arrayOf(R.id.nav_sales, R.id.nav_clients))
+            navView.menu[2].isEnabled = true
+            navView.menu[5].isEnabled = true
+        }
+
+        if (authViewModel.hasInventoryModule() && authViewModel.isInventorier()) {
+            topLevelDestinations.addAll(arrayOf(R.id.nav_inventory))
+            navView.menu[4].isEnabled = true
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -82,7 +99,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_logout -> {
-                viewModel.logOut()
+                authViewModel.logOut()
                 val i: Intent? = baseContext.packageManager
                     .getLaunchIntentForPackage(baseContext.packageName)
                 i?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)

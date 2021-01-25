@@ -38,7 +38,8 @@ class InventoryViewModel @ViewModelInject constructor(
             newTVAAmount = 0.0,
             htDifference = 0.0,
             tvaDifference = 0.0,
-            status = "O"
+            status = "O",
+            sync = false,
         )
     }
 
@@ -57,14 +58,21 @@ class InventoryViewModel @ViewModelInject constructor(
         val line = InventoryLines(
             id = 0,
             inventory = 0,
-            barcode = product?.bardcodes?.first()?.id,
+            barcode = try {
+                product?.bardcodes?.first()?.id
+            } catch (e: NoSuchElementException) {
+                0
+            },
             lot = "",
-            buyPriceHT = product?.product?.purchasePriceHT!! * product.product.quantity!!,
-            tva = product.product.getTvaValue() * product.product.quantity,
-            quantity = product.product.quantity,
+            buyPriceHT = product?.product?.purchasePriceHT ?: 0.0 * (product?.product?.quantity
+                ?: 0.0),
+            tva = product?.product?.getTvaValue() ?: 0.0 * (product?.product?.quantity ?: 0.0),
+            quantity = product?.product?.quantity ?: 0.0,
             newQuantity = physicalQuantity,
-            htDifference = (product.product.purchasePriceHT * product.product.quantity) - (physicalQuantity * product.product.purchasePriceHT),
-            tvaDifference = (product.product.getTvaValue() * product.product.quantity) - (physicalQuantity * product.product.getTvaValue())
+            htDifference = (product?.product?.purchasePriceHT ?: 0.0 * (product?.product?.quantity
+                ?: 0.0)) - (physicalQuantity * (product?.product?.purchasePriceHT ?: 0.0)),
+            tvaDifference = (product?.product?.getTvaValue() ?: 0.0 * (product?.product?.quantity
+                ?: 0.0)) - (physicalQuantity * (product?.product?.getTvaValue() ?: 0.0))
         ).apply {
             selectedProduct = product
         }

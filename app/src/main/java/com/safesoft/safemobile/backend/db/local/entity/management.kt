@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.backend.db.local.entity
 
 import androidx.room.*
+import com.safesoft.safemobile.backend.utils.formatted
 import java.util.*
 
 @Entity(
@@ -21,6 +22,7 @@ data class Inventories(
     @ColumnInfo(name = "TVA_DIFFERENCE", defaultValue = "0.0") val tvaDifference: Double = 0.0,
     @ColumnInfo(name = "STATUS") val status: String,
     @ColumnInfo(name = "WAREHOUSE") val warehouse: Int? = 0,
+    @ColumnInfo(name = "SYNC", defaultValue = "0") val sync: Boolean,
 )
 
 @Entity(
@@ -61,6 +63,18 @@ data class InventoryLines(
 ) {
     @Ignore
     var selectedProduct: AllAboutAProduct? = null
+
+    fun toMap(): Map<Int, Any?> {
+        return mapOf(
+            1 to this.selectedProduct?.bardcodes?.get(0)?.code,
+            2 to this.lot,
+            4 to this.buyPriceHT,
+            5 to this.tva,
+            6 to this.quantity,
+            7 to this.tempQuantity,
+            8 to this.newQuantity,
+        )
+    }
 }
 
 data class InventoryWithLines(
@@ -69,5 +83,23 @@ data class InventoryWithLines(
         parentColumn = "ID",
         entityColumn = "ID",
     ) val lines: List<InventoryLines>
-)
+) {
+
+    fun toMap(): Map<Int, Any?> {
+        return mapOf(
+            2 to this.inventory.date,
+            3 to this.inventory.date.formatted().split(" ")[1],
+            4 to this.inventory.label,
+            5 to this.inventory.productsCount,
+            6 to this.inventory.htAmount,
+            7 to this.inventory.tvaAmount,
+            8 to this.inventory.newHTAmount,
+            9 to this.inventory.newTVAAmount,
+            10 to this.inventory.htDifference,
+            11 to this.inventory.tvaDifference,
+            12 to this.inventory.status,
+            14 to if (this.inventory.warehouse == 0) null else this.inventory.warehouse,
+        )
+    }
+}
 

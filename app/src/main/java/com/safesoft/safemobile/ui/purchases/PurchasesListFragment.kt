@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.databinding.FragmentPurchasesListBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
 import com.safesoft.safemobile.ui.generics.BaseScannerFragment
+import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener
+import com.safesoft.safemobile.ui.generics.listeners.OnItemLongClickListener
 import com.safesoft.safemobile.viewmodel.PurchasesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -40,6 +41,16 @@ class PurchasesListFragment : BaseScannerFragment() {
         super.setUpViews()
         binding.lifecycleOwner = this
         binding.purchasesList.adapter = recyclerAdapter
+        recyclerAdapter.onNormalClickListener =
+            OnItemClickListener { position, _ ->
+                toast(null, "$position")
+            }
+        recyclerAdapter.onLongClickListener = OnItemLongClickListener { position, view ->
+            currentItemPosition = position
+            view.showContextMenu()
+        }
+        registerForContextMenu(binding.purchasesList)
+
         binding.purchasesSearchField.requestFocus()
         binding.purchasesSearchField.setOnLongClickListener {
             launchScanner()
@@ -97,6 +108,23 @@ class PurchasesListFragment : BaseScannerFragment() {
                 }
             }
         })
-
     }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        val inflater = requireActivity().menuInflater
+        inflater.inflate(R.menu.receipt_menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.standard_action_update -> toast(null, "Update clicked on $currentItemPosition")
+            R.id.action_print -> toast(null, "details clicked on $currentItemPosition")
+        }
+        return true
+    }
+
 }

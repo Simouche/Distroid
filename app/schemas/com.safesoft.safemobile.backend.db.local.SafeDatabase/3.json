@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "55549ab7443233af5725de435cee5b8a",
+    "version": 3,
+    "identityHash": "d7b5de39f67c4f505e484c0278f0aaaa",
     "entities": [
       {
         "tableName": "users",
@@ -1545,7 +1545,7 @@
       },
       {
         "tableName": "inventories",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `NUMERO` INTEGER NOT NULL, `DATE` INTEGER NOT NULL, `TIME` TEXT NOT NULL, `LABEL` TEXT NOT NULL, `PRODUCTS_COUNT` INTEGER NOT NULL DEFAULT 0, `HT_AMOUNT` REAL NOT NULL DEFAULT 0.0, `TVA_AMOUNT` REAL NOT NULL DEFAULT 0.0, `NEW_HT_AMOUNT` REAL NOT NULL DEFAULT 0.0, `NEW_TVA_AMOUNT` REAL NOT NULL DEFAULT 0.0, `HT_DIFFERENCE` REAL NOT NULL DEFAULT 0.0, `TVA_DIFFERENCE` REAL NOT NULL DEFAULT 0.0, `STATUS` TEXT NOT NULL, `WAREHOUSE` INTEGER, `SYNC` INTEGER NOT NULL DEFAULT 0)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `NUMERO` INTEGER NOT NULL, `DATE` INTEGER NOT NULL, `TIME` TEXT NOT NULL, `LABEL` TEXT NOT NULL, `PRODUCTS_COUNT` INTEGER NOT NULL DEFAULT 0, `HT_AMOUNT` REAL NOT NULL DEFAULT 0.0, `TVA_AMOUNT` REAL NOT NULL DEFAULT 0.0, `NEW_HT_AMOUNT` REAL NOT NULL DEFAULT 0.0, `NEW_TVA_AMOUNT` REAL NOT NULL DEFAULT 0.0, `HT_DIFFERENCE` REAL NOT NULL DEFAULT 0.0, `TVA_DIFFERENCE` REAL NOT NULL DEFAULT 0.0, `STATUS` TEXT NOT NULL, `WAREHOUSE` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -1637,13 +1637,6 @@
             "columnName": "WAREHOUSE",
             "affinity": "INTEGER",
             "notNull": false
-          },
-          {
-            "fieldPath": "sync",
-            "columnName": "SYNC",
-            "affinity": "INTEGER",
-            "notNull": true,
-            "defaultValue": "0"
           }
         ],
         "primaryKey": {
@@ -1779,7 +1772,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '55549ab7443233af5725de435cee5b8a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd7b5de39f67c4f505e484c0278f0aaaa')"
     ]
   }
 }

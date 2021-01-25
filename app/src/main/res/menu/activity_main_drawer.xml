@@ -11,10 +11,12 @@
         <item
             android:id="@+id/nav_purchases"
             android:icon="@drawable/buy"
+            android:enabled="false"
             android:title="@string/purchases" />
         <item
             android:id="@+id/nav_sales"
             android:icon="@drawable/sales"
+            android:enabled="false"
             android:title="@string/sales" />
         <item
             android:id="@+id/nav_products"
@@ -23,14 +25,17 @@
         <item
             android:id="@+id/nav_inventory"
             android:icon="@drawable/inventory"
+            android:enabled="false"
             android:title="@string/inventory" />
         <item
             android:id="@+id/nav_clients"
             android:icon="@drawable/clients"
+            android:enabled="false"
             android:title="@string/clients" />
         <item
             android:id="@+id/nav_providers"
             android:icon="@drawable/factory"
+            android:enabled="false"
             android:title="@string/providers" />
         <item
             android:id="@+id/nav_settings"

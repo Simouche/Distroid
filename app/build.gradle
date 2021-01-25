@@ -13,8 +13,8 @@ android {
         applicationId "com.safesoft.safemobile"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 7
-        versionName "1.07"
+        versionCode 8
+        versionName "1.08"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -81,10 +81,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
-    def room_version = "2.2.5"
+    def room_version = "2.2.6"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-    // For Kotlin use kapt instead of annotationProcessor
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
     // optional - RxJava support for Room
@@ -134,6 +133,11 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
     implementation 'com.pranavpandey.android:dynamic-toasts:3.2.0'
+
+    implementation 'com.shreyaspatil:MaterialDialog:2.1'
+    implementation 'com.airbnb.android:lottie:3.6.0'
+
+    implementation 'com.github.DantSu:ESCPOS-ThermalPrinter-Android:2.0.8'
 
     def work_version = "2.4.0"
     // Kotlin + coroutines

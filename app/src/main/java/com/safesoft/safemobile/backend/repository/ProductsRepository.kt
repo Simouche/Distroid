@@ -24,6 +24,9 @@ class ProductsRepository @Inject constructor(
 
     fun getAllAboutAProductById(product: Long) = productsDao.getAllAboutAProductById(product)
 
+    fun getAllAboutAProductByBarcode(barcode: Long) =
+        productsDao.getAllAboutAProductByBarcode(barcode)
+
     fun getAllProductsWithBarCodesSingle() = productsDao.getAllProductsWithBarCodesSingle()
 
     fun getAllNewProductsWithBarCodes() = productsDao.getAllNewProductsWithBarCodes()

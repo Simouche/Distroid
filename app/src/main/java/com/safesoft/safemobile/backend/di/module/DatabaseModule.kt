@@ -28,7 +28,7 @@ class DatabaseModule {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 val password = "123456789".asSHA256()
-                db.execSQL("INSERT INTO users (USERNAME,PASSWORD,LOGGED) VALUES ('ADMIN','$password',0);")
+                db.execSQL("INSERT INTO users (USERNAME,PASSWORD,LOGGED,IS_ADMIN) VALUES ('ADMIN','$password',0,1);")
                 /**
                  * this is the trigger for updating the provider balance after a purchase is done
                  */

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="payment_types">
-        <item>CASH</item>
-        <item>TERM</item>
-        <item>CHECK</item>
+        <item>ESPÉCE</item>
+        <item>A TERME</item>
+        <item>CHÉQUE</item>
     </string-array>
 
     <string-array name="synchronization_periods">
@@ -15,14 +15,14 @@
 
     <string-array name="tarifaction_modes">
         <item>Detail</item>
-        <item>Whole</item>
-        <item>Half Whole</item>
+        <item>Gros</item>
+        <item>Semi Gros</item>
     </string-array>
 
     <string-array name="languages">
-        <item>French</item>
-        <item>English</item>
-        <item>Arabic</item>
+        <item>Français</item>
+        <item>Anglais</item>
+        <item>Arabe</item>
     </string-array>
 
 </resources>

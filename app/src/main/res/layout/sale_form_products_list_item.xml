@@ -110,6 +110,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
         </HorizontalScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

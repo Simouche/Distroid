@@ -11,6 +11,7 @@ import com.safesoft.safemobile.backend.db.remote.dao.RemoteProviderDao
 import com.safesoft.safemobile.backend.repository.PreferencesRepository
 import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.backend.worker.ClearTablesWorker
+import com.safesoft.safemobile.backend.worker.InventoryWorker
 import com.safesoft.safemobile.backend.worker.PurchaseWorker
 import com.safesoft.safemobile.backend.worker.SalesWorker
 import com.safesoft.safemobile.backend.worker.client.ClientsWorker
@@ -32,9 +33,11 @@ class SettingsViewModel @ViewModelInject constructor(
 
     val trigger = 0
 
-    private val workManagerInstance: WorkManager = WorkManager.getInstance(getApplication())
+    val workManagerInstance: WorkManager = WorkManager.getInstance(getApplication())
 
-    private val ids = mutableMapOf<String, UUID>()
+    val ids = mutableMapOf<String, UUID>()
+
+    val syncTag = "Sync"
 
     val ipAddress =
         MutableLiveData<String>().apply {
@@ -121,6 +124,54 @@ class SettingsViewModel @ViewModelInject constructor(
                 postValue(preferencesRepository.getSyncTrackingModule())
             }
         }
+
+    val useFlash: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            postValue(preferencesRepository.getUseFlash())
+        }
+    }
+
+    val useAutoFocus: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            postValue(preferencesRepository.getAutoFocus())
+        }
+    }
+
+    val tvaValue: MutableLiveData<Double> = MutableLiveData<Double>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            postValue(preferencesRepository.getTvaValue())
+        }
+    }
+
+    val tarifactionMode: MutableLiveData<String> = MutableLiveData<String>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            postValue(preferencesRepository.getTarifactionMode())
+        }
+    }
+
+    val selectedPrinter: MutableLiveData<String> = MutableLiveData<String>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            postValue(preferencesRepository.getSelectedPrinter())
+        }
+    }
+
+    val showHeader: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            postValue(preferencesRepository.getShowHeader())
+        }
+    }
+
+    val showFooter: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            postValue(preferencesRepository.getShowFooter())
+        }
+    }
+
+    val allowNegativeStock : MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            postValue(preferencesRepository.allowNegativeStock())
+        }
+    }
 
 
     fun downloadUpdatesFromRemoteDB() {
@@ -216,6 +267,14 @@ class SettingsViewModel @ViewModelInject constructor(
             requestsArray.add(updateSalesRequest)
         }
 
+        if (inventoriesSync.value != false) {
+            val updateInventoryRequest =
+                OneTimeWorkRequestBuilder<InventoryWorker>().setConstraints(constraints)
+                    .addTag("inventories_update").build()
+            ids["inventories_update"] = updateInventoryRequest.id
+            requestsArray.add(updateInventoryRequest)
+        }
+
         var workContinuation: WorkContinuation? = null
 
         for ((i, work) in requestsArray.withIndex())
@@ -233,25 +292,11 @@ class SettingsViewModel @ViewModelInject constructor(
         workManagerInstance.enqueue(request)
     }
 
-    private fun observeWorkers() {
-//        if (ids.containsKey("clients"))
-//            WorkManager.getInstance(requireContext()).getWorkInfoByIdLiveData(ids["clients"]!!)
-//                .observe(viewLifecycleOwner,
-//                    {
-//                        if (it != null) {
-//                            if (it.state.isFinished)
-//                                showNotification("Clients")
-//                        }
-//                    })
-    }
-
-
     fun testConnection(): LiveData<Resource<Boolean>> {
         val result = MutableLiveData<Resource<Boolean>>()
         enqueue(remoteDBRepository.checkConnection(), result)
         return result
     }
-
 
     fun save() {
 
@@ -281,6 +326,10 @@ class SettingsViewModel @ViewModelInject constructor(
     fun setDBPath(value: String) = preferencesRepository.setDBPath(value)
 
     fun setWarehouseCode(value: String) = preferencesRepository.setWareHouseCode(value)
+
+    fun setUseAutoFocus(value: Boolean) = preferencesRepository.setAutoFocus(value)
+
+    fun setUseFlash(value: Boolean) = preferencesRepository.setUseFlash(value)
 
 
 }

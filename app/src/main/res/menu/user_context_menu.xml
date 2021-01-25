@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_details_user"
+        android:title="@string/details"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_update_user"
+        android:title="@string/update_user"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_revoke_user"
+        android:title="@string/revoke_access"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_delete_user"
+        android:title="@string/delete_user"
+        app:showAsAction="never" />
+
+</menu>

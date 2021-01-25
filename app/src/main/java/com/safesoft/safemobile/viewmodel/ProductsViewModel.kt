@@ -73,7 +73,6 @@ class ProductsViewModel @ViewModelInject constructor(
 
     fun barcodeDoubleTap() = Products.generateBarCode()
 
-
     fun searchFlow(query: String): LiveData<Resource<List<AllAboutAProduct>>> {
         val data = MutableLiveData<Resource<List<AllAboutAProduct>>>()
         enqueue(productsRepository.searchProductFlow(query), data)

@@ -3,12 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:icon="@drawable/settings"
+        android:orderInCategory="1"
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_male"
+        android:orderInCategory="2"
+        android:title="@string/profile"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_logout"
-        android:orderInCategory="100"
+        android:icon="@drawable/log_out"
+        android:orderInCategory="3"
         android:title="@string/action_logout"
         app:showAsAction="never" />
 </menu>

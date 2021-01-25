@@ -6,11 +6,53 @@
         <variable
             name="inventory"
             type="com.safesoft.safemobile.backend.db.local.entity.InventoryWithLines" />
+
+        <import type="com.safesoft.safemobile.backend.utils.ExtensionsKt" />
+
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.circularreveal.CircularRevealLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:text="@{String.valueOf(inventory.inventory.numero)}"
+            android:textSize="@dimen/_14sdp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:text="@{ExtensionsKt.formatted(inventory.inventory.date)}"
+            android:textSize="@dimen/_14sdp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:text="@{inventory.inventory.time}"
+            android:textSize="@dimen/_14sdp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:text="@{String.valueOf(inventory.inventory.productsCount)}"
+            android:textSize="@dimen/_14sdp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:text="@{inventory.inventory.sync?`Synchronisé`:`NonSynchronisé`}"
+            android:textSize="@dimen/_14sdp" />
+
+    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+
 </layout>

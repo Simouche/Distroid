@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.net.Authenticator
 import java.util.*
 
 @AndroidEntryPoint
@@ -32,7 +33,8 @@ class SplashScreen : BaseActivity() {
     private val permissions = arrayOf(
         Manifest.permission.CALL_PHONE,
         Manifest.permission.CAMERA,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.BLUETOOTH
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,9 +54,13 @@ class SplashScreen : BaseActivity() {
         viewModel.checkLogged().observe(this@SplashScreen, Observer {
             when (it.state) {
                 loading -> {
+                    return@Observer
                 }
-                success ->
+                success -> {
                     mIntent = Intent(applicationContext, MainActivity::class.java)
+                    AuthViewModel.user = it.data!!
+                    viewModel.login()
+                }
                 error -> {
                     mIntent = Intent(applicationContext, LoginActivity::class.java)
                     it.exception?.printStackTrace()
@@ -64,44 +70,25 @@ class SplashScreen : BaseActivity() {
     }
 
     private fun permissionCheck() {
-        if (!hasPermissions(applicationContext, *permissions)) {
-            ActivityCompat.requestPermissions(this, permissions, 1)
-        } else {
-            startActivity(mIntent)
-            finish()
-        }
-//        Permissions.check(
-//            this,
-//            permissions,
-//            null,
-//            null,
-//            object : PermissionHandler() {
-//                override fun onGranted() {
-//                    startActivity(mIntent)
-//                    finish()
-//                }
-//
-//                override fun onDenied(
-//                    context: Context?,
-//                    deniedPermissions: ArrayList<String>?
-//                ) {
-//                    super.onDenied(context, deniedPermissions)
-//                    finishAffinity()
-//                }
-//            })
+        Permissions.check(
+            this,
+            permissions,
+            null,
+            null,
+            object : PermissionHandler() {
+                override fun onGranted() {
+                    startActivity(mIntent)
+                    finish()
+                }
+
+                override fun onDenied(
+                    context: Context?,
+                    deniedPermissions: ArrayList<String>?
+                ) {
+                    super.onDenied(context, deniedPermissions)
+                    finishAffinity()
+                }
+            })
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (grantResults.contains(PackageManager.PERMISSION_DENIED)) {
-            finishAffinity()
-        } else {
-            startActivity(mIntent)
-            finish()
-        }
-
-    }
 }

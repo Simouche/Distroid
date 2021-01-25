@@ -82,6 +82,10 @@ class PreferencesRepository @Inject constructor(private val sharedPreferences: S
     fun setTarifactionModel(value: String) =
         sharedPreferencesEditor.putString("tarifaction_mode", value).commit()
 
+    fun getTvaValue() = sharedPreferences.getFloat("tva_value", 19.0f).toDouble()
+
+    fun setTvaValue(value: Double) = sharedPreferencesEditor.putFloat("tva_value", value.toFloat())
+
     fun getUseFlash(): Boolean = sharedPreferences.getBoolean("use_flash", false)
 
     fun setUseFlash(value: Boolean) = sharedPreferencesEditor.putBoolean("use_flash", value)
@@ -93,4 +97,29 @@ class PreferencesRepository @Inject constructor(private val sharedPreferences: S
     fun getDBUsername() = sharedPreferences.getString("db_username", "SYSDBA")
 
     fun getDBPassword() = sharedPreferences.getString("db_password", "masterkey")
+
+    fun getActiveModules() = sharedPreferences.getStringSet("modules", setOf("P", "S", "I"))
+
+    fun setActiveModules(modules: Set<String>) =
+        sharedPreferencesEditor.putStringSet("modules", modules)
+
+    fun getSelectedPrinter() = sharedPreferences.getString("selected_printer", "I")
+
+    fun setSelectedPrinter(value: String) =
+        sharedPreferencesEditor.putString("selected_printer", value)
+
+    fun getShowHeader() = sharedPreferences.getBoolean("show_header", false)
+
+    fun setShowHeader(value: Boolean) = sharedPreferencesEditor.putBoolean("show_header", value)
+
+    fun getShowFooter() = sharedPreferences.getBoolean("show_footer", false)
+
+    fun setShowFooter(value: Boolean) = sharedPreferencesEditor.putBoolean("show_footer", value)
+
+    fun allowNegativeStock() = sharedPreferences.getBoolean("allow_negative_stock", false)
+
+    fun setAllowNegativeStock(value: Boolean) =
+        sharedPreferencesEditor.putBoolean("allow_negative_stock", value)
+
+
 }

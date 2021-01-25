@@ -48,7 +48,7 @@
             android:layout_marginStart="@dimen/edit_text_margins"
             android:layout_marginTop="@dimen/_50sdp"
             android:layout_marginEnd="@dimen/edit_text_margins"
-            android:hint="@string/email"
+            android:hint="@string/email_username_phone"
             android:inputType="textNoSuggestions"
             android:selectAllOnFocus="true"
             android:text="@={viewModel.loginForm.fields.username}"

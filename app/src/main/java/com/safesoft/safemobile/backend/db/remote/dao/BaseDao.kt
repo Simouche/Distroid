@@ -181,7 +181,7 @@ interface BaseDao<T> {
 
     fun generateCode(table: String): String {
         val resultSet = executeQuery("SELECT GEN_ID($table,1) FROM RDB\$DATABASE")
-        var code: String = ""
+        var code = ""
         while (resultSet.next())
             code = resultSet.getString("GEN_ID")
         val length = code.length

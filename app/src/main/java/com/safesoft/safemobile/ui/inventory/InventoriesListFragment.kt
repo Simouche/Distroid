@@ -1,6 +1,7 @@
 package com.safesoft.safemobile.ui.inventory
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -33,7 +34,7 @@ class InventoriesListFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_inventories_list, container, false)
         return binding.root
@@ -64,19 +65,20 @@ class InventoriesListFragment : BaseFragment() {
         if (!inventoryViewModel.inventoriesList.hasActiveObservers() && (!inventoryViewModel.searchQuery.hasActiveObservers()))
             inventoryViewModel.inventoriesList.observe(
                 viewLifecycleOwner,
-                Observer {
+                {
+                    Log.d(TAG, "setUpObservers: retrieved data")
                     recyclerAdapter.submitList(it)
                     recyclerAdapter.notifyDataSetChanged()
                 }
             )
 
         if (!inventoryViewModel.searchQuery.hasActiveObservers())
-            inventoryViewModel.searchQuery.observe(viewLifecycleOwner, Observer { query ->
+            inventoryViewModel.searchQuery.observe(viewLifecycleOwner, { query ->
                 if (query.isBlank()) {
                     if (!inventoryViewModel.inventoriesList.hasActiveObservers())
                         inventoryViewModel.inventoriesList.observe(
                             viewLifecycleOwner,
-                            Observer {
+                            {
                                 recyclerAdapter.submitList(it)
                                 recyclerAdapter.notifyDataSetChanged()
                             }
@@ -87,7 +89,7 @@ class InventoriesListFragment : BaseFragment() {
                     )
                     inventoryViewModel.search(query).observe(
                         viewLifecycleOwner,
-                        Observer {
+                        {
                             recyclerAdapter.submitList(it)
                             recyclerAdapter.notifyDataSetChanged()
                         }

@@ -66,23 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:text="@{String.format(@string/brand_label,product.brand.name)}"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/_12ssp" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
                     android:text="@{String.format(@string/stock_label,product.product.quantity)}"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/_12ssp" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="@{String.format(@string/promo_label,product.product.promotion)}"
                     android:textAlignment="textStart"
                     android:textSize="@dimen/_12ssp" />
 

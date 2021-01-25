@@ -3,11 +3,20 @@ package com.safesoft.safemobile.backend.repository
 import com.safesoft.safemobile.backend.db.local.dao.InventoryDao
 import com.safesoft.safemobile.backend.db.local.entity.Inventories
 import com.safesoft.safemobile.backend.db.local.entity.InventoryLines
+import com.safesoft.safemobile.backend.db.local.entity.InventoryWithLines
+import com.safesoft.safemobile.backend.db.remote.dao.RemoteInventoryDao
 import javax.inject.Inject
 
-class InventoryRepository @Inject constructor(private val inventoryDao: InventoryDao) {
+class InventoryRepository @Inject constructor(
+    private val inventoryDao: InventoryDao,
+    private val remoteInventoryDao: RemoteInventoryDao
+) {
 
     fun getAllInventories() = inventoryDao.getAllInventories()
+
+    fun markAllInventoriesAsSync() = inventoryDao.markAllInventoriesAsSync()
+
+    fun getAllInventoriesSync() = inventoryDao.getAllInventoriesSync()
 
     fun searchInventory(query: String) = inventoryDao.searchInventory(query)
 
@@ -28,4 +37,7 @@ class InventoryRepository @Inject constructor(private val inventoryDao: Inventor
 
     fun deleteInventoryLines(vararg inventoryLines: InventoryLines) =
         inventoryDao.deleteInventoryLines(* inventoryLines)
+
+    fun insertInventoryInRemoteDB(vararg inventories: InventoryWithLines) =
+        remoteInventoryDao.insert(*inventories)
 }

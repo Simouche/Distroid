@@ -49,9 +49,9 @@ class CreateProductFragment : BaseScannerFragment(), ProductCalculator, BaseForm
         GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
             override fun onDoubleTap(e: MotionEvent): Boolean {
                 Log.d(TAG, "onDoubleTap: barcode double tapped!")
-                if (binding.productBarcode.text!!.isEmptyOrBlank())
+                if (binding.productBarcode.text!!.isEmptyOrBlank()) {
                     binding.productBarcode.setText(viewModel.barcodeDoubleTap())
-                else {
+                } else {
                     addChild()
                 }
                 return true
@@ -125,6 +125,7 @@ class CreateProductFragment : BaseScannerFragment(), ProductCalculator, BaseForm
 
         binding.createProductSaveButton.setOnClickListener { saveProduct() }
         binding.discountSwitch.isChecked = viewModel.isDiscount.value ?: false
+        restoreChildren()
     }
 
     private fun saveProduct() {
@@ -407,13 +408,10 @@ may reactivate this in case of the user wants to change the marge when changing 
     }
 
     private fun handleBarcodeScan(code: String) {
-        if (binding.productBarcode.text.toString().isEmptyOrBlank()) {
+        if (viewModel.productsForm.fields.barcode.value!!.isEmptyOrBlank()) {
             binding.productBarcode.setText(code)
-            if (viewModel.codesList.value?.isEmpty() == true)
-                viewModel.codesList.value?.add(code)
-            else
-                viewModel.codesList.value?.set(0, code)
         } else {
+            var inserted = false
             val childCount = binding.createProductBarcodes.childCount
             for (i in 1 until childCount) {
                 val child =
@@ -424,21 +422,28 @@ may reactivate this in case of the user wants to change the marge when changing 
                         viewModel.codesList.value?.add(code)
                     else
                         viewModel.codesList.value?.set(i - 1, code)
+                    inserted = true
                     return
                 }
+            }
+            if (!inserted) {
+                viewModel.codesList.value?.add(code)
+                addChild(viewModel.codesList.value!!.size - 1)
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        restoreChildren()
+        Log.d(TAG, "onResume: barcode is ${binding.productBarcode.text.toString()}")
         viewModel.page = 1
     }
 
     override fun onPause() {
         super.onPause()
+        Log.d(TAG, "onPause: barcode is ${binding.productBarcode.text.toString()}")
         saveChildrenState()
+        Log.d(TAG, "onPause: barcode is ${binding.productBarcode.text.toString()}")
         Log.d(TAG, "onPause: Paused!")
     }
 
@@ -468,7 +473,7 @@ may reactivate this in case of the user wants to change the marge when changing 
         if (index != -1)
             (view as TextInputLayout).editText?.setText(viewModel.codesList.value?.get(index))
         else
-            viewModel.codesList.value?.add("temporary")
+            viewModel.codesList.value?.add("")
         binding.createProductBarcodes.addView(view)
     }
 

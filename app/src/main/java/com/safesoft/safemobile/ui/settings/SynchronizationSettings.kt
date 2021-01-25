@@ -8,7 +8,6 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +18,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.work.WorkInfo
 import com.safesoft.safemobile.MainActivity
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.databinding.FragmentSynchronizationSettingsBinding
@@ -26,15 +26,11 @@ import com.safesoft.safemobile.ui.generics.BaseAnimations
 import com.safesoft.safemobile.ui.generics.BaseFragment
 import com.safesoft.safemobile.viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.*
 
 
 @AndroidEntryPoint
-class
-SynchronizationSettings : BaseFragment(), BaseAnimations {
+class SynchronizationSettings : BaseFragment(), BaseAnimations {
 
     private lateinit var binding: FragmentSynchronizationSettingsBinding
 
@@ -61,7 +57,19 @@ SynchronizationSettings : BaseFragment(), BaseAnimations {
         super.setUpViews()
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-//        binding.syncPeriod.setSelection(viewModel.syncDuration.value!!)
+        binding.syncPeriod.setSelection(viewModel.syncDuration.value!!)
+        binding.reinitializeButton.setOnClickListener {
+            viewModel.reinitialize()
+            setUpWorksObservers()
+        }
+        binding.sendToServer.setOnClickListener {
+            viewModel.sendUpdatesToRemoteDB()
+            setUpWorksObservers()
+        }
+        binding.loadData.setOnClickListener {
+            viewModel.downloadUpdatesFromRemoteDB()
+            setUpWorksObservers()
+        }
     }
 
 
@@ -124,9 +132,29 @@ SynchronizationSettings : BaseFragment(), BaseAnimations {
         }
     }
 
+    private fun setUpWorksObservers() {
+        viewModel.ids.keys.forEach {
+            viewModel.workManagerInstance.getWorkInfoByIdLiveData(viewModel.ids[it]!!)
+                .observe(viewLifecycleOwner, { workInfo ->
+                    when (workInfo.state) {
+                        WorkInfo.State.ENQUEUED -> showSynchronizationStartedDialog()
+                        WorkInfo.State.SUCCEEDED -> showNotificationPerTask(it)
+                        else -> return@observe
+                    }
+                })
+        }
 
-    private fun reinitialize() {
+    }
 
+    private fun showNotificationPerTask(id: String) {
+        when (id) {
+            "clearTables" -> showNotification(getString(R.string.reinitialization_complete))
+            "clients", "clients_update" -> showNotification(getString(R.string.clients))
+            "providers", "providers_update" -> showNotification(getString(R.string.providers))
+            "product", "product_update" -> showNotification(getString(R.string.product))
+            "purchase_update" -> showNotification(getString(R.string.purchases))
+            "sales_update" -> showNotification(getString(R.string.sales))
+        }
     }
 
 

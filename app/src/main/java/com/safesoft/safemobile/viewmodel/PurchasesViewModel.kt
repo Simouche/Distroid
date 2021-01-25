@@ -166,6 +166,7 @@ class PurchasesViewModel @ViewModelInject constructor(
         fields.totalQuantity.value = 0.0
         fields.note.value = ""
         fields.payment.value = 0.0
+        fields.productsCount.value = 0
     }
 
 }

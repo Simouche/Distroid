@@ -53,6 +53,8 @@ class CreateInventoryFragment : BaseScannerFragment() {
         recyclerAdapter.deleter =
             OnItemClickListener { position, view -> deleteLine(position, view) }
         binding.inventorySelectedProductsList.adapter = recyclerAdapter
+        binding.viewModel = viewModel
+
         binding.validate.setOnClickListener { validate() }
         setUpProductSearch()
     }
@@ -101,7 +103,10 @@ class CreateInventoryFragment : BaseScannerFragment() {
 
     override fun handleScannerResult(text: String) {
         super.handleScannerResult(text)
+        if (text.isEmpty()) return
+        isScanning = false
         binding.inventorySelectProduct.setText(text)
+        Log.d(TAG, "handleScannerResult: finished handling the scan result")
     }
 
     private fun addLine(product: AllAboutAProduct?, quantity: Double) {

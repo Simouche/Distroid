@@ -19,9 +19,18 @@ data class Users(
     @ColumnInfo(name = "FAX") val fax: String?,
     @ColumnInfo(name = "EMAIL") val email: String?,
     @ColumnInfo(name = "LAST_LOGIN") val lastLogin: String?,
-    @ColumnInfo(name = "LOGGED") val logged: Boolean
+    @ColumnInfo(name = "LOGGED") val logged: Boolean,
+    @ColumnInfo(name = "IS_ADMIN", defaultValue = "0") val isAdmin: Boolean,
+    @ColumnInfo(name = "PERMISSIONS", defaultValue = "") val permissions: List<String>,
 ) {
+
     fun checkPassword(password: String): Boolean {
         return this.password == password.asSHA256()
     }
+
+    fun hasPerm(perm: String): Boolean {
+        return perm in this.permissions || this.isAdmin
+    }
+
 }
+

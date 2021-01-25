@@ -64,7 +64,8 @@ class ProductsListFragment : BaseScannerFragment() {
 
     override fun setUpObservers() {
         super.setUpObservers()
-        if (!productsViewModel.productsList.hasActiveObservers() && (!productsViewModel.searchQuery.hasActiveObservers()))
+        if (!productsViewModel.productsList.hasActiveObservers() &&
+            (!productsViewModel.searchQuery.hasActiveObservers()))
             productsViewModel.productsList.observe(
                 viewLifecycleOwner,
                 {
