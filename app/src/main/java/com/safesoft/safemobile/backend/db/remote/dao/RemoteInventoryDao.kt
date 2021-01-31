@@ -97,7 +97,7 @@ class RemoteInventoryDao @Inject constructor(
                 values[13] = user()
                 val boundStatement = bindParams(preparedStatement, values)
                 val rows: Int = executeInsert(boundStatement)
-                Log.d(TAG, "insert: inserted an inventory")
+                Log.d(TAG, "insert: insered an inventory")
                 if (rows != 0 && rows != -1)
                     it.lines.forEach { line ->
                         val insertLineQuery = createInsertQuery(linesTableName, insertLineColumns)

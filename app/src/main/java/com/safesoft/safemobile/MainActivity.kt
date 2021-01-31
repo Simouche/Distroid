@@ -1,7 +1,11 @@
 package com.safesoft.safemobile
 
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,12 +22,27 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.safesoft.safemobile.backend.printer.PrinterService
 import com.safesoft.safemobile.viewmodel.AuthViewModel
 import com.safesoft.safemobile.viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private var isBound = false
+    private lateinit var printerService: PrinterService
+
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val binder = service as PrinterService.PrinterBinder
+            printerService = binder.service
+            isBound = true
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            isBound = false
+        }
+    }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val authViewModel: AuthViewModel by viewModels()
@@ -63,7 +82,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        print(settingsViewModel.trigger)
+        bindService()
     }
 
     private fun prepareDestinations() {
@@ -131,6 +150,35 @@ class MainActivity : AppCompatActivity() {
             return
         }
         super.onBackPressed()
+    }
+
+    private fun bindService() {
+        val intent = Intent(this, PrinterService::class.java)
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+    }
+
+    private fun unbind() {
+        if (isBound) {
+            unbindService(serviceConnection)
+            isBound = false
+        }
+    }
+
+    fun print() {
+        printerService.print()
+    }
+
+    fun printSale(saleId: Long) {
+        printerService.printSale(saleId)
+    }
+
+    fun printPurchase(purchaseId: Long) {
+        printerService.printPurchase(purchaseId)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbind()
     }
 
 }

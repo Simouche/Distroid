@@ -1,12 +1,15 @@
 package com.safesoft.safemobile.ui.generics
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
+import com.safesoft.safemobile.MainActivity
 import com.safesoft.safemobile.R
+import com.safesoft.safemobile.backend.printer.PrinterService
 import com.safesoft.safemobile.backend.utils.Resource
 import com.safesoft.safemobile.backend.utils.ResourceState
 import com.safesoft.safemobile.ui.generics.adapter.BaseFragmentAdapter
@@ -15,7 +18,6 @@ import dmax.dialog.SpotsDialog
 
 
 abstract class BaseFragment : Fragment() {
-
     protected val TAG = this::class.simpleName
 
     protected var currentItemPosition: Int = -1
@@ -85,6 +87,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected open fun setUpViews() {}
+
     protected open fun setUpObservers() {}
 
     protected open fun setUp() {}
@@ -121,4 +124,13 @@ abstract class BaseFragment : Fragment() {
         else if (!isStateDialogShowing)
             stateDialog.show()
     }
+
+    protected fun printSale(saleId: Long) {
+        (requireActivity() as MainActivity).printSale(saleId)
+    }
+
+    protected fun printPurchase(purchaseId: Long) {
+        (requireActivity() as MainActivity).printPurchase(purchaseId)
+    }
+
 }

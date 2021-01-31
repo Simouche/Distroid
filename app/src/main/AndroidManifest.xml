@@ -22,12 +22,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <service
+            android:name=".backend.printer.PrinterService"
+            android:enabled="true"
+            android:exported="false"></service>
 
         <activity android:name=".ui.scanner.ScannerActivity" />
         <activity
             android:name=".ui.auth.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
@@ -50,7 +53,6 @@
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init"
             tools:node="remove" />
-
     </application>
 
 </manifest>

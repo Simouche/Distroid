@@ -6,6 +6,14 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 
 android {
+    signingConfigs {
+        safemobile {
+            storeFile file('C:\\Users\\Wassim\\Desktop\\SafeSoft\\mobile\\native\\keystore\\safe_apps.jks')
+            storePassword 'safesoft'
+            keyAlias 'safesoft'
+            keyPassword 'safesoft'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -13,8 +21,8 @@ android {
         applicationId "com.safesoft.safemobile"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 8
-        versionName "1.08"
+        versionCode 9
+        versionName "1.09"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -29,8 +37,12 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+//            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
         }
     }
     compileOptions {
@@ -61,7 +73,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+//    implementation fileTree("libs")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'

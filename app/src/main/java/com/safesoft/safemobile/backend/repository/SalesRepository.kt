@@ -20,8 +20,9 @@ class SalesRepository @Inject constructor(
     fun insertSaleLines(vararg saleLines: SaleLines) =
         salesDao.insertSaleLines(*saleLines)
 
-
     fun getAllNewSalesWithAllInfo() = salesDao.getAllNewSalesWithAllInfo()
+
+    fun getSaleWithAllInfoById(id: Long) = salesDao.getSaleWithAllInfoById(id)
 
     fun markAllSalesAsSync() = salesDao.markAllSalesAsSync()
 

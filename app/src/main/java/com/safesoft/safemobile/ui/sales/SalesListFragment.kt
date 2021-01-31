@@ -3,15 +3,15 @@ package com.safesoft.safemobile.ui.sales
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.databinding.FragmentSalesListBinding
 import com.safesoft.safemobile.ui.generics.BaseScannerFragment
+import com.safesoft.safemobile.ui.generics.listeners.OnItemClickListener
+import com.safesoft.safemobile.ui.generics.listeners.OnItemLongClickListener
 import com.safesoft.safemobile.viewmodel.SalesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -38,6 +38,16 @@ class SalesListFragment : BaseScannerFragment() {
         super.setUpViews()
         binding.lifecycleOwner = this
         binding.salesList.adapter = recyclerAdapter
+        recyclerAdapter.onNormalClickListener =
+            OnItemClickListener { position, _ ->
+                toast(null, "$position")
+            }
+        recyclerAdapter.onLongClickListener = OnItemLongClickListener { position, view ->
+            currentItemPosition = position
+            view.showContextMenu()
+        }
+        registerForContextMenu(binding.salesList)
+
         binding.salesSearchField.requestFocus()
     }
 
@@ -96,6 +106,26 @@ class SalesListFragment : BaseScannerFragment() {
     override fun handleScannerResult(text: String) {
         super.handleScannerResult(text)
         binding.salesSearchField.setText(text)
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        val inflater = requireActivity().menuInflater
+        inflater.inflate(R.menu.receipt_menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.standard_action_update -> toast(null, "Update clicked on $currentItemPosition")
+            R.id.action_print -> {
+                printSale(recyclerAdapter.getItemAt(currentItemPosition)!!.id)
+                success(R.string.printing)
+            }
+        }
+        return true
     }
 
 }

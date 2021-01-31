@@ -53,13 +53,29 @@
                 android:hint="@string/rest" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/invoice_confirmation_dialog_confirmation_button"
+        <com.google.android.material.circularreveal.CircularRevealLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-            android:text="@string/validate" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/invoice_confirmation_dialog_confirmation_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:text="@string/validate" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/invoice_confirmation_dialog_confirmation_print_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:text="@string/validate_and_print" />
+
+
+        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
     </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 </layout>

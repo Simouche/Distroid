@@ -63,7 +63,7 @@ class InventoryViewModel @ViewModelInject constructor(
             } catch (e: NoSuchElementException) {
                 0
             },
-            lot = "",
+            lot = null,
             buyPriceHT = product?.product?.purchasePriceHT ?: 0.0 * (product?.product?.quantity
                 ?: 0.0),
             tva = product?.product?.getTvaValue() ?: 0.0 * (product?.product?.quantity ?: 0.0),

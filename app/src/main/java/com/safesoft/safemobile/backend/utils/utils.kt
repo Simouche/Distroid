@@ -24,10 +24,26 @@ fun getCurrentDateTime(): String {
 fun calculatePercentageDiff(price1: Double, price2: Double): Double =
     (price1 / price2 - 1) * 100.0
 
-fun calculatePercentageValue(price: Double, percentage: Double): Double = price * (percentage / 100.0)
+fun calculatePercentageValue(price: Double, percentage: Double): Double =
+    price * (percentage / 100.0)
 
 fun calculateNewPrice(price: Double, percentage: Double): Double =
     price + calculatePercentageValue(price, percentage)
 
+val PRINTER_SEPARATOR = """
+                [L]
+                [C]================================
+                [L]
+    """.trimIndent()
 
+val PRINTER_MAIN_CONTENT_HEADER = """
+    [L]<b>Produit</b> [C]<b>Qté</b> [C]<b>P.U</b> [R]<b>Total</b>
+""".trimIndent()
 
+val LINE_SEPARATOR = """
+    [C]--------------------------------
+""".trimIndent()
+
+fun printerReceiptLine(designation: String, quantity: Double,unitPrice:Double, total: Double): String {
+    return "[L]$designation [C]$quantity [C]$unitPrice [R]$total"
+}

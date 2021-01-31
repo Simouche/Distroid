@@ -238,4 +238,9 @@
     <string name="show_footer">Show Footer</string>
     <string name="allow_negative_stock">Allow Sales With Negative Stock</string>
     <string name="action_print">Print</string>
+    <string name="validate_and_print">Validate And Print</string>
+    <string name="printing">Printing</string>
+    <string name="enterprise_name">Enterprise Name</string>
+    <string name="enterprise_address">Enterprise Address</string>
+    <string name="footer_placeholder">Merci... Veuillez Contactez...</string>
 </resources>

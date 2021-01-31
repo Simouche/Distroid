@@ -1,7 +1,7 @@
 package com.safesoft.safemobile.backend.db.local.entity
 
 import androidx.room.*
-import com.safesoft.safemobile.backend.utils.formatted
+import com.safesoft.safemobile.backend.utils.*
 import java.util.*
 
 
@@ -200,6 +200,15 @@ data class SaleLines(
         )
     }
 
+    fun toPrintable(): String {
+        return printerReceiptLine(
+            (selectedProduct?.product?.designation ?: " "),
+            (this.quantity ?: 0.0),
+            (this.selectedProduct?.product?.sellPriceDetailTTC ?: 0.0),
+            this.totalSellPriceTTC
+        )
+    }
+
 }
 
 data class AllAboutASale(
@@ -226,6 +235,39 @@ data class AllAboutASale(
             12 to this.sale.note
         )
     }
+
+    fun getPrintable(): String {
+        val str = this.toPrintable()
+        val lines = str.split("\n").toMutableList()
+        for (index in lines.indices)
+            lines[index] = lines[index].trim()
+        return lines.joinToString("\n")
+    }
+
+    private fun toPrintable(): String {
+        return """
+        [C]<u><font size='big'>BL N°${this.sale.saleNumber}</font></u>
+        [C] le: ${this.sale.date?.formatted()}
+        $PRINTER_SEPARATOR
+        $PRINTER_MAIN_CONTENT_HEADER
+        ${linesPrintable()}
+        $LINE_SEPARATOR
+        [R]TOTAL :[R]${this.sale.totalTTC?.formatted()}
+        $PRINTER_SEPARATOR
+        [L]<font size='tall'>Client :</font>
+        ${this.client.name}
+        ${this.client.address}
+        ${this.client.getAllPhones()?.first()}
+        """.trimIndent()
+    }
+
+    private fun linesPrintable(): String {
+        var linesPrintable = ""
+        for (line in this.saleLines)
+            linesPrintable += "\n${line.toPrintable()}"
+        return linesPrintable
+    }
+
 }
 
 

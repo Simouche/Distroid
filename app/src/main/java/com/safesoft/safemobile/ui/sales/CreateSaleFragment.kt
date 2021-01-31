@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import com.safesoft.safemobile.MainActivity
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.backend.db.local.entity.AllAboutAProduct
 import com.safesoft.safemobile.backend.db.local.entity.Clients
@@ -168,7 +169,6 @@ class CreateSaleFragment : BaseScannerFragment() {
         recyclerAdapter.addItem(viewModel.addLine(product, quantity))
     }
 
-
     private fun deleteLine(position: Int, view: View?) {
         val anim: Animation = AnimationUtils.loadAnimation(
             context,
@@ -241,6 +241,11 @@ class CreateSaleFragment : BaseScannerFragment() {
 
         fBinding.invoiceConfirmationDialogConfirmationButton.setOnClickListener {
             saveInvoice()
+            dialog.dismiss()
+        }
+        fBinding.invoiceConfirmationDialogConfirmationPrintButton.setOnClickListener {
+            saveInvoice()
+            (requireActivity() as MainActivity).print()
             dialog.dismiss()
         }
     }

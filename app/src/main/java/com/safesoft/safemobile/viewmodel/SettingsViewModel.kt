@@ -167,9 +167,33 @@ class SettingsViewModel @ViewModelInject constructor(
         }
     }
 
-    val allowNegativeStock : MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply {
+    val allowNegativeStock: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply {
         viewModelScope.launch(Dispatchers.IO) {
             postValue(preferencesRepository.allowNegativeStock())
+        }
+    }
+
+    val enterpriseName: MutableLiveData<String> = MutableLiveData<String>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            postValue(preferencesRepository.getEnterpriseName())
+        }
+    }
+
+    val enterpriseAddress: MutableLiveData<String> = MutableLiveData<String>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            postValue(preferencesRepository.getEnterpriseAddress())
+        }
+    }
+
+    val enterprisePhone: MutableLiveData<String> = MutableLiveData<String>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            postValue(preferencesRepository.getEnterprisePhone())
+        }
+    }
+
+    val enterpriseFooter: MutableLiveData<String> = MutableLiveData<String>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            postValue(preferencesRepository.getEnterprisePhone())
         }
     }
 
@@ -302,6 +326,18 @@ class SettingsViewModel @ViewModelInject constructor(
 
     }
 
+    fun setShowHeader(value: Boolean) = preferencesRepository.setShowHeader(value)
+
+    fun setShowFooter(value: Boolean) = preferencesRepository.setShowFooter(value)
+
+    fun setSelectedPrinter(value: String) = preferencesRepository.setSelectedPrinter(value)
+
+    fun setTvaValue(value: Double) = preferencesRepository.setTvaValue(value)
+
+    fun setTarifactionMode(value: String) = preferencesRepository.setTarifactionMode(value)
+
+    fun setAllowNegativeStock(value: Boolean) = preferencesRepository.setAllowNegativeStock(value)
+
     fun setAutomaticSync(value: Boolean) = preferencesRepository.setAutomaticSync(value)
 
     fun setAutomaticSyncDuration(value: Int) = preferencesRepository.setAutomaticSyncDuration(value)
@@ -330,6 +366,14 @@ class SettingsViewModel @ViewModelInject constructor(
     fun setUseAutoFocus(value: Boolean) = preferencesRepository.setAutoFocus(value)
 
     fun setUseFlash(value: Boolean) = preferencesRepository.setUseFlash(value)
+
+    fun setEnterpriseName(value: String) = preferencesRepository.setEnterpriseName(value)
+
+    fun setEnterpriseAddress(value: String) = preferencesRepository.setEnterpriseAddress(value)
+
+    fun setEnterprisePhone(value: String) = preferencesRepository.setEnterprisePhone(value)
+
+    fun setEnterpriseFooter(value: String) = preferencesRepository.setEnterpriseFooter(value)
 
 
 }

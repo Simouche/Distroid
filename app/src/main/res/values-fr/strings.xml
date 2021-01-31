@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Paramétre</string>
 
     <string name="menu_dashboard">Accueil</string>
     <string name="menu_purchases">Achats</string>
@@ -232,4 +232,8 @@
     <string name="warehouse">Dépot</string>
     <string name="language">Langue</string>
     <string name="action_print">Print</string>
+    <string name="validate_and_print">Validate And Print</string>
+    <string name="printing">Printing</string>
+    <string name="enterprise_name">Enterprise Name</string>
+    <string name="enterprise_address">Enterprise Address</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.safesoft.safemobile.MainActivity
 import com.safesoft.safemobile.R
 import com.safesoft.safemobile.databinding.FragmentPurchasesListBinding
 import com.safesoft.safemobile.ui.generics.BaseFragment
@@ -122,7 +123,10 @@ class PurchasesListFragment : BaseScannerFragment() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.standard_action_update -> toast(null, "Update clicked on $currentItemPosition")
-            R.id.action_print -> toast(null, "details clicked on $currentItemPosition")
+            R.id.action_print -> {
+                printPurchase(recyclerAdapter.getItemAt(currentItemPosition)!!.id)
+                success(R.string.printing)
+            }
         }
         return true
     }

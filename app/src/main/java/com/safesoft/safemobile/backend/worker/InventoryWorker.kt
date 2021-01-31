@@ -53,7 +53,7 @@ class InventoryWorker @WorkerInject constructor(
                 Result.failure()
             }
             .doOnSuccess {
-//                inventoryRepository.markAllInventoriesAsSync().blockingGet()
+                inventoryRepository.markAllInventoriesAsSync().blockingGet()
                 Log.d(TAG, "createWork: worker finished successfully")
             }
             .observeOn(Schedulers.io())

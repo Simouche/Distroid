@@ -34,6 +34,10 @@ interface SalesDao {
     @Query("SELECT * FROM sales WHERE SYNC = 0 AND DONE = 1")
     fun getAllNewSalesWithAllInfo(): Single<List<AllAboutASale>>
 
+    @Transaction
+    @Query("SELECT * FROM sales WHERE id = :id")
+    fun getSaleWithAllInfoById(id: Long): Single<AllAboutASale>
+
     @Query("UPDATE sales SET SYNC=1 WHERE DONE = 1")
     fun markAllSalesAsSync(): Completable
 }

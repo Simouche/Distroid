@@ -1,9 +1,6 @@
 package com.safesoft.safemobile.ui.settings
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.os.Build
@@ -57,7 +54,7 @@ class SynchronizationSettings : BaseFragment(), BaseAnimations {
         super.setUpViews()
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.syncPeriod.setSelection(viewModel.syncDuration.value!!)
+        binding.syncPeriod.setSelection(viewModel.syncDuration.value ?: 0)
         binding.reinitializeButton.setOnClickListener {
             viewModel.reinitialize()
             setUpWorksObservers()
@@ -124,7 +121,9 @@ class SynchronizationSettings : BaseFragment(), BaseAnimations {
                             duration = 1000,
                             views = views
                         )
-
+                        AlertDialog.Builder(requireContext())
+                            .setMessage(it.exception?.stackTraceToString()).show()
+                        error(message = it.exception?.message ?: "")
                         error(R.string.datanbase_configuration_error)
                     }
                 }
