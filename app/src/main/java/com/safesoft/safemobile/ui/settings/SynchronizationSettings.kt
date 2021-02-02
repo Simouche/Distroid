@@ -121,9 +121,6 @@ class SynchronizationSettings : BaseFragment(), BaseAnimations {
                             duration = 1000,
                             views = views
                         )
-                        AlertDialog.Builder(requireContext())
-                            .setMessage(it.exception?.stackTraceToString()).show()
-                        error(message = it.exception?.message ?: "")
                         error(R.string.datanbase_configuration_error)
                     }
                 }
